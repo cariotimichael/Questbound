@@ -1,7 +1,10 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, Menu } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const path = require('path');
+
+// No default menu bar (File/Edit/View/...) — the game is its own program now.
+Menu.setApplicationMenu(null);
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -17,6 +20,7 @@ function createWindow() {
     minWidth: 960,
     minHeight: 600,
     title: 'Questbound',
+    fullscreen: true,
     backgroundColor: '#0a0a12',
     webPreferences: {
       nodeIntegration: false,

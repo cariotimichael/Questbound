@@ -23,7 +23,23 @@ body{position:fixed;width:100%;background:#05060a;color:#e8e0cc;font-family:-app
 .foot-note{position:absolute;bottom:16px;left:0;right:0;font-size:11px;color:#6b6350;padding:0 20px}
 .ver-tag{position:absolute;bottom:34px;right:20px;font-family:Georgia,serif;font-size:11px;letter-spacing:.06em;color:#6b6350;opacity:.9}
 
-/* ---------- buttons ---------- */
+/* ---------- character slots ---------- */
+.char-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:4px}
+.char-slot{border:2px solid #4a3f22;border-radius:10px;padding:16px;background:rgba(0,0,0,.3);text-align:center;min-height:246px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.char-slot h3{font-family:Georgia,"Times New Roman",serif;font-size:21px;color:#f5d376;margin-bottom:6px;line-height:1.15}
+.char-slot-num{font-size:11px;color:#9d8a5c;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.char-slot-level{font-family:Georgia,"Times New Roman",serif;font-size:17px;color:#ffe9b0}
+.char-slot-meta{font-size:14px;color:#c9bfa4;line-height:1.55;margin-top:2px}
+.char-slot-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:auto;padding-top:16px;width:100%}
+.char-slot-actions .btn{flex:1 1 110px}
+.char-slot-empty{justify-content:center;color:#8a8069}
+.char-slot-empty-mark{font-size:36px;color:#6b6350;margin-bottom:8px}
+.char-active{font-size:12px;color:#ffd94d;margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
+.delete-copy{font-size:15px;line-height:1.6;color:#d8cdb2}
+.delete-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+@media (max-width:700px){.char-slots{grid-template-columns:1fr}.char-slot{min-height:0}}
+
+
 .btn{display:inline-block;min-height:54px;min-width:240px;padding:13px 30px;font-family:Georgia,serif;font-size:18px;letter-spacing:.05em;color:#ffe9b0;background:linear-gradient(180deg,#4d3c1d,#2b2110 60%,#1c1509);border:2px solid #a8802f;border-radius:8px;cursor:pointer;text-shadow:0 1px 2px #000;box-shadow:0 3px 14px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,220,140,.28)}
 .btn:hover{filter:brightness(1.18);box-shadow:0 0 20px rgba(216,169,60,.35),0 3px 14px rgba(0,0,0,.65)}
 .btn:active{transform:translateY(1px)}
@@ -91,6 +107,14 @@ body{position:fixed;width:100%;background:#05060a;color:#e8e0cc;font-family:-app
 .qlog-item .qstat{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#8fa8c9}
 .qlog-item.doneitem .qstat{color:#7bc74d}
 
+/* quest log sections */
+.qsec{margin-bottom:14px}
+.qsec-h{font-family:Georgia,serif;font-size:15px;color:#f5d376;border-bottom:1px solid #4a3f22;padding:2px 0 7px;margin-bottom:10px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:8px}
+.qsec-h .qchev{color:#8a8069;transition:transform .2s;font-size:12px;line-height:1}
+.qsec-h.collapsed .qchev{transform:rotate(-90deg)}
+.qsec-n{font-size:12.5px;color:#8a8069;margin-left:auto;font-family:sans-serif}
+.qsec-b.collapsed{display:none}
+
 /* ---------- bag / char ---------- */
 .bag-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
 .slot{position:relative;aspect-ratio:1;border:1px solid #4a3f22;border-radius:8px;background:rgba(0,0,0,.4) center/78% no-repeat;cursor:pointer;image-rendering:pixelated;min-height:52px}
@@ -135,7 +159,7 @@ body.touch.playing #touch-ui{display:block}
 .abtn .lock{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;font-size:11px;color:#9d8a5c;font-weight:700}
 .abtn.locked .lock{display:flex}
 .abtn.nomt{filter:saturate(.4) brightness(.75)}
-#btn-tgt{position:absolute;right:22px;top:calc(50% - 220px);width:52px;height:52px;border-radius:50%;border:2px solid #8a6d2f;background:rgba(20,22,30,.85);color:#f5d376;font-size:22px;pointer-events:auto;cursor:pointer}
+#btn-tgt{position:absolute;right:22px;top:calc(50% - 262px);width:52px;height:52px;border-radius:50%;border:2px solid #8a6d2f;background:rgba(20,22,30,.85);color:#f5d376;font-size:22px;pointer-events:auto;cursor:pointer}
 
 /* ---------- sys buttons ---------- */
 #sysbtns{position:fixed;right:10px;top:196px;z-index:16;display:flex;flex-direction:column;gap:8px}
@@ -144,7 +168,7 @@ body.touch.playing #touch-ui{display:block}
 .sysb .sub{display:block;font-size:8px;color:#9d8a5c;font-weight:400;letter-spacing:.05em}
 .sysb .main{font-size:17px;line-height:1}
 #sb-act{border-color:#d8a93c;background:rgba(52,38,14,.96);box-shadow:0 0 14px rgba(216,169,60,.5)}
-@media (max-width:640px){body.touch #sysbtns{top:auto;bottom:14px;right:10px;flex-direction:row}#btn-tgt{top:calc(50% - 235px)}}
+@media (max-width:640px){body.touch #sysbtns{top:auto;bottom:14px;right:10px;flex-direction:row}#btn-tgt{top:calc(50% - 262px)}.sysb{width:44px;height:44px;font-size:14px}#sysbtns{gap:5px}}
 
 /* ---------- toast / death ---------- */
 #toast{position:fixed;left:50%;bottom:170px;transform:translateX(-50%);z-index:26;pointer-events:none;text-align:center;width:min(92vw,560px)}
@@ -159,6 +183,33 @@ body.touch.playing #touch-ui{display:block}
 #lvl-flash.show{opacity:1}
 #vignette{position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.42) 100%)}
 #dmg-vignette{position:fixed;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(160,20,10,.55) 100%);opacity:0;transition:opacity .12s}
+.opt-sec{margin:15px 0 5px}.opt-sec h4{font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#e0a458;margin:0 0 8px;letter-spacing:.3px;border-bottom:1px solid rgba(138,109,47,.5);padding-bottom:5px}
+.opt-row{display:flex;align-items:center;gap:12px;padding:9px 2px;border-bottom:1px solid rgba(90,74,46,.25)}
+.opt-label{flex:1;min-width:120px}.opt-label .t{font-weight:700;font-size:15px;color:#e8d9b5}.opt-label .d{font-size:12px;color:#8a7d63;margin-top:2px}
+.opt-val{font-size:13px;color:#e0a458;min-width:36px;text-align:right;font-weight:700}
+input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
+.opt-toggle{position:relative;width:52px;height:26px;flex:none;cursor:pointer}
+.opt-toggle input{opacity:0;width:0;height:0}
+.opt-toggle .track{position:absolute;inset:0;background:#2a2e38;border:1px solid #8a6d2f;border-radius:13px;transition:.15s}
+.opt-toggle .track:before{content:"";position:absolute;left:3px;top:2.5px;width:19px;height:19px;background:#9a8a72;border-radius:50%;transition:.15s}
+.opt-toggle input:checked+.track{background:#3d4a2a}
+.opt-toggle input:checked+.track:before{left:27px;background:#c98f3d}
+.opt-foot{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+.opt-note{font-size:12px;color:#8a7d63;margin:14px 0 4px;line-height:1.45}
+.bind-cat{margin:13px 0 3px;font-size:13px;font-weight:700;color:#e0a458;letter-spacing:.5px;text-transform:uppercase}
+.bind-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(90,74,46,.25)}
+.bind-lbl{font-size:14px;color:#c9bfa4}
+.bind-key{min-width:64px;text-align:center;padding:6px 14px;border:1px solid #8a6d2f;border-radius:6px;background:#181a22;color:#ffd94d;font-weight:700;cursor:pointer;font-family:Georgia,"Times New Roman",serif;font-size:15px}
+.bind-key:hover{border-color:#e0a458;background:#22242e}
+.bind-key.cap{background:#5a2a1a;border-color:#ff9b8e;color:#fff;animation:bindcap .55s infinite alternate}
+@keyframes bindcap{from{opacity:.6}to{opacity:1}}
+.legend-stack{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.legend-item{display:flex;align-items:center;gap:12px}
+.mmode-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-align:center;padding:9px 12px;background:#2a2e38;border:1px solid #8a6d2f;border-radius:5px;color:#dfe0e6;font-size:15px;font-weight:700;cursor:pointer;font-family:Georgia,"Times New Roman",serif;transition:.12s}
+.mmode-btn:hover{background:#343947;border-color:#e0a458}
+.mmode-btn.active{background:#4a3a20;border-color:#e0a458;color:#ffd67a}
+.mmode-desc{font-size:12px;color:#8a7d63;line-height:1.4}
+.charname-inline{padding:10px 12px}
 
 /* ---------- character creation: appearance ---------- */
 .appear-wrap{display:flex;gap:18px;align-items:center;margin-bottom:20px;padding:14px;border:1px solid #4a3f22;border-radius:10px;background:rgba(0,0,0,.3);text-align:left}
@@ -225,7 +276,8 @@ body.touch.playing #touch-ui{display:block}
     <button class="abtn" id="ab0" aria-label="Ability 1"><span class="key">1</span><span class="cdo"></span><span class="lock"></span></button>
     <button class="abtn" id="ab1" aria-label="Ability 2"><span class="key">2</span><span class="cdo"></span><span class="lock"></span></button>
     <button class="abtn" id="ab2" aria-label="Ability 3"><span class="key">3</span><span class="cdo"></span><span class="lock"></span></button>
-    <button class="abtn" id="ab3" aria-label="Health potion"><span class="key">4</span><span class="cdo"></span><span class="lock"></span></button>
+    <button class="abtn" id="ab3" aria-label="Ability 4"><span class="key">4</span><span class="cdo"></span><span class="lock"></span></button>
+    <button class="abtn" id="ab4" aria-label="Health potion"><span class="key">5</span><span class="cdo"></span><span class="lock"></span></button>
   </div>
   <button id="btn-tgt" aria-label="Target nearest enemy">◎</button>
 </div>
@@ -238,6 +290,7 @@ body.touch.playing #touch-ui{display:block}
   <button class="sysb" id="sb-char" aria-label="Character">C<span class="sub">CHAR</span></button>
   <button class="sysb" id="sb-talent" aria-label="Talents">T<span class="sub">TLT</span></button>
   <button class="sysb" id="sb-help" aria-label="Help">?<span class="sub">HELP</span></button>
+  <button class="sysb" id="sb-opt" aria-label="Options">⚙<span class="sub">OPT</span></button>
   <button class="sysb" id="sb-mute" aria-label="Mute">♪<span class="sub">SOUND</span></button>
 </div>
 
@@ -252,11 +305,26 @@ body.touch.playing #touch-ui{display:block}
   <div class="title-sub">Tiny heroes. Big adventure. The wilds of Emberhold await.</div>
   <div class="menu-col">
     <button class="btn hidden" id="btn-continue">Continue Adventure</button>
+    <button class="btn" id="btn-select">Select Hero</button>
     <button class="btn" id="btn-new">New Game</button>
+    <button class="btn small" id="btn-opt">Options</button>
     <button class="btn small" id="btn-how">How to Play</button>
+    <button class="btn small" id="btn-exit-game">Exit Game</button>
   </div>
   <div class="foot-note">An original single-file action RPG. All art &amp; sound generated in-code.</div>
-  <div class="ver-tag">v0.1.1</div>
+  <div class="ver-tag">v0.2.0</div>
+</div>
+
+<!-- character selection -->
+<div id="char-select" class="screen hidden">
+  <div class="panel" style="position:relative;left:auto;top:auto;transform:none;width:min(94vw,860px)">
+    <div class="panel-head"><span class="panel-title">Choose Your Hero</span><button class="panel-x" id="char-back" aria-label="Back">✕</button></div>
+    <div class="panel-body">
+      <div class="char-slot-meta" style="text-align:center;margin-bottom:16px">Choose a saved hero, or create a new one in an empty slot. Every hero keeps its own separate save.</div>
+      <div id="char-slots" class="char-slots"></div>
+      <div id="char-note" class="opt-note hidden" style="text-align:center"></div>
+    </div>
+  </div>
 </div>
 
 <!-- character creation -->
@@ -335,15 +403,17 @@ body.touch.playing #touch-ui{display:block}
 <div id="help" class="panel hidden">
   <div class="panel-head"><span class="panel-title">How to Play</span><button class="panel-x" data-close="help" aria-label="Close">✕</button></div>
   <div class="panel-body">
-    <div class="help-sec"><h4>Goal</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Aid the town of Emberhold: complete all 4 quests, reach level 6, and slay <b style="color:#ff9b8e">Cragmaw</b> in the cave north-east. Speak to townsfolk marked with <b style="color:#ffd94d">!</b> to pick up quests, and return to them when you see <b style="color:#ffd94d">?</b>.</div></div>
+    <div class="help-sec"><h4>Goal</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Aid the town of Emberhold: complete every quest, reach level 10, slay <b style="color:#ff9b8e">Cragmaw</b> (level 8) in the Emberdark Cave north-east — and then descend through the <b style="color:#ff9b8e">Ruined Spire</b> gate south of town into <b style="color:#ff9b8e">the Emberdeep</b> to face <b style="color:#ff9b8e">Kezath, the Sealed Flame</b> (level 10). Speak to townsfolk marked with <b style="color:#ffd94d">!</b> to pick up quests, and return to them when you see <b style="color:#ffd94d">?</b>.</div></div>
     <div class="help-sec"><h4>Desktop Controls</h4><table>
       <tr><td>WASD / Arrows</td><td>Move</td></tr>
       <tr><td>Click enemy</td><td>Target (auto-attacks in range)</td></tr>
       <tr><td>Tab</td><td>Cycle targets</td></tr>
-      <tr><td>1 – 4</td><td>Abilities &amp; health potion</td></tr>
+      <tr><td>1 – 5</td><td>Abilities &amp; health potion</td></tr>
+      <tr><td>Hover hotbar</td><td>Ability tooltips (name, stats, mana, cooldown)</td></tr>
       <tr><td>Click NPC / node</td><td>Talk, trade, gather</td></tr>
       <tr><td>L / B / C / H</td><td>Quest log, bags, character, help</td></tr>
       <tr><td>T</td><td>Talent panel (spend talent points)</td></tr>
+      <tr><td>O</td><td>Options (audio, graphics, HUD, keybindings)</td></tr>
       <tr><td>M</td><td>Mute sound</td></tr>
       <tr><td>Esc</td><td>Close panels / clear target</td></tr>
     </table></div>
@@ -353,9 +423,10 @@ body.touch.playing #touch-ui{display:block}
       <tr><td>◎ button</td><td>Target nearest enemy</td></tr>
       <tr><td>Round buttons</td><td>Abilities &amp; health potion</td></tr>
       <tr><td>Tap NPC / mushroom</td><td>Talk, trade, gather (get close)</td></tr>
-      <tr><td>Side buttons</td><td>Quest log, bags, character, talents, help, sound</td></tr>
+      <tr><td>Side buttons</td><td>Quest log, bags, character, talents, help, options, sound</td></tr>
     </table></div>
     <div class="help-sec"><h4>Talents</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Every level grants a <b style="color:#ffd94d">talent point</b>. Open Talents from the side buttons or the T key to rank up talents that change how your abilities feel — cheaper, bigger, chained, or entirely new side effects. Reshuffle freely: removing or resetting is free.</div></div>
+    <div class="help-sec"><h4>Options</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Open Options from the title screen, the ⚙ side button, or the <b style="color:#ffd94d">O</b> key: master / music / sound-effects volume with independent mute switches, particle effects, screen shake, damage numbers, vignette, the quest tracker, and a fantasy-themed mouse cursor (which changes over enemies, allies and interactables) can all be tuned or hidden here. Every hotkey for abilities, movement and interacting can be rebound to your liking. Settings are saved on this device.</div></div>
     <div class="help-sec"><h4>Races &amp; Racial Passives</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">
       • <b style="color:#e05a4a">Emberkin</b> — <b style="color:#ffd94d">Inner Fire</b>: +8% to all damage.<br/>
       • <b style="color:#9d9280">Ogrun</b> — <b style="color:#ffd94d">Thick Hide</b>: take 10% less damage from all sources, +5% max health.<br/>
@@ -363,12 +434,30 @@ body.touch.playing #touch-ui{display:block}
       • <b style="color:#7bc74d">Wildkin</b> — <b style="color:#ffd94d">Keen Eye</b>: +10% critical strike chance.<br/>
       • <b style="color:#e0ac72">Human</b> — <b style="color:#ffd94d">Adaptability</b>: +10% XP from all sources.<br/>
       Racials benefit every class — pick the race that fits how you want to play.</div></div>
-    <div class="help-sec"><h4>Necromancer</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">The Necromancer wears <b style="color:#ffe9b0">Cloth</b> and wields <b style="color:#ffe9b0">Staves</b>. Abilities: <b style="color:#c9a0e8">Raise Skeleton</b> (Lv1) — a bone servant that fights for you; <b style="color:#c9a0e8">Life Drain</b> (Lv3) — damage a foe and heal yourself; <b style="color:#c9a0e8">Plague Nova</b> (Lv5) — pestilent AoE that spreads death around you. Plagued enemies take damage over time.</div></div>
-    <div class="help-sec"><h4>Class Quests</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Every class has a mentor with a 6-quest chain — one trial per level — each rewarding a piece of <b style="color:#ffd94d">class-locked gear</b> suited to that level. Seek out <b style="color:#ffe9b0">Veteran Korr</b> (Warrior), <b style="color:#ffe9b0">Archmage Lyra</b> (Mage), <b style="color:#ffe9b0">Tracker Fen</b> (Hunter), or <b style="color:#ffe9b0">Mortis at the graveyard</b> (Necromancer).</div></div>
+    <div class="help-sec"><h4>Necromancer</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">The Necromancer wears <b style="color:#ffe9b0">Cloth</b> and wields <b style="color:#ffe9b0">Staves</b>. Abilities: <b style="color:#c9a0e8">Raise Skeleton</b> (Lv1) — a bone servant that fights for you; <b style="color:#c9a0e8">Life Drain</b> (Lv3) — damage a foe and heal yourself; <b style="color:#c9a0e8">Plague Nova</b> (Lv5) — pestilent AoE that spreads death around you; <b style="color:#c9a0e8">Soul Harvest</b> (Lv7) — reap the life of every foe around you and turn their wounds into your strength. Plagued enemies take damage over time.</div></div>
+    <div class="help-sec"><h4>Class Quests</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Every class has a mentor with a 6-quest chain — a trial roughly per level, ending with Cragmaw — each rewarding a piece of <b style="color:#ffd94d">class-locked gear</b> suited to that level. Seek out <b style="color:#ffe9b0">Veteran Korr</b> (Warrior), <b style="color:#ffe9b0">Archmage Lyra</b> (Mage), <b style="color:#ffe9b0">Tracker Fen</b> (Hunter), or <b style="color:#ffe9b0">Mortis at the graveyard</b> (Necromancer).</div></div>
     <div class="help-sec"><h4>Specialized Vendors</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6"><b style="color:#ffe9b0">Weaponsmith Wex</b> sells weapons, <b style="color:#ffe9b0">Armorer Brida</b> sells head/chest/leg/hand/foot armor, and <b style="color:#ffe9b0">Trader Pell</b> sells consumables and trinkets — always matching your class. Vendor gear, world drops, and class-quest rewards are all competitive: gear however you like.</div></div>
     <div class="help-sec"><h4>Gear &amp; Classes</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Monsters drop <b style="color:#4ade80">green</b>, <b style="color:#60a5fa">blue</b>, <b style="color:#c084fc">epic</b> and <b style="color:#ff8c2a">legendary</b> gear for 7 slots — weapon, head, chest, legs, hands, feet, trinket. Tap a piece in your bags to equip it; equipped gear shows on your sprite. Each class is locked to its own <b style="color:#ffe9b0">armor</b> and <b style="color:#ffe9b0">weapons</b>: Warriors wear Plate and swing Greatswords, Mages wear Cloth and carry Staves, Hunters wear Leather and wield Bows, Necromancers wear Cloth and wield Bone Staves.</div></div>
     <div class="help-sec"><h4>Appearance</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Pick your character's race, skin tone, hair color, hairstyle, eye color and a racial accessory on the creation screen — the preview window shows your hero as you'll play them. Each race's palettes stay true to its theme.</div></div>
-    <div class="help-sec"><h4>Tips</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">• Monsters leash back home if you run far — use it to escape.<br/>• Stock up on potions before the gnoll camp and the cave.<br/>• Your progress saves automatically; Continue from the title screen.</div></div>
+    <div class="help-sec"><h4>Tips</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">• Monsters leash back home if you run far — use it to escape.<br/>• Stock up on potions before the gnoll camp and the cave.<br/>• Your progress saves automatically; Continue from the title screen.<br/>• New ability slot: your fourth class ability unlocks at level 7 and sits in slot 4 (press 4), with potions moving to slot 5.</div></div>
+  </div>
+</div>
+
+<!-- options -->
+<div id="options" class="panel hidden">
+  <div class="panel-head"><span class="panel-title">Options</span><button class="panel-x" data-close="options" aria-label="Close">✕</button></div>
+  <div class="panel-body" id="options-body"></div>
+</div>
+
+<!-- delete character -->
+<div id="delete-confirm" class="panel hidden">
+  <div class="panel-head"><span class="panel-title">Delete Hero</span><button class="panel-x" data-close="delete-confirm" aria-label="Cancel">✕</button></div>
+  <div class="panel-body">
+    <p class="delete-copy" id="delete-copy"></p>
+    <div class="delete-actions">
+      <button class="btn small" id="delete-cancel">Cancel</button>
+      <button class="btn small danger" id="delete-yes">Delete Hero</button>
+    </div>
   </div>
 </div>
 
@@ -377,6 +466,14 @@ body.touch.playing #touch-ui{display:block}
   <h2 class="serif">You have died</h2>
   <p id="death-sub">The wilds claimed another hero. You wake at the Emberhold graveyard, a little poorer.</p>
   <button class="btn danger" id="btn-respawn">Respawn at Graveyard</button>
+  <button class="btn small" id="btn-death-menu" style="margin-top:12px">Return to Main Menu</button>
+</div>
+
+<!-- bye screen (shown when scripts can't actually close the window) -->
+<div id="bye-screen" class="screen hidden" style="z-index:80">
+  <div class="kicker">Questbound</div>
+  <h1 class="game-title" style="font-size:clamp(28px,7vw,72px)">Thanks for playing!</h1>
+  <div class="title-sub">You can close this tab now.</div>
 </div>
 
 <script>
@@ -418,32 +515,96 @@ if("ontouchstart" in window||navigator.maxTouchPoints>0)document.body.classList.
 const IS_TOUCH=document.body.classList.contains("touch");
 
 // ---------- audio (all synthesized, no assets) ----------
+// ---------- settings ----------
+const OPT_KEY="questbound_opts_v1";
+const OPT_DEFAULTS={masterVol:80,musicVol:70,sfxVol:80,mute:false,musicMute:false,sfxMute:false,shake:true,dmgNums:true,particles:true,cursor:true,tracker:true,vignette:true};
+let SETTINGS=Object.assign({},OPT_DEFAULTS);
+function loadOpts(){try{const raw=localStorage.getItem(OPT_KEY);if(!raw)return;const s=JSON.parse(raw);if(s&&typeof s==="object")SETTINGS=Object.assign({},OPT_DEFAULTS,s);}catch(e){}}
+function saveOpts(){try{localStorage.setItem(OPT_KEY,JSON.stringify(SETTINGS));}catch(e){}}
+function resetOpts(){SETTINGS=Object.assign({},OPT_DEFAULTS);saveOpts();Audio2.applyAudio();applyHudToggles();applyCursor();}
+function applyHudToggles(){$("vignette").style.display=SETTINGS.vignette?"block":"none";updateMuteButton();}
+
+// ---------- keybindings ----------
+const BIND_KEY="questbound_binds_v1";
+const BIND_DEFAULTS={ab1:"1",ab2:"2",ab3:"3",ab4:"4",potion:"5",up:"w",down:"s",left:"a",right:"d",interact:"e"};
+const BIND_CATS=[
+  {name:"Abilities",acts:[["ab1","Ability 1"],["ab2","Ability 2"],["ab3","Ability 3"],["ab4","Ability 4"],["potion","Health Potion"]]},
+  {name:"Movement",acts:[["up","Move Up"],["down","Move Down"],["left","Move Left"],["right","Move Right"]]},
+  {name:"Interaction",acts:[["interact","Interact / Talk"]]},
+];
+// keys that may NOT be picked as bindings: reserved by the OS/browser or fixed UI keys (Tab target, L/B/C/T/H/M/O panels)
+const NO_BIND=["tab","escape","enter","l","b","c","t","h","m","o"];
+let BINDS=Object.assign({},BIND_DEFAULTS);
+function loadBinds(){try{const raw=localStorage.getItem(BIND_KEY);if(!raw)return;const s=JSON.parse(raw);
+  if(s&&typeof s==="object")for(const k in BIND_DEFAULTS)if(typeof s[k]==="string")BINDS[k]=s[k];}catch(e){}}
+function saveBinds(){try{localStorage.setItem(BIND_KEY,JSON.stringify(BINDS));}catch(e){}}
+function resetBinds(){BINDS=Object.assign({},BIND_DEFAULTS);saveBinds();}
+function keyLabel(k){const m={arrowup:"↑",arrowdown:"↓",arrowleft:"←",arrowright:"→"," ":"Space"};
+  if(m[k])return m[k];return k.length===1?k.toUpperCase():k[0].toUpperCase()+k.slice(1);}
+let rebindTarget=null;
+
+// ---------- thematic cursor ----------
+const CURSORS={};
+function buildCursors(){
+  const mkC=(fill,rim)=>{
+    const c=makeCanvas(32,32),g=c.getContext("2d");
+    const p=[[2,1],[2,26],[8,20],[12,28],[16,25],[12,17],[19,17]];
+    g.beginPath();g.moveTo(p[0][0],p[0][1]);
+    for(let i=1;i<p.length;i++)g.lineTo(p[i][0],p[i][1]);
+    g.closePath();g.lineJoin="round";
+    g.strokeStyle="#08080c";g.lineWidth=5;g.stroke();
+    g.fillStyle=fill;g.fill();
+    g.strokeStyle=rim;g.lineWidth=2;g.stroke();
+    g.fillStyle="rgba(255,255,255,0.35)";g.fillRect(4,3,3,15); // steel glint
+    return `url("${c.toDataURL("image/png")}") 2 2, auto`;
+  };
+  CURSORS.pointer=mkC("#cdd2da","#c9a93c");
+  CURSORS.enemy=mkC("#e05240","#7a1515");
+  CURSORS.npc=mkC("#f5d376","#a97c2a");
+}
+function applyCursor(){
+  const on=!!(SETTINGS.cursor&&!IS_TOUCH);
+  document.body.classList.toggle("custom-cursor",on);
+  let st=document.getElementById("cursor-style");
+  if(!on){cv.style.cursor="";if(st)st.remove();return;}
+  if(!CURSORS.pointer)buildCursors();
+  if(!st){st=document.createElement("style");st.id="cursor-style";document.head.appendChild(st);}
+  st.textContent=`body.custom-cursor,body.custom-cursor button,body.custom-cursor select,body.custom-cursor input,body.custom-cursor .sysb,body.custom-cursor .abtn,body.custom-cursor a{cursor:${CURSORS.pointer}}`;
+}
 const Audio2={
-  ctx:null,muted:false,master:null,noiseBuf:null,
+  ctx:null,master:null,music:null,sfx:null,noiseBuf:null,
+  get muted(){return !!SETTINGS.mute;},
   init(){if(this.ctx)return;try{
     this.ctx=new (window.AudioContext||window.webkitAudioContext)();
-    this.master=this.ctx.createGain();this.master.gain.value=0.5;this.master.connect(this.ctx.destination);
+    this.master=this.ctx.createGain();this.master.connect(this.ctx.destination);
+    this.music=this.ctx.createGain();this.music.connect(this.master);
+    this.sfx=this.ctx.createGain();this.sfx.connect(this.master);
     const len=this.ctx.sampleRate*1,buf=this.ctx.createBuffer(1,len,this.ctx.sampleRate),d=buf.getChannelData(0);
     for(let i=0;i<len;i++)d[i]=Math.random()*2-1;this.noiseBuf=buf;
+    this.applyAudio();
   }catch(e){this.ctx=null;}},
+  applyAudio(){if(!this.ctx||!this.master)return;
+    this.master.gain.setTargetAtTime(SETTINGS.mute?0:(SETTINGS.masterVol/100),this.ctx.currentTime,0.03);
+    this.music.gain.setTargetAtTime(SETTINGS.musicMute?0:(SETTINGS.musicVol/100),this.ctx.currentTime,0.03);
+    this.sfx.gain.setTargetAtTime(SETTINGS.sfxMute?0:(SETTINGS.sfxVol/100),this.ctx.currentTime,0.03);},
   resume(){this.init();if(this.ctx&&this.ctx.state==="suspended")this.ctx.resume();},
-  setMuted(m){this.muted=m;if(this.master)this.master.gain.value=m?0:0.5;},
+  setMuted(m){SETTINGS.mute=m;saveOpts();this.applyAudio();updateMuteButton();},
   tone(freq,freq2,dur,type="sine",vol=0.4,delay=0){
-    if(!this.ctx||this.muted)return;const t=this.ctx.currentTime+delay;
+    if(!this.ctx||SETTINGS.mute||SETTINGS.sfxMute)return;const t=this.ctx.currentTime+delay;
     const o=this.ctx.createOscillator(),g=this.ctx.createGain();
     o.type=type;o.frequency.setValueAtTime(freq,t);
     if(freq2)o.frequency.exponentialRampToValueAtTime(Math.max(20,freq2),t+dur);
     g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.001,t+dur);
-    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+0.02);
+    o.connect(g);g.connect(this.sfx);o.start(t);o.stop(t+dur+0.02);
   },
   noise(dur,vol=0.4,filterFreq=1200,type="lowpass",delay=0){
-    if(!this.ctx||this.muted)return;const t=this.ctx.currentTime+delay;
+    if(!this.ctx||SETTINGS.mute||SETTINGS.sfxMute)return;const t=this.ctx.currentTime+delay;
     const s=this.ctx.createBufferSource();s.buffer=this.noiseBuf;s.loop=true;
     const f=this.ctx.createBiquadFilter();f.type=type;f.frequency.value=filterFreq;
     const g=this.ctx.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.001,t+dur);
-    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+dur+0.02);
+    s.connect(f);f.connect(g);g.connect(this.sfx);s.start(t);s.stop(t+dur+0.02);
   },
-  play(name){if(!this.ctx||this.muted)return;switch(name){
+  play(name){if(!this.ctx||SETTINGS.mute||SETTINGS.sfxMute)return;switch(name){
     case "hit":this.noise(0.12,0.5,900);this.tone(160,60,0.12,"square",0.25);break;
     case "swing":this.noise(0.1,0.25,2500,"highpass");break;
     case "shoot":this.noise(0.08,0.3,3000,"highpass");this.tone(500,900,0.07,"square",0.12);break;
@@ -469,13 +630,83 @@ const Audio2={
     case "gather":this.noise(0.12,0.3,1800);this.tone(600,900,0.1,"sine",0.2);break;
     case "charge":this.noise(0.25,0.4,1000);this.tone(150,400,0.25,"sawtooth",0.25);break;
     case "roar":this.tone(90,45,0.7,"sawtooth",0.5);this.noise(0.7,0.35,300);break;
+    case "portal":this.tone(160,720,0.45,"sine",0.3);this.tone(220,980,0.45,"sine",0.18,0.06);this.noise(0.5,0.2,1400);break;
+    case "chest":this.tone(220,180,0.15,"square",0.2);this.tone(180,720,0.3,"triangle",0.25,0.12);break;
     case "stun":this.tone(800,150,0.2,"square",0.3);break;
     case "equip":this.tone(300,600,0.12,"square",0.2);this.noise(0.08,0.25,3000,"highpass");this.tone(500,900,0.1,"triangle",0.2,0.08);break;
     case "talent":[659,784,988,1175].forEach((f,i)=>this.tone(f,f,0.14,"triangle",0.3,i*0.07));break;
     case "error":this.tone(180,120,0.15,"square",0.25);break;
     case "heal":this.tone(400,800,0.3,"sine",0.25);break;
+    case "howl":this.tone(320,640,0.9,"sine",0.3);this.tone(480,960,0.9,"sine",0.18,0.12);this.tone(640,320,0.5,"sine",0.2,0.9);break;
+    case "deepfreeze":this.tone(1200,150,0.4,"sine",0.3);this.noise(0.3,0.3,3000,"highpass");this.tone(800,100,0.35,"triangle",0.25,0.06);break;
+    case "serrated":this.noise(0.1,0.35,2800,"highpass");this.tone(400,200,0.15,"sawtooth",0.25);break;
+    case "reap":this.tone(700,80,0.45,"sine",0.32);this.noise(0.35,0.25,500);this.tone(350,60,0.5,"sawtooth",0.2,0.05);break;
+    case "discover":[392,523,659].forEach((f,i)=>this.tone(f,f,0.22,"triangle",0.28,i*0.1));break;
   }}
 };
+
+// ---------- procedural music & ambience ----------
+// Zone-aware generative music: pad chords + wandering melody + ambience layers,
+// all routed through the music bus so they respect music volume / mute settings.
+const DEBUG=false; // debug flag referenced by zoneOf(); keep false in production builds
+
+const MUSIC_ZONES={
+  town:{beat:0.5,chords:[[130.81,164.81,196.00],[98.00,123.47,146.83],[110.00,138.59,164.81],[98.00,123.47,196.00]],scale:[261.63,293.66,329.63,392.00,440.00,523.25],wind:0.030,rumble:0.0,pulse:false,bells:true},
+  wild:{beat:0.46,chords:[[146.83,174.61,196.00],[98.00,130.81,146.83],[87.31,103.83,123.47],[116.54,146.83,174.61]],scale:[293.66,329.63,369.99,415.30,466.16,587.33],wind:0.045,rumble:0.0,pulse:false,bells:false},
+  cave:{beat:0.6,chords:[[82.41,98.00,123.47],[98.00,110.00,138.59],[87.31,98.00,130.81],[82.41,110.00,123.47]],scale:[164.81,196.00,207.65,246.94,293.66,329.63],wind:0.012,rumble:0.06,pulse:true,bells:false},
+  dungeon:{beat:0.72,chords:[[55.00,110.00,164.81],[61.74,103.83,146.83],[55.00,98.00,138.59],[61.74,92.50,130.81]],scale:[110.00,130.81,146.83,164.81,196.00,246.94],wind:0.008,rumble:0.10,pulse:true,bells:false}
+};
+const Music={
+  playing:false,zone:"wild",zoneSet:false,nextBeat:0,beatIdx:0,chordIdx:0,melIdx:3,timer:null,padFilter:null,windGain:null,rumbleGain:null,ctx:null,
+  start(){if(this.playing)return;Audio2.resume();if(!Audio2.ctx||!Audio2.music)return;
+    const c=Audio2.ctx;this.ctx=c;
+    this.padFilter=c.createBiquadFilter();this.padFilter.type="lowpass";this.padFilter.frequency.value=750;this.padFilter.connect(Audio2.music);
+    // persistent noise layers (wind + cave rumble), crossfaded by zone
+    const mkLayer=(type,ff,q)=>{const s=c.createBufferSource();s.buffer=Audio2.noiseBuf;s.loop=true;
+      const f=c.createBiquadFilter();f.type=type;f.frequency.value=ff;f.Q.value=q;
+      const g=c.createGain();g.gain.value=0;s.connect(f);f.connect(g);g.connect(Audio2.music);s.start();return g;};
+    this.windGain=mkLayer("bandpass",480,0.6);this.rumbleGain=mkLayer("lowpass",80,0.4);
+    this.nextBeat=c.currentTime+0.2;this.playing=true;
+    this.timer=setInterval(()=>this.tick(),200);},
+  setZone(z){if(MUSIC_ZONES[z])this.zone=z;this.zoneSet=true;},
+  note(freq,dur,when,type,vol,dest){
+    if(!this.ctx)return;const t=Math.max(when,this.ctx.currentTime+0.01);
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type;o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(0.0002,vol),t+dur*0.25);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(dest||Audio2.music);o.start(t);o.stop(t+dur+0.05);},
+  pad(freqs,dur,when){for(let i=0;i<freqs.length;i++){this.note(freqs[i],dur,when,"triangle",i===0?0.045:0.03,this.padFilter);
+      this.note(freqs[i]*1.004,dur,when,"sine",0.015,this.padFilter);}},
+  tick(){if(!this.playing||!this.ctx||this.ctx.state!=="running")return;
+    const ct=this.ctx.currentTime,Z=MUSIC_ZONES[this.zone];
+    // crossfade ambience layers toward zone targets
+    this.windGain.gain.setTargetAtTime(Z.wind,ct,1.5);
+    this.rumbleGain.gain.setTargetAtTime(Z.rumble,ct,1.5);
+    // occasional ambient one-shots
+    const r=Math.random();
+    if(this.zone==="wild"){if(r<0.022){const b=2200+Math.random()*900;this.note(b*1.4,0.1,ct+0.05,"sine",0.018);this.note(b*1.1,0.12,ct+0.2,"sine",0.014);}}
+    else if(this.zone==="cave"){if(r<0.03){const f0=700+Math.random()*500;this.note(f0*0.35,0.09,ct+0.05,"sine",0.03);}}
+    else if(this.zone==="dungeon"){if(r<0.028){const f0=480+Math.random()*360;this.note(f0*0.3,0.5,ct+0.05,"sine",0.035);this.note(f0*0.15,0.35,ct+0.28,"sine",0.025);}}
+    // schedule beats ahead
+    while(this.nextBeat<ct+0.6){
+      const b=this.beatIdx;
+      if(b%4===0)this.pad(Z.chords[this.chordIdx],Z.beat*4.5,this.nextBeat),this.chordIdx=(this.chordIdx+1)%Z.chords.length;
+      if(Math.random()<0.62){this.melIdx+=pick([-2,-1,-1,1,1,2]);
+        let l=Z.scale.length;this.melIdx=Math.max(0,Math.min(l-1,this.melIdx));
+        this.note(Z.scale[this.melIdx],Z.beat*2.2,this.nextBeat,"sine",0.032);}
+      if(Z.pulse&&b%2===0)this.note(58,0.4,this.nextBeat,"sine",0.10);
+      if(Z.bells&&b%12===4){const ch=Z.chords[this.chordIdx];this.note(ch[0]*8,Z.beat*3,this.nextBeat,"triangle",0.012);}
+      this.nextBeat+=Z.beat;this.beatIdx++;}},
+};function zoneOf(x,y){
+  if(DEBUG)return "wild";
+  if(x>4300&&x<4970&&y>100&&y<900)return "dungeon";
+  if(x>3520&&x<4640&&y>50&&y<820)return "cave";
+  if(dist(x,y,700,600)<400)return "town";
+  return "wild";
+}
+
+// ---------- sprite factory (procedural pixel art) ----------
 
 // ---------- sprite factory (procedural pixel art) ----------
 function makeCanvas(w,h){const c=document.createElement("canvas");c.width=w;c.height=h;return c;}
@@ -535,10 +766,10 @@ function paintHumanoid(g,opt){
   else if(w==="crystalstaff"){px(g,17,3,2,15,"#3a2a4a");px(g,15,-1,5,5,"#7a3ad8");px(g,16,0,3,2,"#e8d0ff");px(g,17,5,1,3,"#bfe6ff");}
   else if(w==="emberstaff"){px(g,17,3,2,15,"#3a1a0a");px(g,14,0,6,5,"#ff6b2a");px(g,16,1,3,2,"#ffd94d");px(g,17,5,2,3,"#ff8c2a");}
   else if(w==="gravestaff"){px(g,17,2,2,16,"#1a1a1a");px(g,16,-1,4,4,"#e8e0cc");px(g,16,0,1,2,"#101010");px(g,19,0,1,2,"#101010");px(g,16,3,4,1,"#7a3ad8");}
-  else if(w==="bow"){px(g,16,5,3,10,"#6a4a22");px(g,19,5,1,10,"#d8cdb2");}
-  else if(w==="huntingbow"){px(g,16,4,3,12,"#6a4a22");px(g,19,4,1,12,"#d8cdb2");px(g,16,9,3,2,"#a08050");}
-  else if(w==="longbow"){px(g,16,2,3,16,"#5a3a1e");px(g,19,2,1,16,"#e8e0cc");px(g,16,9,3,2,"#c9a93c");}
-  else if(w==="warbow"){px(g,16,2,3,16,"#3a2a1a");px(g,20,2,1,16,"#e8e0cc");px(g,16,9,3,2,"#c0392b");px(g,19,2,1,16,"#ffd94d");}
+  else if(w==="bow"){px(g,16,5,1,10,"#d8cdb2");px(g,16,5,2,2,"#6a4a22");px(g,17,7,2,2,"#6a4a22");px(g,18,9,2,2,"#6a4a22");px(g,17,11,2,2,"#6a4a22");px(g,16,13,2,2,"#6a4a22");}
+  else if(w==="huntingbow"){px(g,16,4,1,12,"#d8cdb2");px(g,16,4,2,2,"#6a4a22");px(g,17,6,2,2,"#6a4a22");px(g,18,8,2,2,"#6a4a22");px(g,18,10,2,2,"#a08050");px(g,17,12,2,2,"#6a4a22");px(g,16,14,2,2,"#6a4a22");}
+  else if(w==="longbow"){px(g,16,2,1,16,"#e8e0cc");px(g,16,2,2,2,"#5a3a1e");px(g,17,4,2,2,"#5a3a1e");px(g,18,6,2,2,"#5a3a1e");px(g,17,8,3,4,"#c9a93c");px(g,18,12,2,2,"#5a3a1e");px(g,17,14,2,2,"#5a3a1e");px(g,16,16,2,2,"#5a3a1e");}
+  else if(w==="warbow"){px(g,16,2,1,16,"#e8e0cc");px(g,16,2,2,2,"#3a2a1a");px(g,17,4,2,2,"#3a2a1a");px(g,18,6,2,2,"#3a2a1a");px(g,17,8,3,4,"#c0392b");px(g,18,12,2,2,"#3a2a1a");px(g,17,14,2,2,"#3a2a1a");px(g,16,16,2,2,"#3a2a1a");px(g,19,6,1,2,"#ffd94d");px(g,19,12,1,2,"#ffd94d");}
   // helms / hoods / headwear
   if(opt.hood){const hc=opt.hood===true?shirt:opt.hood;px(g,4,0,10,2,hc);px(g,4,2,2,3,hc);px(g,12,2,2,3,hc);}
   if(opt.hoodGem){px(g,8,0,2,2,opt.hoodGem);px(g,8,1,1,1,"#fff");}
@@ -674,6 +905,126 @@ function paintBush(g){px(g,2,6,12,8,"#2d5a2d");px(g,0,10,16,6,"#356b35");px(g,4,
 function paintGrass(g){px(g,1,6,2,6,"#3f7a3f");px(g,5,3,2,8,"#4a8a4a");px(g,9,6,2,5,"#356b35");}
 function paintFlower(g,c){px(g,5,5,2,7,"#3f7a3f");px(g,3,1,6,5,c);px(g,4,2,2,2,"#ffec8a");}
 function paintFence(g){px(g,1,2,3,12,"#5a4028");px(g,12,2,3,12,"#5a4028");px(g,0,4,16,2,"#6a4f34");px(g,0,9,16,2,"#6a4f34");}
+function paintWolf(g){ // 26x14 howlmaw: mangy grey canine
+  const fur="#5a6068",dark="#42464c",lit="#7a8088";
+  px(g,3,3,14,7,fur);px(g,3,3,14,2,lit);                  // body
+  px(g,1,5,3,4,dark);px(g,0,4,2,6,dark);                  // bushy tail
+  px(g,4,10,3,4,dark);px(g,12,10,3,4,dark);               // legs
+  px(g,17,2,5,7,fur);px(g,21,4,4,4,dark);                 // head + snout
+  px(g,17,0,2,3,fur);px(g,20,0,2,3,fur);                  // ears
+  px(g,19,4,1,2,"#ffb");                                 // eye
+  px(g,24,5,1,1,"#111");                                 // nose
+  px(g,6,2,2,2,lit);px(g,11,2,2,2,lit);                   // ragged hackles
+}
+function paintHorror(g){ // 32x22 cave horror: crawling shadow
+  const b="#2a1e33",dark="#1c1424",glow="#b06ae8";
+  for(let i=0;i<4;i++){px(g,0+i*3,9,3,9,dark);px(g,26-i*3,9,3,9,dark);} // 8 legs
+  for(let i=0;i<3;i++){px(g,4+i*3,10,2,2,"#3a2a44");px(g,22-i*3,10,2,2,"#3a2a44");}
+  px(g,6,2,12,10,b);px(g,12,4,14,10,"#332238");           // abdomen + head
+  px(g,8,4,3,3,"#4a3560");px(g,13,6,3,3,"#4a3560");       // pale markings
+  px(g,18,5,3,3,glow);px(g,24,5,3,3,glow);                // glowing eyes
+  px(g,21,10,3,3,glow);px(g,14,10,2,2,glow);
+  px(g,16,14,2,4,dark);px(g,24,14,2,4,dark);              // fangs
+  px(g,6,2,12,2,"#43325a");
+}
+function paintBanner(g){ // 12x34 gnoll war banner
+  px(g,5,0,3,34,"#3a2f1e");
+  px(g,5,4,2,30,"#4a3e28");
+  px(g,2,4,10,8,"#7a1a1a");px(g,2,12,10,5,"#5a1212");     // rag banner
+  px(g,4,6,2,2,"#e8e0cc");px(g,8,6,2,2,"#e8e0cc");        // skull glyph
+  px(g,5,9,4,2,"#e8e0cc");px(g,6,11,2,2,"#e8e0cc");
+}
+function paintCinder(g){ // 22x24 ember wisp: living flame imp
+  px(g,8,2,5,6,"#ffd94d");px(g,14,4,3,4,"#ff8c2a");         // flame crown
+  px(g,6,6,10,10,"#ff6b2a");px(g,7,10,8,6,"#ff8c2a");       // flame body
+  px(g,9,9,3,3,"#ffd94d");px(g,13,12,2,3,"#ffd94d");        // inner fire
+  px(g,8,8,2,2,"#ffe9a0");px(g,13,8,2,2,"#ffe9a0");        // glowing eyes
+  px(g,10,15,1,2,"#b03a1a");px(g,14,17,1,2,"#b03a1a");     // smouldering hem
+}
+function paintKezath(g){ // 40x46: Kezath, the Sealed Flame — towering ember entity
+  // flame crown
+  px(g,10,2,5,6,"#ffd94d");px(g,17,0,4,8,"#ffe9a0");px(g,24,2,4,7,"#ffd94d");
+  px(g,13,4,3,4,"#ff8c2a");px(g,29,4,3,5,"#ff8c2a");
+  // horned skull
+  px(g,6,8,28,14,"#ff6b2a");px(g,5,11,3,6,"#b03a1a");px(g,32,11,3,6,"#b03a1a");
+  // glowing eyes
+  px(g,13,13,4,4,"#ffe9a0");px(g,22,13,4,4,"#ffe9a0");
+  px(g,14,14,2,2,"#000");px(g,23,14,2,2,"#000");
+  // mouth of teeth
+  px(g,15,21,11,3,"#5a1406");px(g,16,21,2,2,"#f0e8d0");px(g,24,21,2,2,"#f0e8d0");
+  // body
+  px(g,8,22,24,16,"#ff6b2a");px(g,10,26,20,11,"#ff8c2a");
+  px(g,14,30,12,14,"#ffd94d");  // core
+  px(g,16,14,8,18,"#ffe9a0");   // chest coreline
+  // arms
+  px(g,2,34,6,4,"#b03a1a");px(g,32,34,6,4,"#b03a1a");
+  // smouldering base
+  px(g,4,44,32,2,"#5a1406");px(g,10,42,4,2,"#7a2410");px(g,26,42,4,2,"#7a2410");
+}
+function paintBedroll(g){ // 24x12
+  px(g,2,3,20,7,"#6a4f34");px(g,2,3,7,7,"#7a5c40");       // roll
+  px(g,0,8,24,3,"#4a3a26");                              // blanket
+  px(g,3,9,18,1,"#5a4630");
+}
+function paintBones(g){ // 28x14 scattered bones
+  const bn="#d8d0bc",dk="#b8b0a0";
+  px(g,2,8,10,2,bn);px(g,1,7,2,4,bn);px(g,11,7,2,4,bn);   // rib arcs
+  px(g,14,6,8,2,dk);px(g,20,5,2,4,dk);
+  px(g,5,3,6,2,bn);px(g,22,10,5,2,bn);                    // femurs
+  px(g,9,9,4,3,bn);px(g,10,10,1,1,"#888");px(g,12,10,1,1,"#888"); // skull
+  px(g,18,2,3,2,dk);
+}
+function paintSkullPile(g){ // 18x16
+  const bn="#e0d8c0",dk="#b8b0a0";
+  px(g,2,10,6,4,bn);px(g,10,10,6,4,dk);px(g,6,5,7,5,bn);
+  px(g,3,11,1,2,"#222");px(g,5,11,1,2,"#222");
+  px(g,11,11,1,2,"#222");px(g,13,11,1,2,"#222");
+  px(g,8,6,1,2,"#222");px(g,10,6,1,2,"#222");
+  px(g,7,14,1,2,"#fff");px(g,13,14,1,2,"#fff");
+}
+function paintStake(g){ // 8x36 skull stake
+  px(g,2,6,4,30,"#3a2f1e");px(g,2,6,1,30,"#4a3e28");
+  px(g,0,0,8,7,"#e0d8c0");px(g,1,2,2,2,"#222");px(g,5,2,2,2,"#222");
+  px(g,2,6,4,1,"#fff");
+}
+function paintLavaCrack(g){ // 46x46 ground decal: glowing cracks
+  px(g,4,20,38,6,"#0c0a08");px(g,14,8,18,30,"#0c0a08");   // dark scorched ground
+  px(g,8,22,14,2,"#ff6b2a");px(g,22,23,16,2,"#ff8c2a");   // cracks glow
+  px(g,26,10,2,26,"#ff6b2a");px(g,16,26,6,2,"#ffd94d");
+  px(g,30,14,2,8,"#ffd94d");px(g,10,26,6,2,"#ff6b2a");
+  px(g,12,22,4,1,"#fff");px(g,28,30,4,1,"#fff");          // hot cores
+}
+function paintObsidian(g){ // 18x34 obsidian spire
+  px(g,4,10,10,24,"#1a1426");px(g,7,4,5,12,"#241c36");
+  px(g,5,12,2,18,"#3a2e52");px(g,8,2,3,4,"#b06ae8");      // edge glint + cap
+  px(g,7,30,5,4,"#12101c");
+}
+function paintColumn(g){ // 22x60 broken watchtower column
+  px(g,5,10,12,46,"#6a6a74");px(g,4,52,14,6,"#4a4a52");
+  px(g,3,8,16,3,"#8a8a95");                              // capital
+  px(g,7,12,2,42,"#585862");px(g,13,12,2,42,"#585862");   // flutes
+  px(g,9,24,4,3,"#5a5a64");
+  px(g,0,56,22,4,"#3a3a42");
+}
+function paintFallenColumn(g){ // 56x16
+  px(g,0,4,56,10,"#6a6a74");px(g,0,4,4,10,"#8a8a95");px(g,52,4,4,10,"#8a8a95");
+  px(g,10,6,3,8,"#585862");px(g,26,6,3,8,"#585862");px(g,42,6,3,8,"#585862");
+}
+function paintRubble(g){ // 30x16
+  px(g,2,10,12,6,"#5a5a64");px(g,12,8,10,8,"#6a6a74");
+  px(g,20,10,8,6,"#4a4a52");px(g,8,4,8,6,"#7a7a84");
+  px(g,14,12,6,4,"#3a3a42");
+}
+function paintStove(g){ // 16x20 forge stove (armorer)
+  px(g,2,6,12,14,"#4a4a52");px(g,2,6,12,3,"#6a6a74");
+  px(g,5,11,6,5,"#ff6b2a");px(g,6,12,4,3,"#ffd94d");
+  px(g,0,18,16,2,"#3a3a42");
+}
+function paintHideRack(g){ // 28x24 hunter's drying rack
+  px(g,2,2,3,22,"#4a3220");px(g,23,2,3,22,"#4a3220");
+  px(g,2,4,26,2,"#5a4028");
+  px(g,6,6,6,10,"#8a6a4e");px(g,14,6,6,12,"#6a4f34");     // hides
+}
 
 // ---------- ability / item icons (48x48, reused on canvas + DOM) ----------
 const ICONS={};
@@ -695,6 +1046,8 @@ function buildIcons(){
   icon("gnoll_ear",g=>{px(g,18,8,12,26,"#6a7a3a");px(g,21,14,6,12,"#8a9a4a");px(g,14,30,20,6,"#4a5528");});
   icon("spider_leg",g=>{px(g,10,20,28,4,"#3a2a3a");px(g,14,14,4,10,"#4a3550");px(g,28,14,4,10,"#4a3550");px(g,20,26,4,10,"#241a24");});
   icon("boss_fang",g=>{px(g,18,6,14,32,"#f0e8d0");px(g,22,30,6,12,"#d8cba8");px(g,20,10,4,20,"#fff");px(g,10,36,30,4,"#5a5a66");});
+  icon("ember_shard",g=>{px(g,20,6,10,32,"#ff6b2a");px(g,22,10,6,24,"#ffd94d");px(g,16,24,6,10,"#b03a1a");px(g,28,22,6,12,"#b03a1a");px(g,18,30,14,4,"#7a2410");});
+  icon("kezath_heart",g=>{px(g,18,8,14,30,"#ff3b1a");px(g,21,12,8,20,"#ffd94d");px(g,12,24,26,4,"#7a2410");px(g,14,10,4,18,"#ff8c2a");px(g,32,12,4,16,"#ff8c2a");});
   icon("coin",g=>{px(g,14,14,20,20,"#d8a93c");px(g,17,17,14,14,"#ffd94d");px(g,21,20,6,8,"#a8802f");});
   icon("buff_power",g=>{px(g,12,28,24,12,"#c0392b");px(g,18,8,6,22,"#e0ac72");px(g,26,8,6,22,"#e0ac72");px(g,16,14,16,6,"#d8a93c");});
   icon("debuff_slow",g=>{px(g,22,6,4,32,"#bfe6ff");px(g,14,14,20,4,"#8ac8f0");px(g,18,26,12,4,"#bfe6ff");});
@@ -729,14 +1082,14 @@ function buildIcons(){
   icon("hunter",g=>{ // drawn bow with nocked arrow
     px(g,0,0,48,48,"#243a18");
     px(g,0,0,48,2,"#5a8a3a");px(g,0,46,48,2,"#121f0a");px(g,0,0,2,48,"#5a8a3a");px(g,46,0,2,48,"#121f0a");
-    px(g,16,6,3,8,"#8a5a30");px(g,13,12,3,8,"#8a5a30");px(g,11,18,3,7,"#8a5a30"); // upper limb
-    px(g,16,7,1,6,"#c9a060");px(g,11,18,1,6,"#c9a060");                // limb highlights
-    px(g,11,24,3,6,"#5a3a1e");px(g,11,24,1,6,"#8a5a30");              // grip
-    px(g,11,29,3,7,"#8a5a30");px(g,13,34,3,8,"#8a5a30");px(g,16,39,3,6,"#8a5a30"); // lower limb
-    px(g,17,8,1,30,"#e8e0cc");                                       // bowstring
-    px(g,18,23,20,2,"#d8cdb2");                                      // arrow shaft
-    px(g,16,21,5,2,"#c0392b");px(g,16,25,5,2,"#c0392b");              // fletching
-    px(g,38,21,2,6,"#9aa3b2");px(g,40,22,2,4,"#dfe6f2");px(g,42,23,2,2,"#ffffff"); // arrowhead
+    px(g,11,6,3,8,"#8a5a30");px(g,14,12,3,8,"#8a5a30");px(g,16,18,3,7,"#8a5a30"); // upper limb curving toward the arrowhead
+    px(g,11,7,1,6,"#c9a060");px(g,16,18,1,6,"#c9a060");                // limb highlights
+    px(g,16,24,3,6,"#5a3a1e");px(g,16,24,1,6,"#8a5a30");              // grip
+    px(g,16,29,3,7,"#8a5a30");px(g,14,34,3,8,"#8a5a30");px(g,11,39,3,6,"#8a5a30"); // lower limb
+    px(g,11,8,1,30,"#e8e0cc");                                       // bowstring behind the limbs
+    px(g,14,23,25,2,"#d8cdb2");                                      // arrow shaft
+    px(g,11,21,4,2,"#c0392b");px(g,11,25,4,2,"#c0392b");              // fletching at the string
+    px(g,39,21,2,6,"#9aa3b2");px(g,41,22,2,4,"#dfe6f2");px(g,43,23,2,2,"#ffffff"); // arrowhead pointing forward
   });
   icon("skull",g=>{px(g,14,10,20,18,"#e8e0cc");px(g,18,16,5,6,"#111");px(g,27,16,5,6,"#111");px(g,22,24,4,4,"#111");px(g,16,28,16,10,"#d8d0b8");px(g,18,30,2,8,"#111");px(g,24,30,2,8,"#111");px(g,30,30,2,8,"#111");});
   // gear: class-locked weapons / armor / helms (warrior=plate, mage=cloth, hunter=leather)
@@ -785,37 +1138,50 @@ function buildIcons(){
     icon("gg_"+ck,g=>{px(g,8,10,13,30,c);px(g,27,10,13,30,c);px(g,8,10,13,6,dd);px(g,27,10,13,6,dd);px(g,10,20,9,3,dd);px(g,29,20,9,3,dd);px(g,10,27,9,3,dd);px(g,29,27,9,3,dd);});
     icon("gt_"+ck,g=>{px(g,6,6,36,36,dd);px(g,14,14,20,20,c);px(g,18,18,12,12,"#fff");px(g,21,21,6,6,c);px(g,6,6,36,4,"#c9a93c");px(g,6,38,36,4,"#c9a93c");});
   }
+  // v0.2.0: new ability icons, junk, debuffs
+  icon("sunder",g=>{px(g,12,8,24,30,"#6a5a40");px(g,16,12,16,22,"#4a3e28");px(g,20,6,4,14,"#ffd94d");px(g,28,6,4,14,"#ffd94d");px(g,16,16,3,18,"#ff6b2a");px(g,29,16,3,18,"#ff6b2a");px(g,24,20,3,14,"#ff8c2a");px(g,6,38,36,4,"#c0392b");}); // cracked shield + claws
+  icon("deepfreeze",g=>{px(g,16,6,16,24,"#bfe6ff");px(g,20,10,8,16,"#dff2ff");px(g,8,16,32,8,"#8ac8f0");px(g,24,2,2,44,"#fff");px(g,12,32,24,6,"#4aa3ff");px(g,20,36,8,6,"#fff");}); // blinding ice burst
+  icon("serrated",g=>{px(g,4,20,36,5,"#d8cdb2");px(g,38,17,6,11,"#8a8f9a");px(g,8,17,5,11,"#c0392b");px(g,12,24,4,6,"#ff5b4a");px(g,24,24,4,8,"#ff5b4a");px(g,30,24,3,5,"#c0392b");}); // barbed arrow dripping blood
+  icon("soulharvest",g=>{px(g,8,8,32,32,"#2a1a3a");px(g,14,14,20,20,"#7a3ad8");px(g,20,20,8,8,"#1d1026");px(g,14,30,20,4,"#a06ae8");px(g,10,10,6,6,"#a06ae8");px(g,32,10,6,6,"#a06ae8");px(g,24,24,2,2,"#fff");}); // purple soul vortex
+  icon("wolf_fang",g=>{px(g,14,10,8,26,"#e8e2cf");px(g,20,20,6,14,"#d8d2bd");px(g,12,32,18,6,"#5a6068");});
+  icon("horror_chitin",g=>{px(g,8,18,32,10,"#2a1e33");px(g,14,12,20,8,"#4a3560");px(g,20,8,8,8,"#b06ae8");px(g,16,24,8,4,"#7a5a9f");});
+  icon("debuff_bleed",g=>{px(g,20,6,8,14,"#ff5b4a");px(g,16,18,16,16,"#c0392b");px(g,20,22,8,8,"#ff8c7a");px(g,26,30,6,10,"#c0392b");});
 }
 function iconURL(id){return ICONS[id]?ICONS[id].toDataURL():"";}
 
 // ---------- game data ----------
-const WORLD_W=3200,WORLD_H=2400,TILE=32;
-const XP_NEED=[0,60,150,260,400,580,99999]; // xp to go from level i to i+1 (index = current level)
+const WORLD_W=5200,WORLD_H=4000,TILE=32;
+const MAX_LEVEL=10;
+const XP_NEED=[0,70,180,310,460,640,860,1100,1380,1700,99999]; // XP to go from level i to i+1 // xp to go from level i to i+1 (index = current level)
 
 const CLASSES={
   warrior:{name:"Warrior",role:"Melee • Tank",desc:"A hardened fighter who wades into the thick of battle, shrugging off blows that would fell lesser heroes.",hp:120,mana:40,ap:12,armor:8,speed:230,ranged:false,range:78,atkSpeed:1.0,color:"#e05a4a",
-    growth:{hp:20,mana:6,ap:3,armor:1.2},abilities:["charge","whirlwind","shieldslam"]},
+    growth:{hp:20,mana:6,ap:3,armor:1.2},abilities:["charge","whirlwind","shieldslam","sunder"]},
   mage:{name:"Mage",role:"Ranged • Control",desc:"A master of frost magic. Fragile in close quarters, but devastating at range with chilling bolts and ice storms.",hp:80,mana:100,ap:14,armor:2,speed:230,ranged:true,range:340,atkSpeed:1.35,color:"#4aa3ff",
-    growth:{hp:13,mana:12,ap:4,armor:0.4},abilities:["frostbolt","blink","blizzard"]},
+    growth:{hp:13,mana:12,ap:4,armor:0.4},abilities:["frostbolt","blink","blizzard","deepfreeze"]},
   hunter:{name:"Hunter",role:"Ranged • Skirmisher",desc:"A swift tracker with unmatched aim. Rains arrows from afar and lays cunning frost traps for pursuers.",hp:95,mana:60,ap:11,armor:4,speed:242,ranged:true,range:380,atkSpeed:1.1,color:"#7bc74d",
-    growth:{hp:16,mana:8,ap:3.5,armor:0.8},abilities:["multishot","frosttrap","aimedshot"]},
+    growth:{hp:16,mana:8,ap:3.5,armor:0.8},abilities:["multishot","frosttrap","aimedshot","serrated"]},
   necromancer:{name:"Necromancer",role:"Ranged • Dark Caster",desc:"A student of death itself. Raises skeletal servants from the grave, drains the life of foes, and spreads festering plagues across the battlefield.",hp:85,mana:95,ap:13,armor:3,speed:230,ranged:true,range:320,atkSpeed:1.3,color:"#a06ae8",
-    growth:{hp:14,mana:11,ap:4,armor:0.5},abilities:["raise_skeleton","life_drain","plague_nova"]},
+    growth:{hp:14,mana:11,ap:4,armor:0.5},abilities:["raise_skeleton","life_drain","plague_nova","soulharvest"]},
 };
 
 const ABILITIES={
   charge:   {name:"Charge",   unlock:1,cd:12,cost:10,range:330,tip:"Rush at your target, dealing 150% weapon damage and stunning for 1.5s."},
   whirlwind:{name:"Whirlwind",unlock:3,cd:8, cost:15,tip:"Spin, striking all nearby enemies for 120% weapon damage."},
   shieldslam:{name:"Shield Slam",unlock:5,cd:10,cost:12,tip:"A brutal blow for 220% weapon damage. Slows the target's attacks."},
+  sunder:   {name:"Sunder Armor",unlock:7,cd:18,cost:20,range:120,tip:"Sunder your target's armor for 180% weapon damage. They take +20% more damage for 6s."},
   frostbolt:{name:"Frostbolt",unlock:1,cd:3, cost:8, range:360,tip:"Hurl a bolt of frost for 160% damage, slowing the target 40% for 3s."},
   blink:    {name:"Blink",    unlock:3,cd:15,cost:20,tip:"Teleport forward a short distance, escaping danger."},
   blizzard: {name:"Ice Storm", unlock:5,cd:14,cost:30,range:360,tip:"Call down an ice storm on your target's area: 3 waves of 110% damage."},
+  deepfreeze:{name:"Deep Freeze",unlock:7,cd:16,cost:24,range:360,tip:"Flash-freeze your target's area: 150% damage to all enemies there, rooting them for 2.5s."},
   multishot:{name:"Multi-Shot",unlock:1,cd:6,cost:10,range:400,tip:"Fire arrows at up to 3 enemies for 130% weapon damage."},
   frosttrap:{name:"Frost Trap",unlock:3,cd:14,cost:12,tip:"Lay a trap at your feet. The next enemy near it takes 150% damage and is rooted for 3s."},
   aimedshot:{name:"Aimed Shot",unlock:5,cd:10,cost:15,range:430,tip:"A perfectly aimed shot for 250% weapon damage."},
+  serrated: {name:"Serrated Shot",unlock:7,cd:8,cost:14,range:400,tip:"Fire a barbed arrow for 180% weapon damage and a bleeding wound that deals 35%/s for 8s."},
   raise_skeleton:{name:"Raise Skeleton",unlock:1,cd:20,cost:25,tip:"Raise a skeletal servant from the fallen that fights for you for 45s."},
   life_drain:{name:"Life Drain",unlock:3,cd:6,cost:12,range:340,tip:"Drain your target for 200% damage, healing yourself for 50% dealt."},
   plague_nova:{name:"Plague Nova",unlock:5,cd:12,cost:22,tip:"Erupt with pestilence: 130% damage to nearby enemies plus a lingering plague for 8s."},
+  soulharvest:{name:"Soul Harvest",unlock:7,cd:20,cost:26,tip:"Reap the life of all nearby enemies for 170% damage, healing yourself for 20% of the damage dealt."},
   potion:   {name:"Health Potion",unlock:1,cd:15,cost:0,tip:"Drink a health potion, restoring 55% of max health."},
 };
 
@@ -834,7 +1200,11 @@ const TALENTS={
     {ab:"shieldslam",talents:[
       {id:"w_ss_dmg",name:"Brutality",tip:"+35% Shield Slam damage per rank."},
       {id:"w_ss_vuln",name:"Expose Weakness",tip:"Target takes +10% damage per rank for 6s."},
-      {id:"w_ss_cd",name:"Shield Mastery",tip:"−2s Shield Slam cooldown per rank.",cdR:-2}]}],
+      {id:"w_ss_cd",name:"Shield Mastery",tip:"−2s Shield Slam cooldown per rank.",cdR:-2}]},
+    {ab:"sunder",talents:[
+      {id:"w_su_dmg",name:"Armorbreaker",tip:"+35% Sunder Armor damage per rank."},
+      {id:"w_su_vuln",name:"Exposed Plate",tip:"+10% more damage taken by the Sundered target per rank."},
+      {id:"w_su_cd",name:"Opportunist",tip:"−2s Sunder Armor cooldown per rank.",cdR:-2}]}],
   mage:[
     {ab:"frostbolt",talents:[
       {id:"m_fb_dmg",name:"Empowered Frost",tip:"+35% Frostbolt damage per rank."},
@@ -847,7 +1217,11 @@ const TALENTS={
     {ab:"blizzard",talents:[
       {id:"m_bz_dmg",name:"Raging Storm",tip:"+30% Ice Storm damage per wave, per rank."},
       {id:"m_bz_rad",name:"Sweeping Cold",tip:"+25 Ice Storm radius per rank."},
-      {id:"m_bz_root",name:"Deep Freeze",tip:"Each wave has a 15% chance per rank to briefly root enemies."}]}],
+      {id:"m_bz_root",name:"Deep Freeze",tip:"Each wave has a 15% chance per rank to briefly root enemies."}]},
+    {ab:"deepfreeze",talents:[
+      {id:"m_df_dmg",name:"Absolute Zero",tip:"+30% Deep Freeze damage per rank."},
+      {id:"m_df_rad",name:"Frostbite",tip:"+25 Deep Freeze radius per rank."},
+      {id:"m_df_root",name:"Glacial Grasp",tip:"Deep Freeze root lasts +0.8s per rank."}]}],
   hunter:[
     {ab:"multishot",talents:[
       {id:"h_ms_vol",name:"Volley",tip:"+1 Multi-Shot target per rank."},
@@ -860,7 +1234,11 @@ const TALENTS={
     {ab:"aimedshot",talents:[
       {id:"h_as_dmg",name:"Deadeye",tip:"+40% Aimed Shot damage per rank."},
       {id:"h_as_cd",name:"Focus",tip:"−2s Aimed Shot cooldown per rank.",cdR:-2},
-      {id:"h_as_pierce",name:"Piercing Shot",tip:"Aimed Shot pierces through, striking enemies behind the target for 75% damage."}]}],
+      {id:"h_as_pierce",name:"Piercing Shot",tip:"Aimed Shot pierces through, striking enemies behind the target for 75% damage."}]},
+    {ab:"serrated",talents:[
+      {id:"h_sr_dmg",name:"Barbed Heads",tip:"+30% Serrated Shot damage per rank."},
+      {id:"h_sr_rot",name:"Hemorrhage",tip:"Serrated Shot bleed deals +50% damage and lasts +2s per rank."},
+      {id:"h_sr_cd",name:"Quarrel",tip:"−1s Serrated Shot cooldown per rank.",cdR:-1}]}],
   necromancer:[
     {ab:"raise_skeleton",talents:[
       {id:"n_sk_dmg",name:"Unholy Strength",tip:"+30% minion damage per rank."},
@@ -873,7 +1251,11 @@ const TALENTS={
     {ab:"plague_nova",talents:[
       {id:"n_pl_dmg",name:"Raging Plague",tip:"+35% Plague Nova and plague damage per rank."},
       {id:"n_pl_rad",name:"Engulfing Doom",tip:"+30 Plague Nova radius per rank."},
-      {id:"n_pl_spread",name:"Wretched Spread",tip:"Killing a plagued enemy spreads the plague to nearby enemies (+40 spread radius per rank)."}]}],
+      {id:"n_pl_spread",name:"Wretched Spread",tip:"Killing a plagued enemy spreads the plague to nearby enemies (+40 spread radius per rank)."}]},
+    {ab:"soulharvest",talents:[
+      {id:"n_sh_dmg",name:"Grim Reapers",tip:"+35% Soul Harvest damage per rank."},
+      {id:"n_sh_rad",name:"Wide Grasp",tip:"+30 Soul Harvest radius per rank."},
+      {id:"n_sh_heal",name:"Grim Feast",tip:"Soul Harvest heals +10% more of the damage dealt per rank."}]}],
 };
 function TR(id){return (G&&G.talents[id])||0;}          // talent rank
 function totalTalentSpent(){let n=0;if(G)for(const k in G.talents)n+=G.talents[k];return n;}
@@ -922,9 +1304,9 @@ const GEAR_LEGACY={
       {id:"h_h1",name:"Alpha's Hunter Hood",tier:1,stats:{armor:1,ap:3},icon:"gh_hunter",sell:50,look:{hood:"#4a6a34",feather:"#7bc74d"}},
       {id:"h_h2",name:"Stalker's Cowl",tier:2,stats:{armor:2,ap:5,hp:20},icon:"gh_hunter",sell:180,look:{hood:"#5a7a40",feather:"#ffd94d",hoodGem:"#7bc74d"}}]},
 };
-// Full loot pool: 112 generated + 28 boar + 3 alpha trophy + 21 legacy + 24 class-quest reward pieces (188 total).
+// Full loot pool: 112 generated + 28 boar + 28 wolf + 3 alpha trophy + 21 legacy + 24 class-quest reward pieces (216 total).
 // Every piece carries a theme tag so each enemy has its own flavor-right loot pool:
-// boar -> Forest Boar, gnoll -> Gnoll Raider, alpha -> Gnoll Alpha only,
+// boar -> Forest Boar, wolf -> Howlmaw Wolf, gnoll -> Gnoll Raider, alpha -> Gnoll Alpha only,
 // recluse -> Cave Recluse, ember/legend -> Cragmaw, quest -> class quest rewards.
 const SLOTS=["weapon","head","chest","legs","gloves","boots","trinket"];
 const SLOT_LABEL={weapon:"Weapon",head:"Head",chest:"Chest",legs:"Legs",gloves:"Hands",boots:"Feet",trinket:"Trinket"};
@@ -1046,6 +1428,22 @@ function themeForItem(d){
     if(slot==="chest")d.type=ARMOR_TYPE[clsKey];
     gearById[id]=d;GEAR[clsKey].push(d);
   }
+  // 2bd) wolf-themed tier-1 gear: the Howlmaw Wolf's own loot pool (4 classes x 7 slots)
+  const WOLF_NAMES={
+    warrior:{weapon:"Wolfrend Greatblade",head:"Wolfskull Helm",chest:"Howlmaw Plate",legs:"Howlmaw Greaves",gloves:"Howlmaw Grips",boots:"Howlmaw Stompers",trinket:"Wolfpack Trophy"},
+    mage:{weapon:"Wolfsbane Rod",head:"Howlmaw Cowl",chest:"Howlmaw Vestments",legs:"Howlmaw Pants",gloves:"Howlmaw Gloves",boots:"Howlmaw Slippers",trinket:"Moonhowl Fetish"},
+    hunter:{weapon:"Wolfbone Longbow",head:"Howlmaw Hood",chest:"Wolfhide Leathers",legs:"Wolfhide Leggings",gloves:"Wolfhide Gloves",boots:"Wolfhide Boots",trinket:"Alpha Wolf's Trophy"},
+    necromancer:{weapon:"Wolfbone Ritual Rod",head:"Wolfskull Cap",chest:"Howlmaw Shroud",legs:"Howlmaw Leggings",gloves:"Howlmaw Grips",boots:"Howlmaw Wraps",trinket:"Wolf Spirit Fetish"},
+  };
+  for(const clsKey of Object.keys(GEAR))for(const slot of SLOTS){
+    const id=PFX[clsKey]+SC[slot]+"f";
+    if(gearById[id])continue;
+    const d={id,name:WOLF_NAMES[clsKey][slot],slot,tier:1,theme:"wolf",cls:clsKey,
+      stats:Object.assign({},TIER_STATS[slot][0]),icon:IP[slot]+"_"+clsKey,
+      sell:SELL[1],price:slot==="weapon"?PRC_W[1]:PRC_A[1],look:lookFor(clsKey,slot,1)};
+    if(slot==="chest")d.type=ARMOR_TYPE[clsKey];
+    gearById[id]=d;GEAR[clsKey].push(d);
+  }
   // 2c) Alpha trophy trinkets: the Gnoll Alpha's epic trophy drop for every class (theme "alpha")
   const ALPHA_TRINKETS={warrior:"Alpha's Fang Trophy",mage:"Alpha's Hex Fang",necromancer:"Alpha's Soul Fang"};
   for(const clsKey of Object.keys(ALPHA_TRINKETS)){
@@ -1074,6 +1472,20 @@ function themeForItem(d){
   }
 })();
 function gearPool(clsKey,slots,tiers,themes){return GEAR[clsKey].filter(d=>slots.includes(d.slot)&&tiers.includes(d.tier)&&!d.quest&&(!themes||themes.includes(d.theme)));}
+// ---- Emberdeep chest uniques: one legendary per class, found only in Kezath's Cache ----
+(function addDungeonUniques(){
+  const U=[
+    {id:"kez_w",cls:"warrior",name:"Kezath's Blazebrand",slot:"weapon",tier:4,theme:"legend",
+     stats:{ap:24,hp:80,mana:25,armor:2},icon:"gw_warrior",sell:1200,look:{weapon:"doomblade"}},
+    {id:"kez_m",cls:"mage",name:"Kezath's Pyre Core",slot:"weapon",tier:4,theme:"legend",
+     stats:{ap:22,hp:80,mana:40},icon:"gw_mage",sell:1200,look:{weapon:"emberstaff"}},
+    {id:"kez_h",cls:"hunter",name:"Kezath's Emberlord Bow",slot:"weapon",tier:4,theme:"legend",
+     stats:{ap:23,hp:90,mana:20},icon:"gw_hunter",sell:1200,look:{weapon:"warbow"}},
+    {id:"kez_n",cls:"necromancer",name:"Kezath's Sealed Pyre",slot:"weapon",tier:4,theme:"legend",
+     stats:{ap:23,hp:80,mana:40},icon:"gw_necromancer",sell:1200,look:{weapon:"gravestaff"}},
+  ];
+  for(const d of U){d.quest=true;d.price=99999;gearById[d.id]=d;GEAR[d.cls].push(d);}
+})();
 const STAT_LABEL={ap:"Attack Power",armor:"Armor",hp:"Health",mana:"Mana"};
 function gearStatsText(d){return Object.keys(d.stats).map(k=>"+"+d.stats[k]+" "+STAT_LABEL[k]).join(", ");}
 // player appearance data
@@ -1147,24 +1559,36 @@ function rebuildPlayerSprite(){
 const MOB_TYPES={
   boar:       {name:"Forest Boar", lvl:1,hp:34, dmg:[3,6],  xp:14, gold:[1,4],  aggro:180,leash:480,speed:150,atkSpeed:1.6,range:50, sprite:"boar", respawn:22,loot:"boar_tusk", lootChance:0.6,
     gear:[{pool:["weapon","head","chest","legs","boots","gloves"],tiers:[1],th:["boar"],ch:0.2},{pool:["trinket"],tiers:[1],th:["boar"],ch:0.05}]},
+  wolf:       {name:"Howlmaw Wolf",lvl:2,hp:58, dmg:[5,9],  xp:22, gold:[2,6],  aggro:200,leash:540,speed:196,atkSpeed:1.7,range:52, sprite:"wolf", respawn:32,loot:"wolf_fang",lootChance:0.6,howler:true,
+    gear:[{pool:["weapon","head","chest","legs","boots","gloves"],tiers:[1],th:["wolf"],ch:0.2},{pool:["trinket"],tiers:[1],th:["wolf"],ch:0.05}]},
   gnoll:      {name:"Gnoll Raider",lvl:3,hp:88, dmg:[7,11], xp:30, gold:[4,9],  aggro:210,leash:520,speed:172,atkSpeed:1.4,range:56, sprite:"gnoll",respawn:38,loot:"gnoll_ear",lootChance:0.55,
     gear:[{pool:["weapon","head","chest","legs","boots","gloves"],tiers:[1],th:["gnoll"],ch:0.22},{pool:["trinket"],tiers:[1],th:["gnoll"],ch:0.05}]},
   gnoll_alpha:{name:"Gnoll Alpha", lvl:4,hp:280,dmg:[10,15],xp:100,gold:[25,45],aggro:230,leash:640,speed:182,atkSpeed:1.3,range:60, sprite:"gnoll_alpha",respawn:75,loot:"gnoll_ear",lootChance:1.0,questMob:true,
     gear:[{pool:["head","weapon"],tiers:[1,2],th:["gnoll","alpha"],ch:0.55},{pool:["chest","legs","trinket"],tiers:[1,2],th:["gnoll","alpha"],ch:0.35},{pool:["trinket"],tiers:[3],th:["alpha"],ch:0.15}]},
   spider:     {name:"Cave Recluse",lvl:5,hp:135,dmg:[9,14], xp:44, gold:[5,11], aggro:220,leash:480,speed:205,atkSpeed:1.2,range:52, sprite:"spider",respawn:45,loot:"spider_leg",lootChance:0.5,
     gear:[{pool:["chest","legs","boots","gloves","head"],tiers:[2],th:["recluse"],ch:0.24},{pool:["weapon","trinket"],tiers:[2],th:["recluse"],ch:0.12}]},
-  boss:       {name:"Cragmaw",     lvl:6,hp:1750,dmg:[16,24],xp:380,gold:[200,300],aggro:340,leash:760,speed:155,atkSpeed:1.8,range:88, sprite:"boss",respawn:100,loot:"boss_fang",lootChance:1.0,elite:true,questMob:true,
+  horror:     {name:"Cave Horror", lvl:7,hp:340,dmg:[15,24],xp:130,gold:[12,26],aggro:240,leash:560,speed:172,atkSpeed:1.7,range:66, sprite:"horror",respawn:55,loot:"horror_chitin",lootChance:0.55,
+    gear:[{pool:["chest","legs","boots","gloves","head"],tiers:[2,3],th:["recluse","ember"],ch:0.22},{pool:["weapon","trinket"],tiers:[2,3],th:["recluse","ember"],ch:0.12}]},
+  boss:       {name:"Cragmaw",     lvl:8,hp:4200,dmg:[24,34],xp:900,gold:[260,400],aggro:340,leash:760,speed:160,atkSpeed:1.8,range:88, sprite:"boss",respawn:100,loot:"boss_fang",lootChance:1.0,elite:true,questMob:true,slam:[45,65],
     gear:[{pool:["weapon"],tiers:[3,4],th:["ember","legend"],ch:0.7},{pool:["head","chest","trinket","legs","gloves","boots"],tiers:[3,4],th:["ember","legend"],ch:0.6},{pool:["trinket"],tiers:[4],th:["legend"],ch:0.3}]},
+  cinder:     {name:"Emberdeep Cinder",lvl:9,hp:560,dmg:[20,30],xp:200,gold:[18,36],aggro:280,leash:640,speed:185,atkSpeed:1.6,range:60, sprite:"cinder",respawn:70,loot:"ember_shard",lootChance:0.55,
+    gear:[{pool:["chest","legs","boots","gloves","head"],tiers:[2,3],th:["recluse","ember"],ch:0.24},{pool:["weapon","trinket"],tiers:[2,3],th:["recluse","ember"],ch:0.12}]},
+  kezath:     {name:"Kezath, the Sealed Flame",lvl:10,hp:6400,dmg:[30,44],xp:1400,gold:[400,600],aggro:360,leash:620,speed:150,atkSpeed:1.9,range:96, sprite:"kezath",respawn:110,loot:"kezath_heart",lootChance:1.0,elite:true,questMob:true,slam:[45,65],
+    gear:[]},
 };
 
 const ITEMS={
-  hpotion:  {name:"Health Potion",price:25, sell:6,  use:"hp",  desc:"Restores 55% of max health. (Hotbar slot 4)"},
+  hpotion:  {name:"Health Potion",price:25, sell:6,  use:"hp",  desc:"Restores 55% of max health. (Hotbar slot 5)"},
   mpotion:  {name:"Mana Potion",  price:20, sell:5,  use:"mp",  desc:"Restores 55% of max mana."},
   elixir:   {name:"Elixir of Power",price:75,sell:18, use:"elixir",desc:"+8 attack power for 5 minutes."},
   boar_tusk:{name:"Boar Tusk",    price:0,  sell:8,  junk:true,desc:"A curved tusk. Traders pay coin for these."},
   gnoll_ear:{name:"Gnoll Ear",    price:0,  sell:12, junk:true,desc:"Proof of a gnoll slain. Grim, but valuable."},
   spider_leg:{name:"Spider Leg",  price:0,  sell:10, junk:true,desc:"Still twitching. Alchemists buy these."},
   boss_fang:{name:"Cragmaw's Fang",price:0, sell:150,junk:true,desc:"A trophy from the cave beast itself."},
+  ember_shard:{name:"Ember Shard",price:0, sell:32,junk:true,desc:"A living coal wrenched from the Emberdeep."},
+  kezath_heart:{name:"Sealed Flame's Heart",price:0, sell:320,junk:true,desc:"A smouldering heart-core wrenched from Kezath."},
+  wolf_fang:{name:"Wolf Fang",    price:0,  sell:14, junk:true,desc:"A sharp howlmaw fang. Trophies fetch good coin."},
+  horror_chitin:{name:"Horror Chitin",price:0,sell:35, junk:true,desc:"Thick, still-pulsing chitin plate. Very valuable."},
 };
 const BAG_SIZE=18;
 
@@ -1184,11 +1608,31 @@ const QUESTS=[
    active:"The gnoll camp lies east of town. Their alpha won't go down easy. Take some friends... or at least some potions.",
    done:"The Alpha is dead? Ha! The pack will scatter. Emberhold owes you a debt.",
    reward:{xp:140,gold:160},req:"boars"},
-  {id:"boss",name:"The Cave Beast",giver:"wren",type:"kill",target:"boss",need:1,lvl:5,
+  {id:"boss",name:"The Cave Beast",giver:"wren",type:"kill",target:"boss",need:1,lvl:7,
    offer:"A beast called Cragmaw nests in the cave north-east, and its spawn creep closer every night. End it, hero — for all our sakes.",
    active:"The cave mouth yawns north-east of town. Cragmaw waits within. Bring potions. Bring courage.",
    done:"Cragmaw is slain! You're a legend of Emberhold now. This town will sing of you for years.",
-   reward:{xp:300,gold:320},req:"shrooms"},
+   reward:{xp:560,gold:520},req:"shrooms"},
+  {id:"emberdeep",name:"The Sealed Flame",giver:"marshal",type:"kill",target:"kezath",need:1,lvl:9,
+   offer:"The Ruined Spire south of town is older than Emberhold. Beneath it, bound in a stone crypt we call the Emberdeep, burns Kezath — the Sealed Flame. Our best delvers never came back. If you aim to end this, go well-armed and well-potioned.",
+   active:"The Emberdeep lies beneath the Ruined Spire, south of town. Slay Kezath, the Sealed Flame.",
+   done:"It is done? Kezath — extinguished. The whole town will drink to your name tonight. Take this, our finest reward.",
+   reward:{xp:1200,gold:900},req:"boss"},
+  {id:"wolfhunt",name:"The Howlmaw Pack",giver:"marshal",type:"kill",target:"wolf",need:6,lvl:2,
+   offer:"Wolves have taken the den south of the graveyard — the howlmaws, lean and mean. Six of them need culling before they take our livestock. Or worse, our people.",
+   active:"Six howlmaw wolves lair south of the graveyard. Put them down.",
+   done:"The wolves will think twice before creeping this close again. Well done.",
+   reward:{xp:95,gold:105,items:["hpotion","hpotion","mpotion"]},req:"boars"},
+  {id:"thinpacks",name:"Thinning the Packs",giver:"marshal",type:"kill",target:"gnoll",need:10,lvl:3,
+   offer:"The gnoll raiders at the camp east press our patrols daily. Ten of them need to not come home. Do that for me and the roads stay open.",
+   active:"The gnoll camp lies east of town. Slay ten raiders.",
+   done:"Ten gnolls fewer. Our patrols report the roads quiet for once. You've earned these coins.",
+   reward:{xp:170,gold:190},req:"wolfhunt"},
+  {id:"deepbrood",name:"The Deep Brood",giver:"wren",type:"kill",target:"horror",need:6,lvl:7,
+   offer:"The cave's depths breed something worse than recluses now — horrors, chitinous and cruel, nesting where Cragmaw once ruled. Six of them, hero. Do what you did before.",
+   active:"Cave horrors lurk in the depths of the cave north-east. Destroy six.",
+   done:"The cave breathes easier with the brood broken. You're a legend of Emberhold twice over.",
+   reward:{xp:460,gold:400},req:"boss"},
   // ---- class quest chains: one trial per level, each with class gear reward ----
   {id:"w1",name:"First Blood",giver:"vet_korr",cls:"warrior",type:"kill",target:"boar",need:5,lvl:1,
    offer:"Strength is proven in the thick of it, not on a parade field. Take this practice edge — no, take it — and go bloody five of those farm-stealing boars south of town. Earn the real steel.",
@@ -1215,11 +1659,11 @@ const QUESTS=[
    active:"Eight more recluses. Leave none squirming.",
    done:"They flee from your name now. Hold these gauntlets — grip the future with them.",
    reward:{xp:200,gold:200,gear:"cq_w5"},req:"w4"},
-  {id:"w6",name:"Worldbreaker",giver:"vet_korr",cls:"warrior",type:"kill",target:"boss",need:1,lvl:6,
+  {id:"w6",name:"Worldbreaker",giver:"vet_korr",cls:"warrior",type:"kill",target:"boss",need:1,lvl:8,
    offer:"The beast Cragmaw. It shattered my mentor's shield wall. It will shatter nothing more — you will end it. Bring me its fang as proof, and take the blade it can fear. Take. It.",
    active:"Cragmaw nests deep in the cave north-east. End the beast. Restore the wall.",
    done:"The Worldbreaker is broken. Emberhold stands because you stand. Legendary — that's the only word left.",
-   reward:{xp:280,gold:280,gear:"cq_w6"},req:"w5"},
+   reward:{xp:380,gold:380,gear:"cq_w6"},req:"w5"},
   {id:"m1",name:"Sparks in the Dark",giver:"arch_lyra",cls:"mage",type:"kill",target:"boar",need:5,lvl:1,
    offer:"Every spell is an argument with reality. Let us begin with a small one: reduce five boars south of town to ash, and I will grant you a focus worthy of your studies.",
    active:"Five boars south of Emberhold. Practice your aim — words fail, spellfire does not.",
@@ -1245,11 +1689,11 @@ const QUESTS=[
    active:"Eight recluses. Storm them out of the dark.",
    done:"The deep shies at your name now. Keep studying. Keep conquering.",
    reward:{xp:200,gold:200,gear:"cq_m5"},req:"m4"},
-  {id:"m6",name:"Heart of the Mountain",giver:"arch_lyra",cls:"mage",type:"kill",target:"boss",need:1,lvl:6,
+  {id:"m6",name:"Heart of the Mountain",giver:"arch_lyra",cls:"mage",type:"kill",target:"boss",need:1,lvl:8,
    offer:"Cragmaw carries something ancient in its core — a vein of fire locked in stone. End the beast, crack the vein, and claim the Emberheart as your staff. Prove magic is the oldest power.",
    active:"Cragmaw waits deep in the cave north-east. Claim the Heart of the Mountain.",
    done:"The vein is yours. The staff is yours. And none of it was an accident — that was you.",
-   reward:{xp:280,gold:280,gear:"cq_m6"},req:"m5"},
+   reward:{xp:380,gold:380,gear:"cq_m6"},req:"m5"},
   {id:"h1",name:"The Boar Trail",giver:"track_fen",cls:"hunter",type:"kill",target:"boar",need:6,lvl:1,
    offer:"Tracking starts with the easy ones. Six boars south of town — follow the churned earth. And take these boots; silent footfalls are the hunter's first lesson.",
    active:"Six boars in the woods south of Emberhold. Quiet feet, sure shot.",
@@ -1275,11 +1719,11 @@ const QUESTS=[
    active:"Eight recluses. No sign you were ever there.",
    done:"The brood hesitates now. The hunter's mark is yours to keep.",
    reward:{xp:200,gold:200,gear:"cq_h5"},req:"h4"},
-  {id:"h6",name:"The Beast of the Deep",giver:"track_fen",cls:"hunter",type:"kill",target:"boss",need:1,lvl:6,
+  {id:"h6",name:"The Beast of the Deep",giver:"track_fen",cls:"hunter",type:"kill",target:"boss",need:1,lvl:8,
    offer:"Cragmaw is the greatest game I have ever tracked — and I have tracked them all. Its hide laughs at arrows, so bring the perfect shot. Cavebreaker is yours if you return.",
    active:"Cragmaw waits deep in the cave north-east. The greatest hunt of your life.",
    done:"The Beast of the Deep fell to your bow. The wilds will remember. So will I.",
-   reward:{xp:280,gold:280,gear:"cq_h6"},req:"h5"},
+   reward:{xp:380,gold:380,gear:"cq_h6"},req:"h5"},
   {id:"n1",name:"First Communion",giver:"mortis",cls:"necromancer",type:"kill",target:"boar",need:5,lvl:1,
    offer:"Death here is not an ending — it is an audience. Prove you can speak with it: end five boars south of town and feel their passing. This vial will keep your first whispers.",
    active:"Five boars south of Emberhold. Listen when they fall.",
@@ -1305,18 +1749,18 @@ const QUESTS=[
    active:"Eight recluses. The harvest grows.",
    done:"The harvest is rich, the grave is full. You walk a path none dare follow.",
    reward:{xp:200,gold:200,gear:"cq_n5"},req:"n4"},
-  {id:"n6",name:"Feast of Cragmaw",giver:"mortis",cls:"necromancer",type:"kill",target:"boss",need:1,lvl:6,
+  {id:"n6",name:"Feast of Cragmaw",giver:"mortis",cls:"necromancer",type:"kill",target:"boss",need:1,lvl:8,
    offer:"Cragmaw — an old soul, fierce and ancient. Its death will feed the grave for years. Strike the final blow and take this staff: Gravewhisper. It remembers every life it reaped.",
    active:"Cragmaw waits deep in the cave north-east. Give the old beast its feast.",
    done:"The Feast of Cragmaw is sung in whispers now. You are death's favorite student.",
-   reward:{xp:280,gold:280,gear:"cq_n6"},req:"n5"},
+   reward:{xp:380,gold:380,gear:"cq_n6"},req:"n5"},
 ];
 const questById=id=>QUESTS.find(q=>q.id===id);
 
 const SELL_REWARD_TEXT=q=>`Rewards: ${q.reward.xp} XP, ${fmtGold(q.reward.gold)}${q.reward.items?" (+"+q.reward.items.map(i=>ITEMS[i].name).join(", ")+")":""}${q.reward.gear?" [Gear: "+gearById[q.reward.gear].name+"]":""}`;
 
 // ---------- world generation ----------
-const TM={GRASS:0,GRASS2:1,DARK:2,DIRT:3,COBBLE:4,CAVEF:5,CAVEW:6,STONE:7};
+const TM={GRASS:0,GRASS2:1,DARK:2,DIRT:3,COBBLE:4,CAVEF:5,CAVEW:6,STONE:7,EMBER:8};
 const TW=Math.ceil(WORLD_W/TILE),TH=Math.ceil(WORLD_H/TILE);
 const tiles=new Int8Array(TW*TH);
 const colliders=[];   // {x,y,r} circles
@@ -1325,6 +1769,13 @@ const decor=[];       // {x,y,spr,scale,yoff,collide} static decor
 const pickups=[];     // mushroom nodes
 const GRAVEYARD={x:340,y:830};
 const SPAWN={x:700,y:740};
+const POIS=[
+  {id:"den",  name:"Howlmaw Den",  x:560, y:1650,r:230},
+  {id:"cave", name:"Cragmaw's Lair",x:4070,y:800, r:260},
+  {id:"grove",name:"Whispering Grove",x:1600,y:2900,r:240},
+  {id:"spire",name:"Ruined Spire", x:4500,y:3100,r:240},
+  {id:"deep", name:"The Emberdeep",x:4690,y:520, r:440},
+];
 
 function tileAt(px,py){const tx=clamp(Math.floor(px/TILE),0,TW-1),ty=clamp(Math.floor(py/TILE),0,TH-1);return tiles[ty*TW+tx];}
 function setTile(tx,ty,v){if(tx>=0&&ty>=0&&tx<TW&&ty<TH)tiles[ty*TW+tx]=v;}
@@ -1348,6 +1799,10 @@ function buildSprites(){
   SPR.gnoll_alpha=outlineSprite(sprite(18,22,g=>paintGnoll(g,true)));
   SPR.spider=outlineSprite(sprite(25,16,g=>paintSpider(g)));
   SPR.boss=outlineSprite(sprite(36,40,g=>paintBoss(g)));
+  SPR.wolf=outlineSprite(sprite(26,14,g=>paintWolf(g)));
+  SPR.horror=outlineSprite(sprite(32,22,g=>paintHorror(g)));
+  SPR.cinder=outlineSprite(sprite(22,24,g=>paintCinder(g)));
+  SPR.kezath=outlineSprite(sprite(40,46,g=>paintKezath(g)));
   SPR.npc_marshal=outlineSprite(sprite(20,24,g=>paintHumanoid(g,{shirt:"#4a5a7a",pants:"#2a2a3a",hair:"#888",weapon:"sword",helm:true})));
   SPR.npc_wren=outlineSprite(sprite(20,24,g=>paintHumanoid(g,{shirt:"#5a7a4a",pants:"#4a3a5a",hair:"#b06a3a",weapon:"staff",gem:"#7bc74d",hood:true})));
   SPR.npc_vendor=outlineSprite(sprite(20,24,g=>paintHumanoid(g,{shirt:"#7a5a2a",pants:"#3a3a3a",hair:"#2a2a2a",belt:"#c9a93c"})));
@@ -1378,6 +1833,18 @@ function buildSprites(){
   SPR.grass=sprite(12,11,g=>paintGrass(g));
   SPR.flower1=sprite(11,12,g=>paintFlower(g,"#e08a9a"));
   SPR.flower2=sprite(11,12,g=>paintFlower(g,"#f0e080"));
+  SPR.banner=sprite(12,34,g=>paintBanner(g));
+  SPR.bedroll=sprite(24,12,g=>paintBedroll(g));
+  SPR.bones=sprite(28,14,g=>paintBones(g));
+  SPR.skullpile=sprite(18,16,g=>paintSkullPile(g));
+  SPR.stake=sprite(8,36,g=>paintStake(g));
+  SPR.lavacrack=sprite(46,46,g=>paintLavaCrack(g));
+  SPR.obsidian=sprite(18,34,g=>paintObsidian(g));
+  SPR.column=sprite(22,60,g=>paintColumn(g));
+  SPR.fallencolumn=sprite(56,16,g=>paintFallenColumn(g));
+  SPR.rubble=sprite(30,16,g=>paintRubble(g));
+  SPR.stove=sprite(16,20,g=>paintStove(g));
+  SPR.hiderack=sprite(28,24,g=>paintHideRack(g));
   SPR.caverock=sprite(28,28,g=>{px(g,2,6,24,20,"#3a3a44");px(g,5,2,18,8,"#44444e");px(g,4,8,6,8,"#4c4c58");});
   // ground tiles 32x32
   const R=mulberry32(1234);
@@ -1390,10 +1857,12 @@ function buildSprites(){
   SPR.t5=tile("#2e2e38",["#272731","#363641"]);
   SPR.t6=tile("#1d1d26",["#17171e","#23232e"]);
   SPR.t7=sprite(32,32,g=>{px(g,0,0,32,32,"#565660");px(g,0,0,32,3,"#6a6a75");px(g,0,14,32,2,"#4a4a52");px(g,14,0,2,32,"#4a4a52");});
+  SPR.t8=tile("#3a2318",["#ff6b2a","#ff8c2a","#2a1812","#ffd94d"]);
 }
 
 function buildWorld(){
   colliders.length=0;rectCols.length=0;decor.length=0;pickups.length=0;
+  chests=[];portals=[];
   const R=mulberry32(4242);
   tiles.fill(TM.GRASS);
   // grass variation noise
@@ -1402,35 +1871,47 @@ function buildWorld(){
   rectTiles(380,320,640,560,TM.COBBLE);
   stampCircle(700,600,150,TM.COBBLE);
   stampCircle(340,830,120,TM.DIRT); // graveyard clearing
-  // gnoll camp clearing
-  stampCircle(2350,1500,210,TM.DIRT);
-  // paths
+  // gnoll camp grounds (dirt, well-trodden) at (2850,2150)
+  stampCircle(2850,2150,270,TM.DIRT);
+  // wolf den clearing
+  stampCircle(560,1650,170,TM.DIRT);
+  // Whispering Grove grounds: dark, hushed grass
+  stampCircle(1600,2900,230,TM.DARK);
+  stampCircle(1600,2900,160,TM.GRASS2);
+  // Ruined Spire: cracked stone yard
+  stampCircle(4500,3100,220,TM.STONE);
+  // roads
   carvePath(700,620,700,1000,2,TM.DIRT); carvePath(700,1000,1400,1400,2,TM.DIRT);
-  carvePath(1000,700,2100,1400,2,TM.DIRT);
-  carvePath(1000,500,2600,760,2,TM.DIRT);
-  carvePath(700,620,340,830,1,TM.DIRT);
-  // cave region
-  const CX0=2280,CY0=80,CX1=2920,CY1=720;
+  carvePath(1400,1400,2200,1900,2,TM.DIRT); carvePath(2200,1900,2850,2150,2,TM.DIRT); // town -> gnoll camp
+  carvePath(1000,500,2600,500,2,TM.DIRT); carvePath(2600,500,4070,810,2,TM.DIRT);     // town -> cave mouth
+  carvePath(700,760,560,1650,1,TM.DIRT);                                             // graveyard -> den
+  carvePath(700,880,1600,2900,2,TM.DIRT);                                            // town -> grove
+  carvePath(2850,2150,4500,3100,2,TM.DIRT);                                          // camp -> spire (old road)
+  carvePath(700,620,340,830,1,TM.DIRT);                                              // town -> graveyard
+  // cave region (3520,80)-(4640,780), entrance gap on south side x 4000-4140
+  const CX0=3520,CY0=80,CX1=4640,CY1=780;
   rectTiles(CX0,CY0,CX1-CX0,CY1-CY0,TM.CAVEF);
-  // cave wall ring (tiles) with entrance gap on south side x 2540-2660
+  // cave wall ring (tiles) with entrance gap
   for(let x=CX0;x<=CX1;x+=TILE){
     for(const y of [CY0,CY0+TILE,CY1-TILE]){
       const cx=x+TILE/2;
-      if(y===CY1-TILE&&cx>2540&&cx<2660)continue;
+      if(y===CY1-TILE&&cx>4000&&cx<4140)continue;
       rectTiles(x,y,TILE,TILE,TM.CAVEW);
     }
     rectTiles(x,CY0-TILE,TILE,TILE,TM.CAVEW);
   }
   for(let y=CY0;y<=CY1;y+=TILE){rectTiles(CX0-TILE,y,TILE,TILE,TM.CAVEW);rectTiles(CX0,y,TILE,TILE,TM.CAVEW);rectTiles(CX1-TILE,y,TILE,TILE,TM.CAVEW);}
+  // boss lair: scorched ember floor where Cragmaw nests
+  stampCircle(4080,300,170,TM.EMBER);
   // colliders for cave walls (circles along ring, skip entrance)
   for(let x=CX0;x<=CX1;x+=40){
     colliders.push({x:x,y:CY0+8,r:24});colliders.push({x:x,y:CY0-TILE+8+32,r:24});
-    const cx=x;if(!(cx>2530&&cx<2670))colliders.push({x:cx,y:CY1-8,r:26});
+    const cx=x;if(!(cx>3990&&cx<4150))colliders.push({x:cx,y:CY1-8,r:26});
   }
   for(let y=CY0;y<=CY1;y+=40){
     colliders.push({x:CX0-8,r:26,y:y});colliders.push({x:CX1+8,r:26,y:y});
   }
-  colliders.push({x:2540,y:CY1-8,r:30});colliders.push({x:2660,y:CY1-8,r:30}); // entrance posts
+  colliders.push({x:4000,y:CY1-8,r:30});colliders.push({x:4140,y:CY1-8,r:30}); // entrance posts
   // world border colliders
   for(let x=0;x<=WORLD_W;x+=80){colliders.push({x,y:-20,r:50});colliders.push({x,y:WORLD_H+20,r:50});}
   for(let y=0;y<=WORLD_H;y+=80){colliders.push({x:-20,y,r:50});colliders.push({x:WORLD_W+20,y,r:50});}
@@ -1446,30 +1927,81 @@ function buildWorld(){
   for(let i=0;i<4;i++){decor.push({x:290+i*34,y:880,spr:SPR.grave,scale:2,yoff:0,collide:8});}
   for(let x=250;x<440;x+=32){decor.push({x,y:748,spr:SPR.fence||null,scale:2});}
   colliders.push({x:340,y:800,r:10});
-  // gnoll camp: tents + fire
+  // ---- gnoll war camp (2850,2150): tents, fires, bones, trophies ----
+  const GX=2850,GY=2150;
   const tentAt=(x,y)=>{decor.push({x,y,spr:SPR.tent,scale:2,yoff:0});colliders.push({x,y:y+10,r:26});};
-  tentAt(2240,1400);tentAt(2460,1440);tentAt(2380,1620);
-  decor.push({x:2350,y:1510,spr:SPR.fire,scale:2,yoff:0,noCollide:true});
-  // cave stalagmites + rocks
-  for(let i=0;i<14;i++){const x=rnd(CX0+80,CX1-80),y=rnd(CY0+120,CY1-140);decor.push({x,y,spr:SPR.stalag,scale:2,yoff:0,collide:10});}
-  for(let i=0;i<8;i++){const x=rnd(CX0+80,CX1-80),y=rnd(CY0+120,CY1-140);decor.push({x,y,spr:SPR.caverock,scale:2,yoff:0,collide:14});}
+  tentAt(GX-110,GY-110);tentAt(GX+110,GY-90);tentAt(GX+170,GY+110);tentAt(GX-170,GY+130);
+  decor.push({x:GX,y:GY,spr:SPR.fire,scale:2,yoff:0,noCollide:true});           // central war-fire
+  decor.push({x:GX-60,y:GY+70,spr:SPR.fire,scale:1,yoff:0,noCollide:true});     // cook fire
+  for(const [bx,by] of [[GX-50,GY+95],[GX+90,GY+40],[GX-100,GY-30]]){           // bedrolls around the fires
+    decor.push({x:bx,y:by,spr:SPR.bedroll,scale:2,yoff:0});}
+  decor.push({x:GX+40,y:GY+120,spr:SPR.hiderack,scale:2,yoff:0,collide:12});    // trophies
+  decor.push({x:GX-150,y:GY-40,spr:SPR.banner,scale:2,yoff:0,collide:8});       // war banners
+  decor.push({x:GX+150,y:GY-10,spr:SPR.banner,scale:2,yoff:0,collide:8});
+  decor.push({x:GX+30,y:GY-130,spr:SPR.skullpile,scale:2,yoff:0});              // grisly trophies
+  decor.push({x:GX-60,y:GY+150,spr:SPR.bones,scale:2,yoff:0});
+  for(let i=0;i<10;i++){ // stake ring around the camp
+    const a=i/10*Math.PI*2;
+    decor.push({x:GX+Math.cos(a)*250,y:GY+Math.sin(a)*250,spr:SPR.stake,scale:2,yoff:0,collide:8});
+  }
+  // ---- cave: stalagmites, rocks, lair decor ----
+  for(let i=0;i<22;i++){const x=rnd(CX0+80,CX1-80),y=rnd(CY0+120,CY1-140);decor.push({x,y,spr:SPR.stalag,scale:2,yoff:0,collide:10});}
+  for(let i=0;i<14;i++){const x=rnd(CX0+80,CX1-80),y=rnd(CY0+120,CY1-140);decor.push({x,y,spr:SPR.caverock,scale:2,yoff:0,collide:14});}
   // entrance rocks
-  decor.push({x:2510,y:740,spr:SPR.caverock,scale:3,yoff:0});colliders.push({x:2510,y:740,r:30});
-  decor.push({x:2690,y:740,spr:SPR.caverock,scale:3,yoff:0});colliders.push({x:2690,y:740,r:30});
-  decor.push({x:2600,y:690,spr:SPR.deadtree,scale:2,yoff:0});
+  decor.push({x:3960,y:810,spr:SPR.caverock,scale:3,yoff:0});colliders.push({x:3960,y:810,r:30});
+  decor.push({x:4180,y:810,spr:SPR.caverock,scale:3,yoff:0});colliders.push({x:4180,y:810,r:30});
+  decor.push({x:4070,y:860,spr:SPR.deadtree,scale:2,yoff:0});
+  // horrid lair of Cragmaw: obsidian columns, lava cracks, bones
+  for(let i=0;i<6;i++){const a=i/6*Math.PI*2+0.3;
+    decor.push({x:4080+Math.cos(a)*130,y:300+Math.sin(a)*130,spr:SPR.obsidian,scale:2,yoff:0,collide:12});}
+  decor.push({x:4080,y:200,spr:SPR.lavacrack,scale:2,yoff:0,noCollide:true});
+  decor.push({x:3980,y:350,spr:SPR.lavacrack,scale:1,yoff:0,noCollide:true});
+  decor.push({x:4180,y:360,spr:SPR.lavacrack,scale:1,yoff:0,noCollide:true});
+  decor.push({x:3990,y:220,spr:SPR.skullpile,scale:3,yoff:0});
+  decor.push({x:4170,y:230,spr:SPR.skullpile,scale:3,yoff:0});
+  decor.push({x:4080,y:430,spr:SPR.bones,scale:3,yoff:0});
+  decor.push({x:3940,y:300,spr:SPR.bones,scale:2,yoff:0});
+  decor.push({x:4220,y:300,spr:SPR.bones,scale:2,yoff:0});
+  // spider webs could go here later; deep cave gets rubble + bones
+  for(let i=0;i<10;i++){const x=rnd(CX0+80,CX1-80),y=rnd(CY0+80,560);decor.push({x,y,spr:pick([SPR.bones,SPR.rubble]),scale:2,yoff:0});}
+  // ---- howlmaw wolf den (560,1650) ----
+  for(let i=0;i<7;i++){const a=i/7*Math.PI*2+rnd(-0.2,0.2),d=rnd(60,150);
+    decor.push({x:560+Math.cos(a)*d,y:1650+Math.sin(a)*d,spr:pick([SPR.bones,SPR.bush,SPR.skullpile]),scale:2,yoff:0});}
+  decor.push({x:470,y:1560,spr:SPR.deadtree,scale:2,yoff:0});
+  decor.push({x:660,y:1750,spr:SPR.deadtree,scale:2,yoff:0});
+  decor.push({x:560,y:1480,spr:SPR.caverock,scale:3,yoff:0});colliders.push({x:560,y:1480,r:34}); // den mound
+  // ---- Whispering Grove (1600,2900): flower ring + ancient stones ----
+  for(let i=0;i<26;i++){const a=rnd(Math.PI*2),d=rnd(30,210);
+    decor.push({x:1600+Math.cos(a)*d,y:2900+Math.sin(a)*d,spr:pick([SPR.flower1,SPR.flower2,SPR.grass,SPR.bush]),scale:2,small:true});}
+  for(let i=0;i<7;i++){const a=i/7*Math.PI*2;
+    if(i===3){decor.push({x:1600+Math.cos(a)*120,y:2900+Math.sin(a)*120,spr:SPR.fallencolumn,scale:2,yoff:0});}
+    else decor.push({x:1600+Math.cos(a)*120,y:2900+Math.sin(a)*120,spr:SPR.column,scale:2,yoff:0,collide:10});
+  }
+  // ---- Ruined Spire (4500,3100): a fallen tower's corpse ----
+  decor.push({x:4500,y:3050,spr:SPR.fallencolumn,scale:3,yoff:0});              // the broken tower
+  colliders.push({x:4500,y:3060,r:40});
+  decor.push({x:4410,y:3160,spr:SPR.column,scale:2,yoff:0,collide:10});
+  decor.push({x:4590,y:3180,spr:SPR.column,scale:2,yoff:0,collide:10});
+  for(let i=0;i<8;i++){const a=rnd(Math.PI*2),d=rnd(60,180);
+    decor.push({x:4500+Math.cos(a)*d,y:3100+Math.sin(a)*d,spr:pick([SPR.rubble,SPR.rubble,SPR.rock]),scale:2,yoff:0});}
+  for(let i=0;i<4;i++){const a=rnd(Math.PI*2),d=rnd(140,200);
+    decor.push({x:4500+Math.cos(a)*d,y:3100+Math.sin(a)*d,spr:SPR.deadtree,scale:2,yoff:0});}
 
-  // trees: scatter avoiding town, paths, camp, cave interior, spawn areas
-  const clearOf=(x,y)=>{ 
+  // trees: scatter avoiding town, paths, camp, cave interior, spawn areas, POIs
+  const clearOf=(x,y)=>{
     if(x>330&&x<1080&&y>270&&y<950)return false;      // town
-    if(x>2140&&x<2580&&y>1290&&y<1710)return false;   // camp
+    if(x>2540&&x<3160&&y>1840&&y<2460)return false;   // camp
     if(inCave(x,y))return false;
-    const t=tileAt(x,y);if(t===TM.DIRT||t===TM.COBBLE||t===TM.CAVEW)return false;
-    if(dist(x,y,2600,760)<120)return false;           // cave mouth
+    const t=tileAt(x,y);if(t===TM.DIRT||t===TM.COBBLE||t===TM.CAVEW||t===TM.STONE||t===TM.EMBER)return false;
+    if(dist(x,y,4070,840)<130)return false;           // cave mouth
     if(dist(x,y,700,740)<160)return false;            // spawn
+    if(dist(x,y,560,1650)<190)return false;           // wolf den
+    if(dist(x,y,1600,2900)<240)return false;          // grove
+    if(dist(x,y,4500,3100)<230)return false;          // spire
     return true;
   };
   let placed=0,tries=0;
-  while(placed<220&&tries<3000){tries++;
+  while(placed<420&&tries<9000){tries++;
     const x=rnd(60,WORLD_W-60),y=rnd(60,WORLD_H-60);
     if(!clearOf(x,y))continue;
     // keep boar meadow somewhat open: thin trees there
@@ -1481,20 +2013,58 @@ function buildWorld(){
   for(let x=20;x<WORLD_W;x+=55){for(const y of [20,WORLD_H-20]){decor.push({x:x+rnd(-10,10),y:y+rnd(-8,8),spr:pick([SPR.tree1,SPR.tree2]),scale:2});}}
   for(let y=20;y<WORLD_H;y+=55){for(const x of [20,WORLD_W-20]){decor.push({x:x+rnd(-8,8),y:y+rnd(-10,10),spr:pick([SPR.tree1,SPR.tree3]),scale:2});}}
   // bushes / grass / flowers / rocks
-  for(let i=0;i<160;i++){const x=rnd(50,WORLD_W-50),y=rnd(50,WORLD_H-50);
+  for(let i=0;i<320;i++){const x=rnd(50,WORLD_W-50),y=rnd(50,WORLD_H-50);
     if(!clearOf(x,y))continue;const t=tileAt(x,y);if(t!==TM.GRASS&&t!==TM.GRASS2&&t!==TM.DARK)continue;
     decor.push({x,y,spr:pick([SPR.bush,SPR.grass,SPR.grass,SPR.flower1,SPR.flower2]),scale:2,small:true});}
-  for(let i=0;i<40;i++){const x=rnd(50,WORLD_W-50),y=rnd(50,WORLD_H-50);
+  for(let i=0;i<70;i++){const x=rnd(50,WORLD_W-50),y=rnd(50,WORLD_H-50);
     if(!clearOf(x,y))continue;decor.push({x,y,spr:SPR.rock,scale:2,small:true,collide:10});}
 
-  // mushroom nodes
-  const shroomSpots=[[1150,1050],[1500,1150],[1700,1500],[1300,1700],[950,1400],[1850,1250],[2050,1100],[1200,1900],[1600,850],[900,900],[2200,1000],[1900,1750]];
+  // mushroom nodes (spread across the new wilds)
+  const shroomSpots=[[1150,1050],[1500,1150],[1700,1500],[1300,1700],[950,1400],[1850,1250],[2050,1100],[1200,1900],[1600,850],[900,900],[2200,1000],[1900,1750],[2500,2400],[2000,2700],[1100,2500],[1550,3000],[3500,1500],[4800,2700],[3200,3300],[2300,3400],[900,2600],[2700,600],[3350,1100],[4650,1500]];
   shroomSpots.forEach((s,i)=>{pickups.push({id:"sh"+i,x:s[0]+rnd(-40,40),y:s[1]+rnd(-40,40),t:0});});
+
+  // ---- THE EMBERDEEP: a delvers' crypt sealed beneath the Ruined Spire (NE corner) ----
+  // floor: carved stone across the whole complex; ember heart in the boss arena
+  const DB={x0:4320,y0:138,x1:4960,y1:892};
+  rectTiles(DB.x0,DB.y0,DB.x1-DB.x0,DB.y1-DB.y0,TM.STONE);
+  rectTiles(4560,158,270,160,TM.EMBER); // boss-room ember core
+  // perimeter walls (visual ring + solid colliders) around the whole crypt
+  rectTiles(DB.x0,DB.y0,DB.x1-DB.x0,16,TM.CAVEW);rectTiles(DB.x0,DB.y1-16,DB.x1-DB.x0,16,TM.CAVEW);
+  rectTiles(DB.x0,DB.y0,16,DB.y1-DB.y0,TM.CAVEW);rectTiles(DB.x1-16,DB.y0,16,DB.y1-DB.y0,TM.CAVEW);
+  rectCols.push({x:DB.x0,y:DB.y0,w:DB.x1-DB.x0,h:14},{x:DB.x0,y:DB.y1-14,w:DB.x1-DB.x0,h:14},
+    {x:DB.x0,y:DB.y0,w:14,h:DB.y1-DB.y0},{x:DB.x1-14,y:DB.y0,w:14,h:DB.y1-DB.y0});
+  // interior partition walls (rectCols mirror freehand CAVEW tiles by way of drawEntities below)
+  const part=(x,y,w,h)=>{rectCols.push({x,y,w,h});rectTiles(Math.floor(x/32)*32,Math.floor(y/32)*32,Math.ceil((x+w)/32)*32-Math.floor(x/32)*32,Math.ceil((y+h)/32)*32-Math.floor(y/32)*32,TM.CAVEW)};
+  part(4344,692,306,12);part(4760,692,180,12);          // divider: entry room <-> main hall (corridor gap 4650-4760)
+  part(4640,470,10,222);part(4760,470,10,222);           // corridor walls, entry route
+  part(4344,452,306,12);part(4760,452,180,12);          // main hall north wall (boss-corridor gap 4650-4760)
+  part(4640,318,10,134);part(4760,318,10,134);          // boss corridor walls
+  part(4344,318,306,12);part(4760,318,180,12);          // boss room south wall
+  part(4434,480,10,85);part(4434,605,10,65);            // west treasure nook divider (gap y 565-605)
+  // decor: braziers (fires), bones, skull piles, obsidian pillars, lava cracks
+  for(const [fx,fy] of [[4430,870],[4870,870],[4900,700],[4420,500],[4880,465],[4540,230],[4820,230],[4380,560]]){
+    decor.push({x:fx,y:fy,spr:SPR.fire,scale:2,yoff:0,noCollide:true});}
+  decor.push({x:4460,y:545,spr:SPR.skullpile,scale:2,yoff:0});
+  decor.push({x:4380,y:600,spr:SPR.bones,scale:2,yoff:0});
+  decor.push({x:4370,y:520,spr:SPR.skullpile,scale:2,yoff:0});
+  decor.push({x:4690,y:190,spr:SPR.lavacrack,scale:2,yoff:0,noCollide:true});
+  decor.push({x:4590,y:260,spr:SPR.lavacrack,scale:1,yoff:0,noCollide:true});
+  decor.push({x:4790,y:280,spr:SPR.lavacrack,scale:1,yoff:0,noCollide:true});
+  for(const [ox,oy] of [[4480,175],[4910,175],[4480,295],[4910,295],[4480,630],[4900,630]]){
+    decor.push({x:ox,y:oy,spr:SPR.obsidian,scale:2,yoff:0,collide:12});}
+  for(let i=0;i<10;i++){decor.push({x:rnd(DB.x0+60,DB.x1-60),y:rnd(DB.y0+60,DB.y1-60),
+    spr:pick([SPR.bones,SPR.rubble,SPR.skullpile]),scale:2,yoff:0});}
+  // ---- dungeon gates: spire <-> crypt (teleport portals) ----
+  portals.push({x:4480,y:3060,dx:4550,dy:830,id:"deep-in"});   // spire door -> entry room
+  portals.push({x:4500,y:800, dx:4520,dy:3125,id:"deep-out"});  // entry room exit -> spire
+  decor.push({x:4480,y:3060,spr:SPR.obsidian,scale:2,yoff:0,collide:12}); // spire-side gate pillar
+  decor.push({x:4440,y:3060,spr:SPR.obsidian,scale:2,yoff:0,collide:12});
+  // the nook's old hoard: a modest mid-dungeon cache for delvers
+  chests.push({x:4370,y:570,opened:false,name:"Delver's Hoard",rich:false});
 
   // apply collide markers to colliders
   for(const d of decor){if(d.collide)colliders.push({x:d.x,y:d.y,r:d.collide});}
 }
-
 // collision resolve: push circle (x,y,r) out of colliders
 function resolveCollision(p,r){
   for(const c of colliders){
@@ -1514,7 +2084,7 @@ let mmapC=null;
 function buildMinimap(){
   mmapC=makeCanvas(176,132);const g=mmapC.getContext("2d");
   const sx=176/TW,sy=132/TH;
-  const cols=["#3d6b35","#3a6332","#2c4f28","#7a623c","#6f6f78","#2e2e38","#14141c","#565660"];
+  const cols=["#3d6b35","#3a6332","#2c4f28","#7a623c","#6f6f78","#2e2e38","#14141c","#565660","#5a2318"];
   for(let ty=0;ty<TH;ty++)for(let tx=0;tx<TW;tx++){g.fillStyle=cols[tiles[ty*TW+tx]];g.fillRect(tx*sx,ty*sy,sx+1,sy+1);}
 }
 
@@ -1535,23 +2105,36 @@ function newGameState(name,clsKey,raceKey){
     lungeT:0,lungeDur:0.2,lungeAng:0,castT:0,castKind:null,
     quests:{}, // qid -> {s:'active'|'done'|'complete',p:progress}
     atkT:0,moveX:0,moveY:0,walkT:0,regenT:0,
-    stats:{kills:0,deaths:0},
+    stats:{kills:0,deaths:0},discovered:[],dustT:0,poiT:0,zoneT:0,
   };
 }
 const cls=()=>CLASSES[G.clsKey];
 
 // ---------- entities ----------
-let mobs=[],npcs=[],projectiles=[],particles=[],floaters=[],traps=[],blizzards=[],telegraphs=[],villagers=[],minions=[];
+let mobs=[],npcs=[],projectiles=[],particles=[],floaters=[],traps=[],blizzards=[],telegraphs=[],villagers=[],minions=[],chests=[],portals=[];
 
 const MOB_SPAWNS=[
-  // boars in southern woods
+  // boars in the southern woods (spaced out across the new wilds)
   ...[[1150,1150],[1350,1250],[1550,1100],[1700,1350],[1250,1500],[1450,1600],[1650,1550],[1100,1700],[1550,1750],[1800,1500]].map(p=>({type:"boar",x:p[0],y:p[1]})),
-  // gnolls at camp
-  ...[[2280,1420],[2420,1410],[2300,1570],[2430,1600],[2350,1350],[2250,1500]].map(p=>({type:"gnoll",x:p[0],y:p[1]})),
-  {type:"gnoll_alpha",x:2440,y:1630},
-  // spiders in cave
-  ...[[2480,560],[2720,540],[2600,420]].map(p=>({type:"spider",x:p[0],y:p[1]})),
-  {type:"boss",x:2600,y:250},
+  ...[[2050,1900],[950,2150],[1300,2350],[1750,2100]].map(p=>({type:"boar",x:p[0],y:p[1]})),
+  // howlmaw wolves at the den south of the graveyard
+  ...[[480,1600],[560,1620],[640,1580],[500,1730],[620,1740],[560,1560],[430,1680]].map(p=>({type:"wolf",x:p[0],y:p[1]})),
+  // gnolls in the war camp NE of town, with their alpha
+  ...[[2760,2030],[2930,2050],[2970,2200],[2840,2260],[2720,2150],[2890,2310],[3030,2120],[2810,2060],[2920,2160],[2740,2270]].map(p=>({type:"gnoll",x:p[0],y:p[1]})),
+  {type:"gnoll_alpha",x:2850,y:2150},
+  // spiders mid-cave
+  ...[[3800,560],[4300,520],[3950,380],[4230,640]].map(p=>({type:"spider",x:p[0],y:p[1]})),
+  // horrors deep in the cave
+  ...[[3700,250],[3900,180],[4100,150],[4300,200],[4450,300],[3750,420],[3980,320],[4180,400]].map(p=>({type:"horror",x:p[0],y:p[1]})),
+  {type:"boss",x:4080,y:300},
+  // The Emberdeep: densely packed cinder packs guarding the sealed flame (entered via the Ruined Spire doorway)
+  ...[[4490,800],[4510,860],[4590,795],[4890,790],[4860,830],[4915,755]].map(p=>({type:"cinder",x:p[0],y:p[1]})),   // entry-room twin packs
+  ...[[4700,540],[4708,628]].map(p=>({type:"cinder",x:p[0],y:p[1]})),          // corridor guards
+  ...[[4375,560],[4410,640],[4370,620]].map(p=>({type:"cinder",x:p[0],y:p[1]})), // west nook pack
+  ...[[4760,590],[4820,560],[4860,620]].map(p=>({type:"cinder",x:p[0],y:p[1]})), // main-hall pack
+  ...[[4860,480],[4810,500]].map(p=>({type:"cinder",x:p[0],y:p[1]})),          // main-hall north pack
+  {type:"cinder",x:4700,y:390},               // boss-corridor guard
+  {type:"kezath",x:4690,y:225},
 ];
 function spawnMob(def){
   const t=MOB_TYPES[def.type];
@@ -1601,16 +2184,16 @@ function msg(text,cls2){ // DOM toast + combat log
 }
 const combatLog=[];
 function burst(x,y,color,n=10,spd=120,life=0.5,size=3){
-  if(particles.length>600)return;
+  if(!SETTINGS.particles||particles.length>600)return;
   for(let i=0;i<n;i++){const a=rnd(Math.PI*2),s=rnd(spd*0.3,spd);
     particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,t:0,dur:rnd(life*0.5,life),color,size:rnd(1,size)});}
 }
-function ring(x,y,color,r1=10,r2=90,dur=0.35){if(particles.length>600)return;particles.push({ring:true,x,y,t:0,dur,r1,r2,color});}
+function ring(x,y,color,r1=10,r2=90,dur=0.35){if(!SETTINGS.particles||particles.length>600)return;particles.push({ring:true,x,y,t:0,dur,r1,r2,color});}
 // slash arc, motion streak, screen shake, attack lunge
-function slash(x,y,ang,color,r=60,width=1.1){if(particles.length>600)return;particles.push({slash:true,x,y,ang,t:0,dur:0.22,color,r,width});}
-function streak(x1,y1,x2,y2,color,dur=0.25){if(particles.length>600)return;particles.push({streak:true,x1,y1,x2,y2,t:0,dur,color});}
+function slash(x,y,ang,color,r=60,width=1.1){if(!SETTINGS.particles||particles.length>600)return;particles.push({slash:true,x,y,ang,t:0,dur:0.22,color,r,width});}
+function streak(x1,y1,x2,y2,color,dur=0.25){if(!SETTINGS.particles||particles.length>600)return;particles.push({streak:true,x1,y1,x2,y2,t:0,dur,color});}
 let shakeMag=0;
-function addShake(m){shakeMag=Math.min(24,Math.max(shakeMag,m));}
+function addShake(m){if(!SETTINGS.shake)return;shakeMag=Math.min(24,Math.max(shakeMag,m));}
 function lunge(ang,dur=0.18){G.lungeT=dur;G.lungeDur=dur;G.lungeAng=ang;}
 
 // ---------- combat ----------
@@ -1623,7 +2206,8 @@ function dealDamageToMob(m,amount,opts={}){
   if(G.raceKey==="emberkin")dmg*=1.08; // Emberkin: Inner Fire +8% all damage
   dmg=Math.max(1,Math.round(dmg*rnd(0.9,1.1)));
   m.hp-=dmg;m.dmgFlash=0.12;m.lastDmgT=0;
-  floater(m.x,m.y,dmg,crit?"#ffd94d":(opts.color||"#fff"),crit);
+  if(SETTINGS.dmgNums)floater(m.x,m.y,dmg,crit?"#ffd94d":(opts.color||"#fff"),crit);
+  if(crit){slash(m.x,m.y-16,rnd(0,Math.PI*2),"#ffd94d",44,1.2);addShake(1.5);}
   if(opts.knock){const a=angTo(G.x,G.y,m.x,m.y);m.x+=Math.cos(a)*opts.knock;m.y+=Math.sin(a)*opts.knock;}
   // aggro the mob and nearby allies
   if(m.state!=="aggro"){m.state="aggro";m.target="player";m.aggroT=0;m.alertT=1.0;}
@@ -1632,6 +2216,7 @@ function dealDamageToMob(m,amount,opts={}){
   else if(opts.slow)addDebuff(m,"slow",opts.slow.dur,opts.slow.mult);
   else if(opts.root)addDebuff(m,"root",opts.root,1);
   else if(opts.stun)addDebuff(m,"stun",opts.stun,1);
+  if(opts.bleed)addDebuff(m,"bleed",opts.bleed.dur,1,{dps:opts.bleed.dps});
 }
 function killMob(m){
   m.state="dead";m.hp=0;m.deadT=0;m.respawnT=m.t.respawn;G.stats.kills++;
@@ -1668,6 +2253,8 @@ function killMob(m){
   }
   gainXP(m.t.xp);
   questKillCredit(m.type);
+  if(m.type==="kezath"){spawnChest(m.x,m.y+34,"Kezath's Cache",true);
+    msg("A cache of the Sealed Flame\'s hoard gleams in the ashes.","loot");}
   if(G.target===m)G.target=null;
   updateQuestMarkers();
 }
@@ -1697,10 +2284,10 @@ function respawn(){
   msg("You wake at the graveyard, aching but alive.");
 }
 function gainXP(n){
-  if(G.level>=6)return;
+  if(G.level>=MAX_LEVEL)return;
   n=Math.round(n*(G.raceKey==="human"?1.1:1)); // Human: Adaptability +10% XP
   G.xp+=n;floater(G.x,G.y-30,"+"+n+" XP","#c9a0e8");
-  while(G.level<6&&G.xp>=XP_NEED[G.level]){G.xp-=XP_NEED[G.level];levelUp();}
+  while(G.level<MAX_LEVEL&&G.xp>=XP_NEED[G.level]){G.xp-=XP_NEED[G.level];levelUp();}
 }
 function levelUp(){
   const c=cls();G.level++;
@@ -1732,14 +2319,14 @@ function abilityReady(id){return (G.cd[id]||0)<=0;}
 function useAbilitySlot(slot){
   if(G.dead||!G)return;
   Audio2.resume();
-  if(slot===3){drinkPotion("hpotion");return;}
+  if(slot===4){drinkPotion("hpotion");return;}
   const aid=cls().abilities[slot],ab=ABILITIES[aid];
   if(G.level<ab.unlock){Audio2.play("error");msg(`${ab.name} unlocks at level ${ab.unlock}.`);return;}
   if(!abilityReady(aid))return;
   const cost=effCost(aid);
   if(G.mana<cost){Audio2.play("error");msg("Not enough mana.","loot");return;}
   // offensive abilities need a target (acquire nearest in range if none)
-  const needsTarget=["charge","frostbolt","blizzard","multishot","aimedshot","life_drain"].includes(aid);
+  const needsTarget=["charge","frostbolt","blizzard","multishot","aimedshot","life_drain","sunder","deepfreeze","serrated"].includes(aid);
   if(needsTarget&&(!G.target||G.target.state==="dead")){
     const t=nearestEnemy(ab.range||400);
     if(t)G.target=t;else{Audio2.play("error");msg("No target in range.");return;}
@@ -1784,6 +2371,13 @@ const ABILITY_FN={
       addDebuff(t,"aslow",4,0.6);
       const vw2=TR("w_ss_vuln");if(vw2>0)addDebuff(t,"vuln",6,vw2);
     }else{floater(G.x,G.y-20,"Too far!","#ff9b8e");G.cd.shieldslam=0.5;G.mana+=effCost("shieldslam");}},
+  sunder(){const t=G.target;Audio2.play("boom");addShake(4);
+    const a=angTo(G.x,G.y,t.x,t.y);lunge(a);
+    const dmg=playerAttackPower()*1.8*(1+0.35*TR("w_su_dmg"));
+    slash(t.x,t.y-16,a,"#ff8c2a",70,1.3);burst(t.x,t.y-14,"#c9a93c",12,180,0.4,3);
+    ring(t.x,t.y,"#ffb063",8,50,0.3);
+    dealDamageToMob(t,dmg,{color:"#ffb063",knock:20});
+    addDebuff(t,"vuln",6,2+TR("w_su_vuln"));},
   frostbolt(){const t=G.target;Audio2.play("frost");
     ring(G.x,G.y,"#bfe6ff",6,40,0.25);
     const rDmg=1+0.35*TR("m_fb_dmg"),cr=TR("m_fb_chill");
@@ -1809,6 +2403,11 @@ const ABILITY_FN={
     ring(G.x,G.y,"#bfe6ff",8,50,0.3);
     blizzards.push({x:t.x,y:t.y,r:150+25*TR("m_bz_rad"),t:0,dur:2.4,tick:0,
       dmg:playerAttackPower()*1.1*(1+0.3*TR("m_bz_dmg")),rootC:0.15*TR("m_bz_root")});},
+  deepfreeze(){const t=G.target;Audio2.play("deepfreeze");addShake(2);
+    const r=120+25*TR("m_df_rad"),dmg=playerAttackPower()*1.5*(1+0.3*TR("m_df_dmg"));
+    ring(t.x,t.y,"#bfe6ff",10,r,0.4);burst(t.x,t.y-14,"#bfe6ff",20,220,0.6,4);
+    for(const m of mobs)if(m.state!=="dead"&&dist(t.x,t.y,m.x,m.y)<r)
+      dealDamageToMob(m,dmg,{root:2.5+0.8*TR("m_df_root"),color:"#8ac8f0"});},
   multishot(){Audio2.play("shoot");addShake(2);
     const n=3+TR("h_ms_vol"),dmg=playerAttackPower()*1.3*(1+0.3*TR("h_ms_dmg"));
     const inCone=mobs.filter(m=>m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<420)
@@ -1835,6 +2434,11 @@ const ABILITY_FN={
         const vx=m.x-t.x,vy=m.y-t.y,along=vx*Math.cos(a)+vy*Math.sin(a);
         const side=Math.abs(-vx*Math.sin(a)+vy*Math.cos(a));
         if(along>0&&along<200&&side<48){const mm=m;setTimeout(()=>dealDamageToMob(mm,dmg*0.75,{color:"#ffd94d"}),120);}}}},
+  serrated(){const t=G.target;Audio2.play("serrated");addShake(2);
+    const rDmg=1+0.3*TR("h_sr_dmg"),rot=TR("h_sr_rot");
+    const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.2);
+    streak(G.x,G.y-18,t.x,t.y-14,"#ff5b4a",0.2);
+    dealDamageToMob(t,playerAttackPower()*1.8*rDmg,{bleed:{dur:8+2*rot,dps:playerAttackPower()*0.35*(1+0.5*rot)},color:"#ff5b4a"});},
   // ---- necromancer ----
   raise_skeleton(){
     Audio2.play("skeleton");
@@ -1864,6 +2468,15 @@ const ABILITY_FN={
       addDebuff(m,"plague",8,1,{dps:playerAttackPower()*0.25*mul});
     }}
   },
+  soulharvest(){Audio2.play("reap");addShake(3);
+    const mul=1+0.35*TR("n_sh_dmg"),r=180+30*TR("n_sh_rad");
+    ring(G.x,G.y,"#a06ae8",20,r,0.45);burst(G.x,G.y-14,"#7a3ad8",24,240,0.6,4);
+    let dealt=0;
+    for(const m of mobs){if(m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<r){
+      const dmg=playerAttackPower()*1.7*mul;dealt+=dmg;dealDamageToMob(m,dmg,{color:"#a06ae8"});}}
+    const heal=Math.round(dealt*(0.2+0.1*TR("n_sh_heal")));
+    if(heal>0){G.hp=Math.min(G.maxhp,G.hp+heal);floater(G.x,G.y-30,"+"+heal,"#7bc74d");
+      burst(G.x,G.y-20,"#7bc74d",10,140,0.5,3);}},
 };
 function updateMinions(dt){
   for(let i=minions.length-1;i>=0;i--){const m=minions[i];
@@ -1973,9 +2586,9 @@ function updateMobs(dt){
     m.lastDmgT+=dt;m.dmgFlash=Math.max(0,m.dmgFlash-dt);m.lungeT=Math.max(0,(m.lungeT||0)-dt);
     m.alertT=Math.max(0,(m.alertT||0)-dt);m.twitch=Math.max(0,(m.twitch||0)-dt);
     for(const d of m.debuffs){d.dur-=dt;
-      if(d.kind==="plague"&&d.dur>0&&d.dps&&m.state!=="dead"){
+      if((d.kind==="plague"||d.kind==="bleed")&&d.dur>0&&d.dps&&m.state!=="dead"){
         d.tick=(d.tick||0)-dt;
-        if(d.tick<=0){d.tick=1;dealDamageToMob(m,d.dps*rnd(0.85,1.15),{color:"#7bc74d"});}
+        if(d.tick<=0){d.tick=1;dealDamageToMob(m,d.dps*rnd(0.85,1.15),{color:d.kind==="bleed"?"#e05240":"#7bc74d"});}
       }}
     m.debuffs=m.debuffs.filter(d=>d.dur>0);
     const rooted=isRooted(m),spd=m.t.speed*slowMult(m);
@@ -1985,8 +2598,12 @@ function updateMobs(dt){
     if(m.state==="idle"){m.twitchT-=dt;
       if(m.twitchT<=0){m.twitchT=rnd(3,8);m.twitch=0.5;m.twDir=pick([-1,1]);
         if(m.type==="boar")burst(m.x,m.y-12,"#9a8a72",3,45,0.35,2);}} // boar snort
+    // howlmaw idle howls: haunting call rising from the pack
+    if(m.t.howler&&m.state==="idle"){m.howlT=(m.howlT===undefined?rnd(4,10):m.howlT)-dt;
+      if(m.howlT<=0&&dist(G.x,G.y,m.x,m.y)<900){m.howlT=rnd(9,24);Audio2.play("howl");
+        ring(m.x,m.y-16,"#a8b8c8",10,80,0.7);burst(m.x,m.y-20,"#d8e2ea",5,60,0.4,2);}}
     // Cragmaw sheds living embers while it loiters
-    if(m.t.elite&&m.state!=="dead"&&Math.random()<dt*5&&particles.length<550)
+    if(m.t.elite&&m.state!=="dead"&&SETTINGS.particles&&Math.random()<dt*5&&particles.length<550)
       particles.push({x:m.x+rnd(-26,26),y:m.y+rnd(-50,-6),vx:rnd(-14,14),vy:rnd(-60,-24),t:0,dur:rnd(0.5,1.0),
         color:pick(["#ff8c2a","#ffd94d","#ff5a2a"]),size:rnd(2,3)});
     if(m.state==="idle"){
@@ -1994,7 +2611,11 @@ function updateMobs(dt){
       if(m.wanderT<=0){m.wanderT=rnd(2,5);const a=rnd(Math.PI*2);m.wx=Math.cos(a);m.wy=Math.sin(a);}
       if(!rooted){m.x+=m.wx*40*dt;m.y+=m.wy*40*dt;if(dist(m.hx,m.hy,m.x,m.y)>120){m.wx*=-1;m.wy*=-1;}resolveCollision(m,12);}
       if(!G.dead&&pd<m.t.aggro){m.state="aggro";m.target="player";m.aggroT=0;m.alertT=1.2;
-        if(m.t.elite){Audio2.play("roar");msg("Cragmaw has noticed you!","quest");}}
+        if(m.t.elite){Audio2.play("roar");msg(m.t.name+" has noticed you!","quest");}
+        if(m.t.howler){ // wolves howl and the pack answers
+          if(Math.random()<0.6){Audio2.play("howl");ring(m.x,m.y-16,"#a8b8c8",10,120,0.8);}
+          for(const o of mobs)if(o!==m&&o.type==="wolf"&&o.state==="idle"&&dist(o.x,o.y,m.x,m.y)<340){
+            o.state="aggro";o.target="player";o.aggroT=0;o.alertT=1.2;}}}
     }else if(m.state==="aggro"){
       if(G.dead){m.state="return";}
       else if(hd>m.t.leash){m.state="return";}
@@ -2003,9 +2624,10 @@ function updateMobs(dt){
         const a=angTo(m.x,m.y,G.x,G.y);
         if(!rooted&&pd>m.t.range*0.8){m.x+=Math.cos(a)*spd*dt;m.y+=Math.sin(a)*spd*dt;resolveCollision(m,12);}
         // elite slam
-        if(m.t.elite){m.slamT-=dt;
+        if(m.t.elite&&m.type!=="kezath"){m.slamT-=dt;
           if(m.slamT<=0&&pd<260){m.slamT=8;Audio2.play("roar");
-            telegraphs.push({x:m.x,y:m.y,r:170,t:0,dur:1.1,dmg:rndi(28,42)});floater(m.x,m.y-40,"Cragmaw slams!","#ff6b5e",true);}}
+            telegraphs.push({x:m.x,y:m.y,r:170,t:0,dur:1.1,dmg:m.t.slam?rndi(m.t.slam[0],m.t.slam[1]):rndi(28,42)});floater(m.x,m.y-40,"Cragmaw slams!","#ff6b5e",true);}}
+        if(m.type==="kezath")updateKezath(m,dt,pd);
         m.atkT-=dt*(hasDebuff(m,"aslow")?0.6:1);
         if(pd<m.t.range&&m.atkT<=0){m.atkT=m.t.atkSpeed;m.lungeT=0.34; // 0.12s windup lean-back + 0.22s strike
           Audio2.play("swing");damagePlayer(rndi(m.t.dmg[0],m.t.dmg[1]),m);}
@@ -2020,6 +2642,57 @@ function updateMobs(dt){
   }
 }
 
+// ----- Kezath, the Sealed Flame: encounter AI (telegraphed AoE, summoned adds, phases, enrage) -----
+function updateKezath(m,dt,pd){
+  const frac=m.hp/m.maxhp;
+  m.pyreT=(m.pyreT===undefined?4.5:m.pyreT)-dt;
+  m.stormT=(m.stormT===undefined?7:m.stormT)-dt;
+  m.emberT=(m.emberT===undefined?0.3:m.emberT)-dt;
+  // summon ember children at hp thresholds
+  for(const [T,k] of [[0.75,"sm75"],[0.5,"sm50"],[0.25,"sm25"]]){
+    if(frac<=T&&!m[k]){m[k]=true;summonKezathAdds(m);};}
+  // phase change at 50%: the flame unseals
+  if(frac<=0.5&&!m.phase2){m.phase2=true;m.stormT=2;
+    floater(m.x,m.y-70,"The seal breaks!","#ff5030",true);Audio2.play("roar");
+    burst(m.x,m.y-20,"#ff6b2a",40,320,0.8,5);ring(m.x,m.y,"#ff8c2a",20,220,0.5);
+    msg("Kezath unseals itself — its fires rage unchecked!","quest");}
+  // enrage below 25%: hotter, faster
+  if(frac<=0.25&&!m.enraged){m.enraged=true;
+    floater(m.x,m.y-70,"Kezath burns brighter!","#ff6b5e",true);Audio2.play("roar");
+    msg("Kezath enrages — its flames flare white-hot!","quest");}
+  // Pyre Slam: heavy telegraphed AoE under the player
+  if(m.pyreT<=0&&pd<420){pyreSlam(m);m.pyreT=m.phase2?rndi(4,5.5):rndi(5.5,7);}
+  // Flame Storm (phase 2): a volley of fire circles around the player
+  if(m.phase2&&m.stormT<=0&&pd<460){flameStorm(m);m.stormT=rndi(6,9);}
+  // enrage: attack faster, douse faster
+  if(m.enraged)m.atkT-=dt*0.8;
+  // ambient ember aura
+  if(SETTINGS.particles&&m.emberT<=0){m.emberT=0.16;
+    particles.push({x:m.x+rnd(-34,34),y:m.y+rnd(-46,-8),vx:rnd(-16,16),vy:rnd(-80,-30),t:0,dur:rnd(0.5,1.0),
+      color:pick(["#ff8c2a","#ffd94d","#ff5a2a"]),size:rnd(2,3.5)});}
+}
+function pyreSlam(m){
+  telegraphs.push({x:G.x,y:G.y,r:150,t:0,dur:1.4,dmg:rndi(70,95),fire:true});
+  floater(m.x,m.y-70,"Pyre Slam!","#ff8c2a",true);
+  Audio2.play("cast");
+}
+function flameStorm(m){
+  for(let i=0;i<3;i++)
+    telegraphs.push({x:G.x+rnd(-120,120),y:G.y+rnd(-90,90),r:110,t:-i*0.35,dur:1.3,dmg:rndi(48,66),fire:true});
+  floater(m.x,m.y-70,"Flame Storm!","#ff5030",true);
+  Audio2.play("cast");
+}
+function summonKezathAdds(m){
+  floater(m.x,m.y-70,"The flame beckons its children!","#ff8c2a",true);
+  Audio2.play("roar");
+  for(let i=0;i<2;i++){
+    const a=rnd(Math.PI*2),d=rnd(60,110);
+    const s=spawnMob({type:"cinder",x:m.x+Math.cos(a)*d,y:m.y+Math.sin(a)*d});
+    s.state="aggro";s.target="player";s.atkT=0.8;
+    burst(s.x,s.y,"#ff6b2a",12,140,0.6,4);
+  }
+}
+
 // ---------- projectiles / traps / blizzards / telegraphs ----------
 function updateCombatFx(dt){
   shakeMag=Math.max(0,shakeMag-shakeMag*9*dt-2*dt);
@@ -2030,7 +2703,7 @@ function updateCombatFx(dt){
     const tx=t.x,ty=t.y-14,a=angTo(p.x,p.y,tx,ty);
     p.x+=Math.cos(a)*p.spd*dt;p.y+=Math.sin(a)*p.spd*dt;
     p.ang=a;
-    if(particles.length<500&&p.life>0.25&&Math.random()<0.7)
+    if(SETTINGS.particles&&particles.length<500&&p.life>0.25&&Math.random()<0.7)
       particles.push({x:p.x,y:p.y,vx:rnd(-30,30),vy:rnd(-30,30),t:0,dur:0.2,color:p.kind.startsWith("frost")?"#bfe6ff":(p.color||"#d8cdb2"),size:2});
     if(dist(p.x,p.y,tx,ty)<22){
       Audio2.play(p.kind.startsWith("frost")?"frosthit":"bowhit");
@@ -2058,8 +2731,11 @@ function updateCombatFx(dt){
     if(b.t>=b.dur)blizzards.splice(i,1);
   }
   for(let i=telegraphs.length-1;i>=0;i--){const t=telegraphs[i];t.t+=dt;
-    if(t.t>=t.dur){Audio2.play("boom");burst(t.x,t.y,"#ff8c2a",22,220,0.6,5);ring(t.x,t.y,"#ff6b2a",20,t.r,0.4);addShake(8);
-      if(dist(G.x,G.y,t.x,t.y)<t.r&&!G.dead){damagePlayer(t.dmg);addDebuff(G,"stun",1,1);msg("Slammed!","loot");}
+    if(t.t>=t.dur){
+      if(t.fire){Audio2.play("boom");burst(t.x,t.y,"#ff6b2a",24,240,0.55,5);ring(t.x,t.y,"#ff8c2a",20,t.r,0.35);addShake(6);
+        if(dist(G.x,G.y,t.x,t.y)<t.r&&!G.dead){damagePlayer(t.dmg);floater(G.x,G.y-34,"Burning!","#ff8c2a");}}
+      else{Audio2.play("boom");burst(t.x,t.y,"#ff8c2a",22,220,0.6,5);ring(t.x,t.y,"#ff6b2a",20,t.r,0.4);addShake(8);
+        if(dist(G.x,G.y,t.x,t.y)<t.r&&!G.dead){damagePlayer(t.dmg);addDebuff(G,"stun",1,1);msg("Slammed!","loot");}}
       telegraphs.splice(i,1);}
   }
   for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.t+=dt;
@@ -2186,6 +2862,48 @@ function updateQuestMarkers(){
 
 // ---------- NPC dialog ----------
 let dialogNPC=null;
+// ---------- chests & dungeon gates ----------
+function spawnChest(x,y,name,rich){
+  chests.push({x,y,opened:false,name,rich});
+}
+function openChest(c){
+  if(c.opened)return;
+  if(G.inv.length>=BAG_SIZE){msg("Bags are full — make room first.","loot");return;}
+  c.opened=true;
+  Audio2.play("chest");
+  ring(c.x,c.y-8,"#ffd94d",24,60,0.6);burst(c.x,c.y-12,"#ffd94d",18,150,0.6,3);
+  const loot=[];
+  if(c.rich){
+    // Kezath's Cache: 2 dungeon-tier pieces + the boss's class-unique + gold + potions
+    const slots=["weapon","head","chest","trinket","legs","gloves","boots"].sort(()=>rnd(-1,1)).slice(0,2);
+    for(const s of slots){
+      const pool=gearPool(G.clsKey,[s],[3,4],["ember","legend"]);
+      if(pool.length){const d=pool[(Math.random()*pool.length)|0];addGearItem(d);
+        loot.push(`<b style="color:${rarityColor(d.tier)}">${d.name}</b>`);}}
+    const u=gearById["kez_"+PFX_c(G.clsKey)];
+    if(u){addGearItem(u);loot.push(`<b style="color:${rarityColor(u.tier)}">★ ${u.name}</b>`);}
+    loot.push(potionLoot(2));
+    const g=rndi(500,800);G.gold+=g;loot.push(`<b style="color:#ffd94d">${g} gold</b>`);
+  }else{
+    // modest mid-dungeon cache
+    if(Math.random()<0.6){
+      const pool=gearPool(G.clsKey,["weapon","head","chest","legs","gloves","boots","trinket"],[2,3],["recluse","ember"]);
+      if(pool.length){const d=pool[(Math.random()*pool.length)|0];addGearItem(d);
+        loot.push(`<b style="color:${rarityColor(d.tier)}">${d.name}</b>`);}}
+    loot.push(potionLoot(1));
+    const g=rndi(180,420);G.gold+=g;loot.push(`<b style="color:#ffd94d">${g} gold</b>`);
+  }
+  msg("Opened "+c.name+": "+loot.join(", ")+".","loot");
+  saveGame();
+}
+function PFX_c(clsKey){return {warrior:"w",mage:"m",hunter:"h",necromancer:"n"}[clsKey];}
+function potionLoot(n){
+  const p=["hpotion","mpotion","elixir"];
+  let label=[];
+  for(let i=0;i<n;i++){const id=p[(Math.random()*p.length)|0];addItem(id,1);label.push(ITEMS[id].name);}
+  return label.join(", ");
+}
+
 function openDialog(npc){
   dialogNPC=npc;Audio2.play("talk");
   refreshNPCDialog();
@@ -2334,19 +3052,40 @@ function sellItem(id){
 }
 
 // ---------- quest log panel ----------
+let qsecOpen={active:true,completed:false}; // quest log sections: active open, completed collapsed
 function renderQuestLog(){
   const body=$("questlog-body");body.innerHTML="";
   const mine=QUESTS.filter(q=>questState(q.id)!=="none");
   if(!mine.length){body.appendChild(el("div","npc-text","No quests yet. Speak to the townsfolk of Emberhold — look for the golden ! marks."));return;}
-  for(const q of mine){
+  const renderQ=q=>{
     const s=questState(q.id),p=questProgress(q.id);
-    const d=el("div","qlog-item"+(s==="done"?" doneitem":""),
+    return el("div","qlog-item"+(s==="done"?" doneitem":""),
       `<div class="qstat">${s==="complete"?"Complete":s==="done"?"Ready to turn in":"In progress"}</div>
        <div class="qn">${q.name}</div>
        <div class="qo">${s==="complete"?"Finished.":(q.type==="kill"?`Slay: ${p}/${q.need}`:`Gather: ${p}/${q.need}`)}</div>
        <div class="qd">${s==="done"?"Return to "+npcName(q.giver)+".":q.active}</div>`);
-    body.appendChild(d);
-  }
+  };
+  const section=(key,label,list)=>{
+    const open=qsecOpen[key];
+    const wrap=el("div","qsec");
+    const h=el("div","qsec-h"+(open?"":" collapsed"));
+    h.innerHTML=`<span class="qchev">▾</span>${label}<span class="qsec-n">${list.length}</span>`;
+    h.setAttribute("role","button");h.setAttribute("tabindex","0");
+    h.setAttribute("aria-expanded",open?"true":"false");h.setAttribute("aria-label",label);
+    const toggle=()=>{Audio2.resume();Audio2.play("ui");qsecOpen[key]=!qsecOpen[key];renderQuestLog();};
+    h.onclick=toggle;
+    h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle();}});
+    wrap.appendChild(h);
+    const b=el("div","qsec-b"+(open?"":" collapsed"));
+    if(!list.length&&key==="active")b.appendChild(el("div","npc-text","No active quests. Speak to the townsfolk of Emberhold for work."));
+    for(const q of list)b.appendChild(renderQ(q));
+    wrap.appendChild(b);
+    body.appendChild(wrap);
+  };
+  const active=mine.filter(q=>questState(q.id)!=="complete");
+  const completed=mine.filter(q=>questState(q.id)==="complete");
+  section("active","Active Quests",active);
+  if(completed.length)section("completed","Completed Quests",completed);
 }
 
 // ---------- item tooltip: stats, comparison vs. equipped, and target slot ----------
@@ -2455,13 +3194,13 @@ function renderChar(){
   body.appendChild(el("div","npc-name",G.name));
   body.appendChild(el("div",null,`<span style="color:${c.color};font-weight:700">Level ${G.level} ${c.name}</span> <span style="color:#9d8a5c">• ${c.role}</span><br><span style="color:#c9bfa5">${RACES[G.raceKey]?RACES[G.raceKey].name:"Human"}</span> <span style="color:#8a8069">• ${RACES[G.raceKey]?RACES[G.raceKey].racialName:"Adaptability"} — ${RACES[G.raceKey]?RACES[G.raceKey].racialTip:""}</span>`));
   const rows=[["Health",`${Math.ceil(G.hp)} / ${G.maxhp}`],["Mana",`${Math.ceil(G.mana)} / ${G.maxmana}`],
-    ["XP",G.level>=6?"MAX":`${G.xp} / ${XP_NEED[G.level]}`],
+    ["XP",G.level>=MAX_LEVEL?"MAX":`${G.xp} / ${XP_NEED[G.level]}`],
     ["Attack Power",Math.round(playerAttackPower())],["Armor",Math.round(G.armor)],
     ["Coin",fmtGold(G.gold)],["Monsters slain",G.stats.kills],["Deaths",G.stats.deaths]];
   for(const [k,v] of rows)body.appendChild(el("div","stat-row",`<span class="k">${k}</span><span class="v">${v}</span>`));
   body.appendChild(el("div","help-sec",`<h4 style="margin-top:16px">Abilities</h4>`+
     c.abilities.map((a,i)=>{const ab=ABILITIES[a];return `<div class="stat-row"><span class="k">[${i+1}] ${ab.name}</span><span class="v">${G.level>=ab.unlock?"✓":"Lvl "+ab.unlock}</span></div>`;}).join("")+
-    `<div class="stat-row"><span class="k">[4] Health Potion</span><span class="v">×${countItem("hpotion")}</span></div>`));
+    `<div class="stat-row"><span class="k">[5] Health Potion</span><span class="v">×${countItem("hpotion")}</span></div>`));
   body.appendChild(el("div","help-sec",`<h4 style="margin-top:16px">Equipment <span style="font-size:12px;color:#8a8069;font-weight:400">(tap a piece to unequip)</span></h4>`));
   const eq=el("div","equip-grid");
   for(const slot of SLOTS){
@@ -2563,8 +3302,8 @@ function updatePlayer(dt){
   G.play+=dt;
   // movement
   let mx=0,my=0;
-  if(keys.w||keys.arrowup)my-=1;if(keys.s||keys.arrowdown)my+=1;
-  if(keys.a||keys.arrowleft)mx-=1;if(keys.d||keys.arrowright)mx+=1;
+  if(keys[BINDS.up]||keys.arrowup)my-=1;if(keys[BINDS.down]||keys.arrowdown)my+=1;
+  if(keys[BINDS.left]||keys.arrowleft)mx-=1;if(keys[BINDS.right]||keys.arrowright)mx+=1;
   if(joy.active){mx+=joy.dx;my+=joy.dy;}
   const ml=Math.hypot(mx,my);
   if(ml>1){mx/=ml;my/=ml;}
@@ -2574,7 +3313,38 @@ function updatePlayer(dt){
   if(!rooted&&(mx||my)){
     G.x+=mx*G.speed*slowMult(G)*speedBuff()*dt;G.y+=my*G.speed*slowMult(G)*speedBuff()*dt;
     resolveCollision(G,14);G.walkT+=dt*10;
+    // movement dust kicked up behind the player
+    G.dustT-=dt;
+    if(G.dustT<=0){G.dustT=0.13;
+      if(SETTINGS.particles&&Math.random()<0.75)
+        burst(G.x+rnd(-7,7),G.y+8+rnd(-3,3),tileAt(G.x,G.y)==TM.CAVEF?"#8a8578":"#a8977a",1,42,0.38,2);}
   }
+  // points of interest: discovery fanfare when first stepping close
+  G.poiT-=dt;
+  if(G.poiT<=0){G.poiT=0.3;
+    for(const poi of POIS){
+      if(G.discovered.includes(poi.id))continue;
+      if(dist(G.x,G.y,poi.x,poi.y)>poi.r)continue;
+      G.discovered.push(poi.id);
+      Audio2.play("discover");
+      ring(G.x,G.y,"#f5d376",12,110,0.8);burst(G.x,G.y-20,"#f5d376",18,180,0.7,3);
+      msg(`<b>${poi.name}</b> discovered!`,"quest");
+      if(!IS_TOUCH)floater(G.x,G.y-40,poi.name,"#f5d376",true);
+    }
+  }
+  // music zone follows the player's location
+  G.zoneT-=dt;
+  if(G.zoneT<=0){G.zoneT=1;Music.setZone(zoneOf(G.x,G.y));}
+  // dungeon gates: portals between the Ruined Spire and the Emberdeep
+  G.portalCd=Math.max(0,(G.portalCd||0)-dt);
+  if(G.portalCd<=0&&!G.dead)for(const p of portals){
+    if(dist(G.x,G.y,p.x,p.y)<52){
+      Audio2.play("portal");ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
+      G.x=p.dx;G.y=p.dy;G.portalCd=2.5;
+      ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
+      msg(p.id==="deep-in"?"You descend into the Emberdeep…":"You climb out of the Emberdeep…","quest");
+      Music.setZone(zoneOf(G.x,G.y));
+      break;}}
   if(G.lungeT>0)G.lungeT-=dt;
   if((G.castT||0)>0)G.castT-=dt;
   // regen
@@ -2623,7 +3393,7 @@ function s2w(sx,sy){return [(sx-vw/2)/viewScale+cam.x,(sy-vh/2)/viewScale+cam.y]
 function render(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.imageSmoothingEnabled=false;
-  if(!G||gameScreen==="title"||gameScreen==="create"){renderTitleBg();return;}
+  if(!G||gameScreen==="title"||gameScreen==="select"||gameScreen==="create"){renderTitleBg();return;}
   renderWorld();renderHUD();
 }
 
@@ -2637,7 +3407,7 @@ function renderWorld(){
   // ground tiles
   const x0=Math.max(0,Math.floor((cam.x-vw/2/viewScale)/TILE)-1),x1=Math.min(TW-1,Math.ceil((cam.x+vw/2/viewScale)/TILE)+1);
   const y0=Math.max(0,Math.floor((cam.y-vh/2/viewScale)/TILE)-1),y1=Math.min(TH-1,Math.ceil((cam.y+vh/2/viewScale)/TILE)+1);
-  const tileSpr=[SPR.t0,SPR.t1,SPR.t2,SPR.t3,SPR.t4,SPR.t5,SPR.t6,SPR.t7];
+  const tileSpr=[SPR.t0,SPR.t1,SPR.t2,SPR.t3,SPR.t4,SPR.t5,SPR.t6,SPR.t7,SPR.t8];
   for(let ty=y0;ty<=y1;ty++)for(let tx=x0;tx<=x1;tx++){
     const t=tiles[ty*TW+tx];
     const [sx,sy]=w2s(tx*TILE,ty*TILE);
@@ -2666,11 +3436,14 @@ function renderWorld(){
   }
   // telegraphs
   for(const t of telegraphs){
-    const [sx,sy]=w2s(t.x,t.y),r=t.r*viewScale,pr=t.t/t.dur;
-    ctx.beginPath();ctx.arc(sx,sy,r,0,7);ctx.fillStyle=`rgba(255,60,30,${0.08+pr*0.25})`;ctx.fill();
-    ctx.strokeStyle="#ff4b2a";ctx.lineWidth=3;ctx.stroke();
-    ctx.beginPath();ctx.arc(sx,sy,r*pr,0,7);ctx.fillStyle="rgba(255,80,40,0.35)";ctx.fill();
+    const [sx,sy]=w2s(t.x,t.y),r=t.r*viewScale,pr=clamp(t.t/t.dur,0,1);
+    ctx.beginPath();ctx.arc(sx,sy,r,0,7);ctx.fillStyle=t.fire?`rgba(255,120,40,${0.10+pr*0.28})`:`rgba(255,60,30,${0.08+pr*0.25})`;ctx.fill();
+    ctx.strokeStyle=t.fire?"#ff8c2a":"#ff4b2a";ctx.lineWidth=3;ctx.stroke();
+    ctx.beginPath();ctx.arc(sx,sy,r*pr,0,7);ctx.fillStyle=t.fire?"rgba(255,140,42,0.4)":"rgba(255,80,40,0.35)";ctx.fill();
   }
+  // dungeon gates & chests (before entities, like doorway art)
+  for(const p of portals)drawPortal(p);
+  for(const c of chests)drawChest(c);
   // y-sorted entities
   const ents=[];
   for(const d of decor)ents.push({y:d.y,k:"d",d});
@@ -2735,7 +3508,52 @@ function renderWorld(){
     ctx.lineWidth=3;ctx.strokeStyle="#000";ctx.strokeText(f.txt,sx,sy);ctx.fillStyle=f.color;ctx.fillText(f.txt,sx,sy);
     ctx.globalAlpha=1;
   }
+  // the Emberdeep: a warm gloom presses into the crypt's air
+  if(G&&zoneOf(G.x,G.y)==="dungeon"){
+    ctx.fillStyle="rgba(24,8,14,0.26)";ctx.fillRect(-120,-120,vw+240,vh+240);
+    ctx.fillStyle="rgba(60,20,8,0.10)";ctx.fillRect(-120,-120,vw+240,vh+240);
+  }
   ctx.restore(); // end screen shake
+}
+
+function drawPortal(p){
+  const [sx,sy]=w2s(p.x,p.y),s=viewScale,t=performance.now()/1000;
+  const w=46*s,h=60*s;
+  // arched stone doorway
+  ctx.fillStyle="#2b2b34";ctx.fillRect(sx-w/2,sy-h,w*.16,w);
+  ctx.fillStyle="#34343f";ctx.fillRect(sx-w/2+4*s,sy-h+6*s,w*.84,h-6*s);
+  // swirling flame gate
+  const pulse=0.55+0.45*Math.sin(t*3+p.x);
+  ctx.globalAlpha=0.35+0.3*pulse;
+  ctx.fillStyle="#ff8c2a";
+  ctx.beginPath();ctx.ellipse(sx,sy-24*s,14*s*(0.85+0.15*pulse),24*s,0,0,7);ctx.fill();
+  ctx.globalAlpha=0.9;
+  ctx.fillStyle="#ffd94d";
+  ctx.beginPath();ctx.ellipse(sx,sy-22*s,6*s,14*s,0,0,7);ctx.fill();
+  ctx.globalAlpha=1;
+  // pillar caps
+  ctx.fillStyle="#4a4a56";ctx.fillRect(sx-w/2-3*s,sy-h-4*s,w*.22,7*s);
+  ctx.fillRect(sx+w/2-w*.22+3*s,sy-h-4*s,w*.22,7*s);
+  // base shadow
+  ctx.fillStyle="rgba(0,0,0,0.35)";ctx.beginPath();ctx.ellipse(sx,sy,26*s,7*s,0,0,7);ctx.fill();
+}
+function drawChest(c){
+  const [sx,sy]=w2s(c.x,c.y),s=viewScale;
+  const w=34*s,h=24*s,bob=c.opened?0:Math.sin(performance.now()/700+c.x)*1.5*s;
+  ctx.fillStyle="rgba(0,0,0,0.35)";ctx.beginPath();ctx.ellipse(sx,sy,20*s,6*s,0,0,7);ctx.fill();
+  // body + lid
+  ctx.fillStyle=c.opened?"#5a4028":"#7a4a22";ctx.fillRect(sx-w/2,sy-h/2+bob,w,h/2+4*s);
+  ctx.fillStyle=c.opened?"#6b4a2e":"#8f5a26";ctx.fillRect(sx-w/2,sy-h+bob,w,h/2+2*s);
+  // brass trim + lock
+  ctx.fillStyle="#d8a93c";ctx.fillRect(sx-w/2,sy-2*s+bob,w,3*s);
+  ctx.fillRect(sx-3*s,sy-h+3*s+bob,6*s,h-3*s);
+  if(!c.opened){
+    ctx.fillStyle="#ffd94d";ctx.fillRect(sx-4.5*s,sy-4*s+bob,9*s,10*s);
+    ctx.fillStyle="#5a2a10";ctx.fillRect(sx-1.5*s,sy-1*s+bob,3*s,4*s);
+    // sparkle
+    if(SETTINGS.particles&&Math.random()<0.04)
+      particles.push({x:c.x+rnd(-16,16),y:c.y+rnd(-26,-8),vx:rnd(-10,10),vy:rnd(-40,-16),t:0,dur:rnd(0.4,0.7),color:"#ffd94d",size:2.5});
+  }
 }
 
 function drawEnt(spr,x,y,scale,flip,bob){
@@ -2790,7 +3608,7 @@ function drawMobCorpse(m,spr,scale,w,h,sx,sy){
 
 function drawMob(m){
   const spr=SPR[m.t.sprite];
-  const scale=m.t.elite?3:(m.type==="gnoll_alpha"?2.6:2);
+  const scale=m.t.elite?3:(m.type==="gnoll_alpha"?2.6:(m.type==="horror"?2.7:(m.type==="cinder"?2.3:2)));
   const [sx,sy]=w2s(m.x,m.y);
   const w=spr.width*scale*viewScale,h=spr.height*scale*viewScale;
   if(m.state==="dead"){drawMobCorpse(m,spr,scale,w,h,sx,sy);return;}
@@ -2997,8 +3815,8 @@ function renderHUD(){
   }
   // XP bar (bottom center, above hotbar)
   const xbw=Math.min(560,vw-240),xbx=(vw-xbw)/2,xby=vh-96;
-  bar(xbx,xby,xbw,10,G.level>=6?1:G.xp/XP_NEED[G.level],"#8a5cc9");
-  text(G.level>=6?"MAX LEVEL":`Level ${G.level} — ${G.xp}/${XP_NEED[G.level]} XP`,vw/2,xby-5,11,"#c9a0e8","center","sans-serif");
+  bar(xbx,xby,xbw,10,G.level>=MAX_LEVEL?1:G.xp/XP_NEED[G.level],"#8a5cc9");
+  text(G.level>=MAX_LEVEL?"MAX LEVEL":`Level ${G.level} — ${G.xp}/${XP_NEED[G.level]} XP`,vw/2,xby-5,11,"#c9a0e8","center","sans-serif");
   // hotbar (desktop canvas; touch uses DOM buttons)
   if(!IS_TOUCH)renderHotbar();
   // minimap
@@ -3025,6 +3843,15 @@ function renderHUD(){
   if(hint)text(hint,vw/2,vh-130,14,"#ffe9b0","center");
 }
 function fmtDur(s){s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function rr(x,y,w,h,r){ // rounded-rect path helper
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
 function interactHint(){
   for(const n of npcs)if(dist(G.x,G.y,n.x,n.y)<150)return (IS_TOUCH?"Tap TALK to speak with ":"Click ")+n.name+" to talk";
   for(const p of pickups)if(p.t<=0&&dist(G.x,G.y,p.x,p.y)<130)return IS_TOUCH?"Tap GET to gather the mushroom":"Click the mushroom to gather";
@@ -3039,6 +3866,7 @@ function nearestInteractable(){
   for(const n of npcs){const d=dist(G.x,G.y,n.x,n.y);if(d<170&&(!best||d<best.d))best={kind:"npc",d,n};}
   for(const p of pickups){if(p.t>0)continue;const d=dist(G.x,G.y,p.x,p.y);if(d<130&&(!best||d<best.d))best={kind:"pickup",d,p};}
   for(const v of villagers){const d=dist(G.x,G.y,v.x,v.y);if(d<170&&(!best||d<best.d))best={kind:"villager",d,v};}
+  for(const c of chests){if(c.opened)continue;const d=dist(G.x,G.y,c.x,c.y);if(d<130&&(!best||d<best.d))best={kind:"chest",d,c};}
   return best;
 }
 function refreshInteractButton(){
@@ -3047,6 +3875,7 @@ function refreshInteractButton(){
   let glyph="!",sub="TALK",aria="Talk";
   if(ia.kind==="npc"){glyph="❝";sub="TALK";aria="Talk to "+ia.n.name;}
   else if(ia.kind==="pickup"){glyph="✿";sub="GET";aria="Gather mushroom";}
+  else if(ia.kind==="chest"){glyph="✦";sub="OPEN";aria="Open "+ia.c.name;}
   else{glyph="❝";sub="CHAT";aria="Chat with villager";}
   const key=ia.kind+":"+sub+":"+aria;
   if(lastActKey===key)return;
@@ -3061,28 +3890,32 @@ function performInteract(){
   Audio2.resume();Audio2.play("ui");
   if(ia.kind==="npc")openDialog(ia.n);
   else if(ia.kind==="pickup")tryGather(ia.p.x,ia.p.y);
+  else if(ia.kind==="chest")openChest(ia.c);
   else msg(pick(["Lovely day in Emberhold.","Heard Cragmaw's been restless…","Pell overcharges, but don't tell him I said so.","My cousin swears the boars are organizing."]));
 }
+let hotbarSlots=[]; // {x,y,size,slot,aid} — canvas hit areas for tooltips
 function renderHotbar(){
-  const size=56,gap=8,n=4,w=n*(size+gap)-gap,x0=(vw-w)/2,y0=vh-size-14;
-  for(let i=0;i<4;i++){
+  const size=56,gap=8,n=5,w=n*(size+gap)-gap,x0=(vw-w)/2,y0=vh-size-14;
+  hotbarSlots=[];
+  for(let i=0;i<5;i++){
     const x=x0+i*(size+gap);
-    let iconId,ready=true,frac=0,locked=false,label=String(i+1);
-    if(i<3){const aid=cls().abilities[i],ab=ABILITIES[aid];iconId=aid;
+    let iconId,ready=true,frac=0,locked=false,label=String(i+1),aid=null;
+    if(i<4){aid=cls().abilities[i];const ab=ABILITIES[aid];iconId=aid;
       if(G.level<ab.unlock){locked=true;}
       else{const cd=G.cd[aid]||0;if(cd>0){ready=false;frac=cd/effCD(aid);}}
       if(G.mana<effCost(aid)&&!locked)ready=false;
-    }else{iconId="hpotion";const cd=G.cd.potion||0;if(cd>0){ready=false;frac=cd/ABILITIES.potion.cd;}
+    }else{aid="potion";iconId="hpotion";const cd=G.cd.potion||0;if(cd>0){ready=false;frac=cd/ABILITIES.potion.cd;}
       if(countItem("hpotion")<=0)locked=true;}
+    hotbarSlots.push({x,y:y0,size,slot:i,aid});
     ctx.fillStyle="rgba(10,12,18,0.85)";ctx.fillRect(x,y0,size,size);
     ctx.strokeStyle=locked?"#4a4a52":"#8a6d2f";ctx.lineWidth=2;ctx.strokeRect(x+1,y0+1,size-2,size-2);
     ctx.globalAlpha=locked?0.35:(ready?1:0.7);
     ctx.drawImage(ICONS[iconId],x+4,y0+4,size-8,size-8);ctx.globalAlpha=1;
     if(!ready&&frac>0){ctx.fillStyle="rgba(0,0,0,0.65)";ctx.fillRect(x+2,y0+2,size-4,(size-4)*frac);
-      const aid=i<3?cls().abilities[i]:"potion";text(Math.ceil(G.cd[aid]||0),x+size/2,y0+size/2+7,18,"#fff","center","sans-serif");}
-    if(i===3&&countItem("hpotion")>0)text("×"+countItem("hpotion"),x+size-6,y0+size-6,11,"#ffd94d","right","sans-serif");
+      const aid2=i<4?cls().abilities[i]:"potion";text(Math.ceil(G.cd[aid2]||0),x+size/2,y0+size/2+7,18,"#fff","center","sans-serif");}
+    if(i===4&&countItem("hpotion")>0)text("×"+countItem("hpotion"),x+size-6,y0+size-6,11,"#ffd94d","right","sans-serif");
     text(label,x+6,y0+16,11,"#f5d376","left","sans-serif");
-    if(locked&&i<3)text("Lv"+ABILITIES[cls().abilities[i]].unlock,x+size/2,y0+size/2+7,15,"#9d8a5c","center","sans-serif");
+    if(locked&&i<4)text("Lv"+ABILITIES[cls().abilities[i]].unlock,x+size/2,y0+size/2+7,15,"#9d8a5c","center","sans-serif");
   }
 }
 function renderMinimap(){
@@ -3102,18 +3935,22 @@ function renderMinimap(){
   text("Emberhold",mx,my+r+14,11,"#9d8a5c","center");
 }
 function renderTracker(){
+  if(!SETTINGS.tracker)return;
   const act=QUESTS.filter(q=>{const s=questState(q.id);return s==="active"||s==="done";});
   if(!act.length)return;
-  let y=IS_TOUCH?170:200;
-  const x=vw-16;
-  text("QUESTS",x,y,12,"#f5d376","right");y+=20;
-  for(const q of act.slice(0,3)){
+  // left side, below the player frame — clear of minimap and hotbar
+  const show=act.slice(0,3),x=12,y0=IS_TOUCH?222:212,h=show.length*41+24;
+  ctx.fillStyle="rgba(8,10,16,0.72)";rr(x,y0-16,272,h,8);ctx.fill();
+  ctx.strokeStyle="rgba(138,109,47,0.55)";ctx.lineWidth=1;rr(x,y0-16,272,h,8);ctx.stroke();
+  let y=y0;
+  text("QUESTS",x+12,y,12,"#f5d376","left");y+=22;
+  for(const q of show){
     const s=questState(q.id),p=questProgress(q.id);
-    text(q.name,x,y,13,s==="done"?"#7bc74d":"#ffd94d","right");y+=17;
+    text(q.name,x+12,y,13,s==="done"?"#7bc74d":"#ffd94d","left");y+=17;
     const obj=q.type==="kill"
       ?`Slain: ${p}/${q.need}`
       :`Mushrooms: ${p}/${q.need}`;
-    text(s==="done"?"Return to "+npcName(q.giver):obj,x,y,11,"#d8cdb2","right","sans-serif");y+=22;
+    text(s==="done"?"Return to "+npcName(q.giver):obj,x+12,y,11,"#d8cdb2","left","sans-serif");y+=24;
   }
 }
 
@@ -3168,32 +4005,47 @@ function renderTitleBg(){
 }
 
 // ---------- input ----------
-let gameScreen="title"; // title | create | play
-const modalOpen=()=>["dialog","vendor","questlog","bagpanel","charpanel","talents","help"].some(id=>!$(id).classList.contains("hidden"));
-function closeModals(){for(const id of ["dialog","vendor","questlog","bagpanel","charpanel","talents","help"])$(id).classList.add("hidden");dialogNPC=null;hideItemTip();}
+let gameScreen="title"; // title | select | create | play
+let pendingDeleteSlot=null,creatingSlot=null,createReturn="title";
+const modalOpen=()=>["dialog","vendor","questlog","bagpanel","charpanel","talents","help","options","delete-confirm"].some(id=>!$(id).classList.contains("hidden"));
+function closeModals(){for(const id of ["dialog","vendor","questlog","bagpanel","charpanel","talents","help","options","delete-confirm"])$(id).classList.add("hidden");dialogNPC=null;hideItemTip();rebindTarget=null;pendingDeleteSlot=null;}
 $("bagpanel").addEventListener("scroll",()=>hideItemTip());
 document.addEventListener("touchstart",()=>{tipTouchMode=true;},{passive:true,capture:true});
 document.addEventListener("mousemove",()=>{tipTouchMode=false;},{capture:true});
 
 window.addEventListener("keydown",e=>{
   const k=e.key.toLowerCase();
+  // hotkey rebinding capture: next non-reserved key is bound to the clicked action
+  if(rebindTarget){
+    e.preventDefault();e.stopPropagation();
+    if(k!=="escape"&&!NO_BIND.includes(k)){
+      for(const a in BINDS)if(a!==rebindTarget&&BINDS[a]===k){BINDS[a]=BINDS[rebindTarget];break;} // swap conflicts
+      BINDS[rebindTarget]=k;saveBinds();Audio2.play("ui");
+    }else Audio2.play("error");
+    rebindTarget=null;renderOptions();
+    return;
+  }
   if(gameScreen!=="play"){
-    if(k==="escape"){closeModals();if(gameScreen==="create"){$("create-screen").classList.add("hidden");$("title-screen").classList.remove("hidden");gameScreen="title";}}
+    if(k==="escape"){const hadModal=modalOpen();closeModals();if(hadModal)return;
+      if(gameScreen==="select")exitCharacterSelect();
+      else if(gameScreen==="create")exitCreation();}
     return;
   }
   if(document.activeElement===$("char-name"))return;
   if(["arrowup","arrowdown","arrowleft","arrowright"," "].includes(k))e.preventDefault();
   keys[k]=true;
   if(k==="tab"){e.preventDefault();cycleTarget();}
-  else if(k==="1")useAbilitySlot(0);else if(k==="2")useAbilitySlot(1);
-  else if(k==="3")useAbilitySlot(2);else if(k==="4")useAbilitySlot(3);
+  else if(k===BINDS.ab1)useAbilitySlot(0);else if(k===BINDS.ab2)useAbilitySlot(1);
+  else if(k===BINDS.ab3)useAbilitySlot(2);else if(k===BINDS.ab4)useAbilitySlot(3);
+  else if(k===BINDS.potion)useAbilitySlot(4);
   else if(k==="l")togglePanel("questlog",renderQuestLog);
   else if(k==="b")togglePanel("bagpanel",renderBag);
   else if(k==="c")togglePanel("charpanel",renderChar);
   else if(k==="t")togglePanel("talents",renderTalents);
   else if(k==="h")togglePanel("help");
   else if(k==="m")toggleMute();
-  else if(k==="e")performInteract();
+  else if(k==="o")togglePanel("options",renderOptions);
+  else if(k===BINDS.interact)performInteract();
   else if(k==="escape"){if(modalOpen())closeModals();else G.target=null;}
 });
 window.addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=false;});
@@ -3235,6 +4087,55 @@ function worldTap(sx,sy){
   for(const v of villagers){if(dist(wx,wy,v.x,v.y-16)<50&&dist(G.x,G.y,v.x,v.y)<170){
     msg(pick(["Lovely day in Emberhold.","Heard Cragmaw's been restless…","Pell overcharges, but don't tell him I said so.","My cousin swears the boars are organizing."]));return;}}
 }
+
+// ability tooltip HTML for the canvas hotbar
+function abilityTipHTML(slot){
+  const isPotion=slot===4;
+  const aid=isPotion?"potion":cls().abilities[slot];
+  const ab=ABILITIES[aid];
+  const keyB=keyLabel(BINDS[["ab1","ab2","ab3","ab4","potion"][slot]]);
+  const h=[];
+  h.push(`<div class="tt-name" style="color:${isPotion?"#ffd94d":"#f5d376"}">${ab.name}</div>`);
+  h.push(`<div class="tt-meta">${isPotion?"Consumable":"Ability "+(slot+1)+" · unlocks Lv"+ab.unlock} · <b style="color:#ffe9b0">${keyB}</b></div>`);
+  h.push(`<div class="tt-stats">`);
+  h.push(`<div class="tt-stat"><span>Mana cost</span><span class="d">${effCost(aid)}</span></div>`);
+  h.push(`<div class="tt-stat"><span>Cooldown</span><span class="d">${effCD(aid)}s</span></div>`);
+  if(ab.range)h.push(`<div class="tt-stat"><span>Range</span><span class="d">${ab.range}</span></div>`);
+  if(isPotion)h.push(`<div class="tt-stat"><span>Carried</span><span class="d">×${countItem("hpotion")}</span></div>`);
+  h.push(`</div>`);
+  h.push(`<div class="tt-hint" style="font-style:normal">${ab.tip}</div>`);
+  return h.join("");
+}
+let hotTipShown=-1;
+// desktop: hotbar hover tooltips + thematic cursor updates
+cv.addEventListener("mousemove",e=>{
+  if(tipTouchMode||IS_TOUCH||gameScreen!=="play"||modalOpen()){if(hotTipShown>=0){hotTipShown=-1;hideItemTip();}return;}
+  let slot=-1;
+  for(const h of hotbarSlots)if(e.clientX>=h.x&&e.clientX<=h.x+h.size&&e.clientY>=h.y&&e.clientY<=h.y+h.size){slot=h.slot;break;}
+  if(slot!==hotTipShown){hotTipShown=slot;
+    if(slot>=0)showItemTip(abilityTipHTML(slot),e.clientX,e.clientY);
+    else hideItemTip();}
+  else if(slot>=0)placeItemTip(e.clientX,e.clientY);
+});
+cv.addEventListener("mousemove",e=>{
+  if(!SETTINGS.cursor||IS_TOUCH){cv.style.cursor="";return;}
+  if(!CURSORS.pointer)buildCursors();
+  let img=CURSORS.pointer;
+  if(gameScreen==="play"&&!modalOpen()){
+    let onBar=false;
+    for(const h of hotbarSlots){if(e.clientX>=h.x&&e.clientX<=h.x+h.size&&e.clientY>=h.y&&e.clientY<=h.y+h.size){img=CURSORS.npc;onBar=true;break;}}
+    if(!onBar){
+      const [wx,wy]=s2w(e.clientX,e.clientY);
+      for(const m of mobs){if(m.state==="dead")continue;
+        if(dist(wx,wy,m.x,m.y-14)<(m.t.elite?70:44)/viewScale+18){img=CURSORS.enemy;break;}}
+      if(img===CURSORS.pointer){
+        for(const n of npcs)if(dist(wx,wy,n.x,n.y-16)<64/viewScale+30){img=CURSORS.npc;break;}
+        if(img===CURSORS.pointer)for(const p of pickups)if(p.t<=0&&dist(wx,wy,p.x,p.y)<70){img=CURSORS.npc;break;}
+      }
+    }
+  }
+  cv.style.cursor=img;
+});
 
 // touch: joystick (left) + tap (right) + ability buttons
 const joy={active:false,id:null,ox:0,oy:0,dx:0,dy:0};
@@ -3282,10 +4183,10 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 // ability buttons (DOM, touch)
 function refreshAbilityButtons(){
-  for(let i=0;i<4;i++){
+  for(let i=0;i<5;i++){
     const b=$("ab"+i);if(!b)continue;
     let iconId,cdLeft=0,cdMax=1,locked=false,lockTxt="";
-    if(i<3){const aid=cls().abilities[i],ab=ABILITIES[aid];iconId=aid;
+    if(i<4){const aid=cls().abilities[i],ab=ABILITIES[aid];iconId=aid;
       if(G.level<ab.unlock){locked=true;lockTxt="Lv"+ab.unlock;}
       cdLeft=G.cd[aid]||0;cdMax=ab.cd;
       b.classList.toggle("nomt",G.mana<effCost(aid));
@@ -3295,12 +4196,13 @@ function refreshAbilityButtons(){
     b.style.backgroundImage=`url(${iconURL(iconId)})`;
     b.classList.toggle("locked",locked);
     b.querySelector(".lock").textContent=lockTxt;
+    const k=b.querySelector(".key");if(k)k.textContent=keyLabel(BINDS[["ab1","ab2","ab3","ab4","potion"][i]]);
     const cdo=b.querySelector(".cdo");
     if(cdLeft>0){cdo.style.display="flex";cdo.textContent=Math.ceil(cdLeft);}else cdo.style.display="none";
   }
 }
-for(let i=0;i<4;i++){
-  const b=$("ab"+i);
+for(let i=0;i<5;i++){
+  const b=$("ab"+i);if(!b)continue;
   b.addEventListener("touchstart",e=>{e.preventDefault();e.stopPropagation();useAbilitySlot(i);},{passive:false});
   b.addEventListener("mousedown",e=>{e.stopPropagation();useAbilitySlot(i);});
 }
@@ -3314,14 +4216,104 @@ $("sb-bag").onclick=()=>{Audio2.play("ui");togglePanel("bagpanel",renderBag);};
 $("sb-char").onclick=()=>{Audio2.play("ui");togglePanel("charpanel",renderChar);};
 $("sb-talent").onclick=()=>{Audio2.play("ui");togglePanel("talents",renderTalents);};
 $("sb-help").onclick=()=>{Audio2.play("ui");togglePanel("help");};
+$("sb-opt").onclick=()=>{Audio2.play("ui");togglePanel("options",renderOptions);};
 $("sb-mute").onclick=()=>toggleMute();
-function toggleMute(){Audio2.resume();Audio2.setMuted(!Audio2.muted);
-  $("sb-mute").firstChild.textContent=Audio2.muted?"✕":"♪";
-  $("sb-mute").querySelector(".sub").textContent=Audio2.muted?"MUTED":"SOUND";}
+$("btn-opt").onclick=()=>{Audio2.play("ui");togglePanel("options",renderOptions);};
+function toggleMute(){Audio2.resume();Audio2.setMuted(!Audio2.muted);}
+// keeps the side mute button in sync with SETTINGS.mute
+function updateMuteButton(){const b=$("sb-mute");if(!b)return;
+  b.firstChild.textContent=SETTINGS.mute?"✕":"♪";
+  b.querySelector(".sub").textContent=SETTINGS.mute?"MUTED":"SOUND";}
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{Audio2.play("ui");$(b.dataset.close).classList.add("hidden");if(b.dataset.close==="dialog")dialogNPC=null;});
 $("tab-buy").onclick=()=>{shopMode="buy";Audio2.play("ui");renderShop();};
 $("tab-sell").onclick=()=>{shopMode="sell";Audio2.play("ui");renderShop();};
 $("btn-respawn").onclick=()=>{Audio2.play("ui");respawn();};
+$("btn-death-menu").onclick=()=>{Audio2.play("ui");returnToMainMenu();};
+
+// ---------- options panel ----------
+function renderOptions(){
+  const b=$("options-body");b.innerHTML="";
+  const sec=(t)=>{const s=el("div","opt-sec");s.innerHTML=`<h4>${t}</h4>`;b.appendChild(s);return s;};
+  const tgl=(key,title,desc,secEl)=>{
+    const row=el("div","opt-row");
+    row.appendChild(el("div","opt-label",`<div class="t">${title}</div>${desc?`<div class="d">${desc}</div>`:""}`));
+    const lab=el("label","opt-toggle"),input=el("input"),track=el("span","track");
+    input.type="checkbox";input.checked=!!SETTINGS[key];
+    lab.appendChild(input);lab.appendChild(track);row.appendChild(lab);
+    input.onchange=()=>{SETTINGS[key]=input.checked;saveOpts();applyHudToggles();applyCursor();Audio2.play("ui");};
+    (secEl||b).appendChild(row);
+  };
+  const slider=(key,title,desc,secEl)=>{
+    const row=el("div","opt-row");
+    row.appendChild(el("div","opt-label",`<div class="t">${title}</div>${desc?`<div class="d">${desc}</div>`:""}`));
+    const val=el("span","opt-val",(SETTINGS[key]|0)+"%");
+    const inp=el("input");inp.type="range";inp.min="0";inp.max="100";inp.value=SETTINGS[key];inp.className="opt-slider";
+    inp.oninput=()=>{SETTINGS[key]=+inp.value;saveOpts();val.textContent=SETTINGS[key]+"%";Audio2.applyAudio();};
+    inp.onchange=()=>{Audio2.resume();Audio2.play("ui");};
+    row.appendChild(val);row.appendChild(inp);
+    (secEl||b).appendChild(row);
+  };
+  const mrow=(key,title,secEl)=>{
+    const row=el("div","opt-row");
+    row.appendChild(el("div","opt-label",`<div class="t">${title}</div>`));
+    const btn=el("button","btn small",SETTINGS[key]?"Muted":"Unmuted");
+    btn.onclick=()=>{SETTINGS[key]=!SETTINGS[key];saveOpts();Audio2.applyAudio();applyHudToggles();renderOptions();Audio2.play("ui");};
+    row.appendChild(btn);
+    (secEl||b).appendChild(row);
+  };
+  // -- Graphics
+  const g=sec("Graphics");
+  tgl("cursor","Custom cursor","Fantasy-themed mouse cursor; changes when hovering enemies, allies and interactables.",g);
+  tgl("particles","Particles","Spell impacts, projectile trails, movement dust and other effects.",g);
+  tgl("shake","Screen shake","Camera shake on heavy hits and boss attacks.",g);
+  // -- Audio
+  const a=sec("Audio");
+  slider("masterVol","Master volume","",a);mrow("mute","Mute all",a);
+  slider("musicVol","Music volume","Background music and ambience.",a);mrow("musicMute","Mute music",a);
+  slider("sfxVol","Sound effects volume","",a);mrow("sfxMute","Mute sound effects",a);
+  // -- Display
+  const d=sec("Display");
+  tgl("dmgNums","Damage numbers","Floating damage & healing numbers in combat.",d);
+  tgl("tracker","Quest tracker","Left-side quest objective panel.",d);
+  tgl("vignette","Vignette","Soft dark edge around the screen.",d);
+  // -- Keybindings
+  const c=sec("Keybindings");
+  for(const cat of BIND_CATS){
+    c.appendChild(el("div","bind-cat",cat.name));
+    for(const [act,label] of cat.acts){
+      const row=el("div","bind-row");
+      row.appendChild(el("span","bind-lbl",label));
+      const kb=el("button","bind-key"+(rebindTarget===act?" cap":""),rebindTarget===act?"press a key…":keyLabel(BINDS[act]));
+      kb.onclick=(ev)=>{ev.stopPropagation();Audio2.play("ui");
+        rebindTarget=(rebindTarget===act)?null:act;renderOptions();};
+      row.appendChild(kb);c.appendChild(row);
+    }
+  }
+  c.appendChild(el("div","opt-note","Click a binding, then press any key to reassign it; Esc cancels. Some keys (Tab, L, B, C, T, H, M, O, Enter) are reserved for the interface. Arrow keys always work for movement."));
+  const foot=el("div","opt-foot");
+  const rb=el("button","btn small","Reset Keybindings");
+  rb.onclick=()=>{resetBinds();rebindTarget=null;renderOptions();Audio2.play("ui");};
+  const ro=el("button","btn small","Reset All Options");
+  ro.onclick=()=>{resetOpts();rebindTarget=null;renderOptions();Audio2.play("ui");};
+  foot.appendChild(rb);foot.appendChild(ro);b.appendChild(foot);
+  b.appendChild(el("div","opt-note","Options and keybindings are saved automatically on this device and apply immediately."));
+  if(gameScreen==="play"){
+    const ge=sec("Game");
+    const row=el("div","opt-row");
+    row.appendChild(el("div","opt-label",`<div class="t">Return to Main Menu</div>`));
+    const menuBtn=el("button","btn small","Return to Main Menu");
+    menuBtn.onclick=()=>{Audio2.play("ui");returnToMainMenu();};
+    row.appendChild(menuBtn);ge.appendChild(row);
+    ge.appendChild(el("div","opt-note","Your hero is saved before returning, so you can continue from the title screen."));
+  }
+  // -- Exit
+  const ex=sec("Exit");
+  const xrow=el("div","opt-row");
+  xrow.appendChild(el("div","opt-label",`<div class="t">Exit Game</div>`));
+  const exBtn=el("button","btn small","Exit Game");
+  exBtn.onclick=()=>exitGame();
+  xrow.appendChild(exBtn);ex.appendChild(xrow);
+}
 
 // ---------- character creation ----------
 let selClass="warrior",selRace="human";
@@ -3381,53 +4373,222 @@ function buildClassCards(){
   drawPreview();
 }
 $("btn-random-name").onclick=()=>{Audio2.play("ui");$("char-name").value=pick(NAMES);};
-$("create-back").onclick=()=>{$("create-screen").classList.add("hidden");$("title-screen").classList.remove("hidden");gameScreen="title";};
+$("create-back").onclick=()=>exitCreation();
+$("char-back").onclick=()=>{Audio2.play("ui");exitCharacterSelect();};
 $("btn-new").onclick=()=>{Audio2.resume();Audio2.play("ui");
-  $("title-screen").classList.add("hidden");$("create-screen").classList.remove("hidden");
-  gameScreen="create";selRace="human";AP.skin=1;AP.hair=1;AP.style=0;AP.eyes=0;AP.acc=0;buildRaceCards();buildClassCards();buildAppearance();$("char-name").value=pick(NAMES);};
+  const slot=firstEmptySlot();if(slot<0){openCharacterSelect("All three hero slots are full. Delete a hero to create another.");return;}
+  beginCreation(slot,false);};
+$("btn-select").onclick=()=>{Audio2.resume();Audio2.play("ui");openCharacterSelect();};
 $("btn-how").onclick=()=>{Audio2.play("ui");togglePanel("help");};
+$("btn-exit-game").onclick=()=>{Audio2.play("ui");exitGame();};
 $("btn-begin").onclick=()=>{
   Audio2.resume();
+  if(typeof creatingSlot!=="number"||creatingSlot<0||creatingSlot>=SLOT_COUNT){Audio2.play("error");return;}
+  if(loadSlot(creatingSlot)){Audio2.play("error");openCharacterSelect("That hero slot is already occupied.");return;}
   const name=($("char-name").value||"").trim()||pick(NAMES);
   Audio2.play("quest");
-  startGame(name,selClass,null,selRace);
+  const slot=creatingSlot;creatingSlot=null;
+  startGame(name,selClass,null,selRace,slot);
 };
+$("delete-cancel").onclick=()=>{Audio2.play("ui");closeModals();};
+$("delete-yes").onclick=()=>{Audio2.play("ui");deletePendingCharacter();};
 $("btn-continue").onclick=()=>{Audio2.resume();Audio2.play("ui");
-  const s=loadGame();if(s)startGame(s.name,s.clsKey,s);};
+  const slot=continueSlotIndex();if(slot<0)return;continueCharacter(slot);};
 
-// ---------- save / load ----------
-const SAVE_KEY="wow2d_save_v3";
+// ---------- character saves (separate slots) ----------
+const SLOT_COUNT=3;
+const CHAR_KEY_PREFIX="questbound_chars_v1_slot";
+const ACTIVE_KEY="questbound_chars_v1_active";
+const LEGACY_SAVE_KEYS=["wow2d_save_v4","wow2d_save_v3","wow2d_save_v2","wow2d_save_v1"];
+let activeSlot=null;
+try{const savedActive=parseInt(localStorage.getItem(ACTIVE_KEY),10);if(savedActive>=0&&savedActive<SLOT_COUNT)activeSlot=savedActive;}catch(e){}
+function slotKey(slot){return `${CHAR_KEY_PREFIX}${slot+1}`;}
+function validSave(s){return !!(s&&(s.v===1||s.v===2||s.v===3||s.v===4)&&s.name&&s.clsKey);}
+function parseSlotSave(raw,slot){
+  if(!raw)return null;
+  try{const s=JSON.parse(raw);if(!validSave(s))return null;s.slot=slot;return s;}catch(e){return null;}
+}
+function loadLegacyGame(){
+  try{
+    for(const key of LEGACY_SAVE_KEYS){
+      const s=parseSlotSave(localStorage.getItem(key),0);
+      if(s)return s;
+    }
+  }catch(e){}
+  return null;
+}
+function clearLegacySaves(){try{for(const key of LEGACY_SAVE_KEYS)localStorage.removeItem(key);}catch(e){}}
+function loadSlot(slot){
+  if(typeof slot!=="number"||slot<0||slot>=SLOT_COUNT)return null;
+  try{
+    const raw=localStorage.getItem(slotKey(slot));
+    const s=parseSlotSave(raw,slot);if(s)return s;
+    if(slot===0)return loadLegacyGame(); // legacy single-save games become the first slot
+  }catch(e){}
+  return null;
+}
+function firstEmptySlot(){for(let i=0;i<SLOT_COUNT;i++)if(!loadSlot(i))return i;return -1;}
+function hasAnySave(){for(let i=0;i<SLOT_COUNT;i++)if(loadSlot(i))return true;return false;}
+function setActiveSlot(slot){
+  activeSlot=(typeof slot==="number"&&slot>=0&&slot<SLOT_COUNT)?slot:null;
+  try{if(activeSlot===null)localStorage.removeItem(ACTIVE_KEY);else localStorage.setItem(ACTIVE_KEY,String(activeSlot));}catch(e){}
+}
+function continueSlotIndex(){
+  try{const a=localStorage.getItem(ACTIVE_KEY);const n=a===null?-1:parseInt(a,10);
+    if(n>=0&&n<SLOT_COUNT&&loadSlot(n))return n;}catch(e){}
+  for(let i=0;i<SLOT_COUNT;i++)if(loadSlot(i))return i;
+  return -1;
+}
+function updateTitleButtons(){$("btn-continue").classList.toggle("hidden",!hasAnySave());}
 function saveGame(){
   if(!G||gameScreen!=="play")return;
+  if(typeof activeSlot!=="number"||activeSlot<0||activeSlot>=SLOT_COUNT)return;
   try{
-    const s={v:3,name:G.name,clsKey:G.clsKey,raceKey:G.raceKey,level:G.level,xp:G.xp,gold:G.gold,
+    const s={v:4,slot:activeSlot,savedAt:Date.now(),name:G.name,clsKey:G.clsKey,raceKey:G.raceKey,level:G.level,xp:G.xp,gold:G.gold,
       x:Math.round(G.x),y:Math.round(G.y),hp:Math.ceil(G.hp),mana:Math.ceil(G.mana),
       ap:G.ap,armor:G.armor,maxhp:G.maxhp,maxmana:G.maxmana,speed:G.speed,
-      inv:G.inv,quests:G.quests,play:Math.round(G.play),stats:G.stats,muted:Audio2.muted,
-      appearance:G.appearance,talentPts:G.talentPts,talents:G.talents,gear:G.gear,gearSeq:G.gearSeq};
-    localStorage.setItem(SAVE_KEY,JSON.stringify(s));
+      inv:G.inv,quests:G.quests,play:Math.round(G.play),stats:G.stats,
+      appearance:G.appearance,talentPts:G.talentPts,talents:G.talents,gear:G.gear,gearSeq:G.gearSeq,
+      discovered:G.discovered||[]};
+    localStorage.setItem(slotKey(activeSlot),JSON.stringify(s));
+    if(activeSlot===0)clearLegacySaves(); // migrated into the first slot; never re-import
   }catch(e){}
 }
-function loadGame(){
-  try{
-    let raw=localStorage.getItem(SAVE_KEY); // v3
-    if(!raw)raw=localStorage.getItem("wow2d_save_v2"); // v2 fallback → migrated on next save
-    if(!raw)raw=localStorage.getItem("wow2d_save_v1"); // v1 fallback → migrated on next save
-    if(!raw)return null;
-    const s=JSON.parse(raw);return (s&&(s.v===1||s.v===2||s.v===3))?s:null;}catch(e){return null;}
+function hasSave(){return hasAnySave();}
+function deleteSlot(slot){
+  if(typeof slot!=="number"||slot<0||slot>=SLOT_COUNT)return;
+  try{localStorage.removeItem(slotKey(slot));if(slot===0)clearLegacySaves();}catch(e){}
+  if(activeSlot===slot)setActiveSlot(null);
 }
-function hasSave(){return !!loadGame();}
+
+// ---------- character selection ----------
+function characterCardName(slot,s){
+  const card=el("div","char-slot");
+  card.appendChild(el("div","char-slot-num",`Slot ${slot+1}`));
+  const cls=CLASSES[s.clsKey],race=RACES[s.raceKey];
+  if(s.clsKey&&ICONS[s.clsKey]){const ic=el("div","class-icon");ic.style.margin="0 auto 10px";ic.style.backgroundImage=`url(${iconURL(s.clsKey)})`;if(cls&&cls.color)ic.style.borderColor=cls.color;card.appendChild(ic);}
+  const name=el("h3");name.textContent=(s.name&&String(s.name).trim())||"Unnamed hero";card.appendChild(name);
+  const lvl=el("div","char-slot-level");lvl.textContent=`Level ${s.level||1}`;card.appendChild(lvl);
+  const meta=el("div","char-slot-meta");meta.textContent=`${cls?cls.name:String(s.clsKey)} • ${race?race.name:String(s.raceKey)}`;card.appendChild(meta);
+  if(activeSlot===slot)card.appendChild(el("div","char-active","Last played"));
+  const acts=el("div","char-slot-actions");
+  const cont=el("button","btn small","Continue");
+  cont.onclick=()=>{Audio2.resume();Audio2.play("ui");continueCharacter(slot);};
+  const del=el("button","btn small danger","Delete");
+  del.onclick=()=>{Audio2.play("ui");requestDeleteSlot(slot);};
+  acts.appendChild(cont);acts.appendChild(del);card.appendChild(acts);
+  return card;
+}
+function emptySlotCard(slot){
+  const card=el("div","char-slot char-slot-empty");
+  card.appendChild(el("div","char-slot-num",`Slot ${slot+1}`));
+  card.appendChild(el("div","char-slot-empty-mark","◌"));
+  card.appendChild(el("div","char-slot-level","Empty"));
+  const acts=el("div","char-slot-actions");
+  const create=el("button","btn small","Create Hero");
+  create.onclick=()=>{Audio2.resume();Audio2.play("ui");beginCreation(slot,true);};
+  acts.appendChild(create);card.appendChild(acts);
+  return card;
+}
+function renderCharacterSlots(note){
+  const slots=$("char-slots");slots.innerHTML="";
+  for(let i=0;i<SLOT_COUNT;i++){const s=loadSlot(i);slots.appendChild(s?characterCardName(i,s):emptySlotCard(i));}
+  const elNote=$("char-note");
+  if(note){elNote.textContent=note;elNote.classList.remove("hidden");}
+  else{elNote.textContent="";elNote.classList.add("hidden");}
+  updateTitleButtons();
+}
+function openCharacterSelect(note){
+  closeModals();
+  $("title-screen").classList.add("hidden");$("create-screen").classList.add("hidden");$("char-select").classList.add("hidden");
+  $("char-select").classList.remove("hidden");gameScreen="select";
+  creatingSlot=null;createReturn="title";
+  renderCharacterSlots(note);
+}
+function exitCharacterSelect(){
+  $("char-select").classList.add("hidden");$("title-screen").classList.remove("hidden");
+  gameScreen="title";creatingSlot=null;createReturn="title";updateTitleButtons();
+}
+function beginCreation(slot,fromSelect){
+  closeModals();
+  creatingSlot=slot;createReturn=fromSelect?"select":"title";
+  $("title-screen").classList.add("hidden");$("char-select").classList.add("hidden");
+  $("create-screen").classList.remove("hidden");gameScreen="create";
+  selRace="human";AP.skin=1;AP.hair=1;AP.style=0;AP.eyes=0;AP.acc=0;
+  buildRaceCards();buildClassCards();buildAppearance();$("char-name").value=pick(NAMES);
+}
+function exitCreation(){
+  creatingSlot=null;
+  if(createReturn==="select"){openCharacterSelect();}
+  else{$("create-screen").classList.add("hidden");$("title-screen").classList.remove("hidden");gameScreen="title";updateTitleButtons();}
+  createReturn="title";
+}
+function requestDeleteSlot(slot){
+  const s=loadSlot(slot);if(!s)return;
+  pendingDeleteSlot=slot;
+  const cls=CLASSES[s.clsKey],race=RACES[s.raceKey];
+  const name=(s.name&&String(s.name).trim())||"Unnamed hero";
+  $("delete-copy").textContent=`Delete ${name}, level ${s.level||1} ${race?race.name:s.raceKey} ${cls?cls.name:s.clsKey}, from slot ${slot+1}? This cannot be undone.`;
+  $("delete-confirm").classList.remove("hidden");
+}
+function deletePendingCharacter(){
+  const slot=pendingDeleteSlot;pendingDeleteSlot=null;
+  if(slot===null||slot===undefined)return;
+  deleteSlot(slot);
+  $("delete-confirm").classList.add("hidden");
+  renderCharacterSlots();
+}
+function continueCharacter(slot){
+  const s=loadSlot(slot);if(!s)return;
+  setActiveSlot(slot);startGame(s.name,s.clsKey,s,s.raceKey,slot);
+}
+function returnToMainMenu(){
+  Audio2.resume();
+  const wasPlay=gameScreen==="play";
+  if(G&&G.dead&&wasPlay)respawn(); // never leave a dead hero saved as an unplayable corpse
+  if(G&&wasPlay)saveGame();
+  closeModals();
+  creatingSlot=null;createReturn="title";pendingDeleteSlot=null;
+  $("death-screen").classList.add("hidden");
+  $("create-screen").classList.add("hidden");$("char-select").classList.add("hidden");
+  $("sysbtns").classList.add("hidden");
+  document.body.classList.remove("playing");
+  $("title-screen").classList.remove("hidden");
+  gameScreen="title";
+  for(const k in keys)keys[k]=false;
+  updateTitleButtons();
+}
+
+// ---------- exit game ----------
+// Buttons: title screen (#btn-exit-game) and options panel ("Exit Game" row).
+// In the Electron desktop wrapper window.close() quits the app. On the open web,
+// browsers refuse to close tabs/windows that scripts didn't open, so the call
+// silently fails there — in that case we detect the still-open window and show
+// the bye screen instead of doing nothing.
+function exitGame(){
+  try{window.close();}catch(e){}
+  setTimeout(()=>{if(!window.closed)showByeScreen();},200);
+}
+function showByeScreen(){
+  returnToMainMenu(); // also saves the hero mid-game before discarding the session
+  $("title-screen").classList.add("hidden");
+  gameScreen="bye";
+  $("bye-screen").classList.remove("hidden");
+}
 
 // ---------- game start / main loop ----------
-function startGame(name,clsKey,save,raceKey){
+function startGame(name,clsKey,save,raceKey,slot){
   buildSprites();buildWorld();buildMinimap();
   spawnAllMobs();spawnNPCs();spawnVillagers();
   projectiles=[];particles=[];floaters=[];traps=[];blizzards=[];telegraphs=[];minions=[];combatLog.length=0;
+  if(typeof slot==="number")setActiveSlot(slot);
+  else if(save&&typeof save.slot==="number")setActiveSlot(save.slot);
   G=newGameState(name,clsKey,save?save.raceKey||"human":raceKey||"human");
   if(save){
     G.level=save.level;G.xp=save.xp;G.gold=save.gold;G.x=save.x;G.y=save.y;
     G.maxhp=save.maxhp;G.maxmana=save.maxmana;G.ap=save.ap;G.armor=save.armor;G.speed=save.speed;
     G.hp=Math.min(save.hp,save.maxhp);G.mana=Math.min(save.mana,save.maxmana);
+    if(save.hp<=0){G.x=GRAVEYARD.x;G.y=GRAVEYARD.y;G.hp=G.maxhp;G.mana=G.maxmana;}
     G.inv=save.inv||[];G.quests=save.quests||{};G.play=save.play||0;G.stats=save.stats||{kills:0,deaths:0};
     // v2 fields, with v1 backfill
     G.appearance=migrateAppearance(save.appearance||defaultAppearance());
@@ -3441,14 +4602,18 @@ function startGame(name,clsKey,save,raceKey){
       if(save.gear.head)G.gear.head=save.gear.head;else if(save.gear.helm)G.gear.head=save.gear.helm;
       for(const s of ["legs","gloves","boots","trinket"])if(save.gear[s])G.gear[s]=save.gear[s];}
     G.gearSeq=save.gearSeq||1;
-    if(save.muted){Audio2.setMuted(true);$("sb-mute").firstChild.textContent="✕";}
+    // v4: discovered points of interest (v3 backfills to newGameState defaults)
+    if(save.discovered)G.discovered=save.discovered;
+    if(save.muted!==undefined)Audio2.setMuted(!!save.muted); // legacy: v3 saves carried global mute
   }else{
     G.appearance=migrateAppearance(chosenAppearance()); // from character creation
   }
+  G.zoneT=0;G.poiT=0;G.dustT=0;
   rebuildPlayerSprite();
   cam.x=G.x;cam.y=G.y;
+  Music.start();updateMuteButton();
   updateQuestMarkers();renderQuestLog();refreshAbilityButtons();
-  $("title-screen").classList.add("hidden");$("create-screen").classList.add("hidden");
+  $("title-screen").classList.add("hidden");$("create-screen").classList.add("hidden");$("char-select").classList.add("hidden");
   $("sysbtns").classList.remove("hidden");
   document.body.classList.add("playing");
   gameScreen="play";
@@ -3473,8 +4638,10 @@ function loop(ts){
 }
 
 // ---------- init ----------
+loadOpts();loadBinds();
 buildIcons();buildSprites();resize();
-if(hasSave())$("btn-continue").classList.remove("hidden");
+applyHudToggles();applyCursor();
+updateTitleButtons();
 requestAnimationFrame(loop);
 window.addEventListener("beforeunload",saveGame);
 document.addEventListener("visibilitychange",()=>{if(document.hidden)saveGame();});
