@@ -1,54 +1,44 @@
-# Questbound — Desktop Edition
+# Questbound
 
-Windows desktop wrapper for the Questbound 2D action RPG, with a native
-auto-updater that ships patch notes with every release.
+**Tiny heroes. Big adventure.** Questbound is a 2D top-down action RPG inspired by classic MMOs — explore the wilds of Emberhold, battle gnoll camps, delve the Emberdeep dungeon, and face bosses with real mechanics, like Kezath the Sealed Flame.
 
-## How updates flow
+## Features
 
-1. We build a patch in the browser (the artifact).
-2. The latest game file is exported to `game/questbound.html`.
-3. `node scripts/release.js <version> "<patch notes>"` commits, tags, and pushes.
-4. GitHub Actions builds the Windows installer and publishes it to the GitHub release.
-5. Players get a "Questbound X.Y.Z is available" popup **with the patch notes**
-   on next launch. One click downloads and installs it.
+- **4 classes, 5 races** — Warrior, Mage, Hunter, Necromancer; Emberkin, Ogrun, Astren, Wildkin, Human, each with thematic racial passives and distinct customization
+- **Real boss fights** — telegraphed AoEs, summoned adds, phase changes, and enrages
+- **Dungeons with loot** — multi-room crawls ending in lootable boss chests with class-unique rewards
+- **136+ gear pieces** across 7 slots, including Legendary tier, plus class quests and talent trees
+- **5 skills per class**, specialization-friendly talent UI, and full hotkey rebinding
+- **Quest tracker, split quest log** (Active/Completed), specialized vendors with level-progressed stock
+- **Options menu** — graphics, audio (master/music/SFX), screen shake, damage numbers, custom cursor
+- **Thematic music, ambient audio, and particle effects** throughout
+- **3 character slots** with fully separate saves
+- **Desktop + mobile** — fullscreen native Windows app and touch-friendly browser play
 
-## First-time setup on your Windows PC
+## Play
 
-1. **Install Node.js 20 (LTS)** from https://nodejs.org — take all defaults.
-2. **Install Git** from https://git-scm.com/download/win — take all defaults.
-3. **Create a free GitHub account** at https://github.com/signup (if you don't have one).
-4. **Create a new repository** called `questbound` (public or private — updater works with either).
-5. Open **PowerShell** and run:
-   ```powershell
-   git clone https://github.com/YOUR_GITHUB_USER/questbound.git
-   cd questbound
-   # copy all files from this folder into it
-   npm install
-   npm start
-   ```
-   The game should open in its own window. Close it with `Ctrl+C` in PowerShell.
-6. **Point the updater at your repo:** in `package.json`, under `build.publish`,
-   replace `YOUR_GITHUB_USER` with your GitHub username.
-7. **First release:**
-   ```powershell
-   git add -A
-   git commit -m "Questbound desktop v0.1.0"
-   git push -u origin main
-   npm run dist
-   ```
-   The installer lands in `dist/Questbound-Setup-0.1.0.exe` — run it to install.
-8. **Ship it like a real game:** for every later patch,
-   ```powershell
-   node scripts/release.js 0.2.0 "Patch 0.2 - Talents & Threads: ..."
-   ```
-   Tagging `v0.2.0` triggers the cloud build; the `.exe` appears on your
-   GitHub release page, and every installed copy updates itself with the notes.
+Download the latest `Questbound-Setup-X.Y.Z.exe` from the [Releases](../../releases) page, run it (Windows will ask you to confirm — select **More info → Run anyway**), and you're in. The app **updates itself** — when a new version drops, you'll get a popup with patch notes. Just hit Download & Install.
 
-## Notes
+You can also play the latest build right in your browser — it's a single self-contained HTML file.
 
-- Saves live in the app's local storage on each PC (same as the browser version).
-  Cloud cross-progression is a later step and needs a small server.
-- No code signing yet: Windows SmartScreen will show a warning on first install.
-  Click "More info" → "Run anyway". A code-signing certificate removes this
-  (~$100+/yr) — optional.
-- The mobile (Android) wrapper is a separate step (Capacitor) — desktop first.
+## Controls (default)
+
+| Action | Key |
+|---|---|
+| Move | WASD / Arrow keys |
+| Abilities | 1–5 |
+| Interact | E |
+| Quest log | Q |
+| Options | Esc |
+
+All keybinds are rebindable in Options. Touch controls are supported on mobile.
+
+## Development
+
+Questbound's game code is a single HTML file (`game/questbound.html`) wrapped in Electron for the desktop build. Patches ship through GitHub Releases — tagging a version kicks off a cloud build, and every installed copy self-updates with the release notes.
+
+Built solo, one patch at a time.
+
+## Tech
+
+HTML5 Canvas · WebAudio (all art and sound generated in-code) · Electron + electron-updater
