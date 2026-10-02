@@ -312,7 +312,7 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
     <button class="btn small" id="btn-exit-game">Exit Game</button>
   </div>
   <div class="foot-note">An original single-file action RPG. All art &amp; sound generated in-code.</div>
-  <div class="ver-tag">v0.2.0</div>
+  <div class="ver-tag">v0.2.1</div>
 </div>
 
 <!-- character selection -->
@@ -1905,13 +1905,13 @@ function buildWorld(){
   stampCircle(4080,300,170,TM.EMBER);
   // colliders for cave walls (circles along ring, skip entrance)
   for(let x=CX0;x<=CX1;x+=40){
-    colliders.push({x:x,y:CY0+8,r:24});colliders.push({x:x,y:CY0-TILE+8+32,r:24});
+    colliders.push({x:x,y:CY0+8,r:24});colliders.push({x:x,y:CY0-TILE+8,r:24});
     const cx=x;if(!(cx>3990&&cx<4150))colliders.push({x:cx,y:CY1-8,r:26});
   }
   for(let y=CY0;y<=CY1;y+=40){
     colliders.push({x:CX0-8,r:26,y:y});colliders.push({x:CX1+8,r:26,y:y});
   }
-  colliders.push({x:4000,y:CY1-8,r:30});colliders.push({x:4140,y:CY1-8,r:30}); // entrance posts
+  // (the cave mouth stays clear: the wall colliders above skip the gap, so the visible opening is truly passable)
   // world border colliders
   for(let x=0;x<=WORLD_W;x+=80){colliders.push({x,y:-20,r:50});colliders.push({x,y:WORLD_H+20,r:50});}
   for(let y=0;y<=WORLD_H;y+=80){colliders.push({x:-20,y,r:50});colliders.push({x:WORLD_W+20,y,r:50});}
@@ -1978,8 +1978,8 @@ function buildWorld(){
     else decor.push({x:1600+Math.cos(a)*120,y:2900+Math.sin(a)*120,spr:SPR.column,scale:2,yoff:0,collide:10});
   }
   // ---- Ruined Spire (4500,3100): a fallen tower's corpse ----
-  decor.push({x:4500,y:3050,spr:SPR.fallencolumn,scale:3,yoff:0});              // the broken tower
-  colliders.push({x:4500,y:3060,r:40});
+  decor.push({x:4630,y:2975,spr:SPR.fallencolumn,scale:3,yoff:0});              // the broken tower (moved clear of the dungeon gate)
+  colliders.push({x:4630,y:2985,r:30});
   decor.push({x:4410,y:3160,spr:SPR.column,scale:2,yoff:0,collide:10});
   decor.push({x:4590,y:3180,spr:SPR.column,scale:2,yoff:0,collide:10});
   for(let i=0;i<8;i++){const a=rnd(Math.PI*2),d=rnd(60,180);
@@ -2055,10 +2055,13 @@ function buildWorld(){
   for(let i=0;i<10;i++){decor.push({x:rnd(DB.x0+60,DB.x1-60),y:rnd(DB.y0+60,DB.y1-60),
     spr:pick([SPR.bones,SPR.rubble,SPR.skullpile]),scale:2,yoff:0});}
   // ---- dungeon gates: spire <-> crypt (teleport portals) ----
-  portals.push({x:4480,y:3060,dx:4550,dy:830,id:"deep-in"});   // spire door -> entry room
-  portals.push({x:4500,y:800, dx:4520,dy:3125,id:"deep-out"});  // entry room exit -> spire
-  decor.push({x:4480,y:3060,spr:SPR.obsidian,scale:2,yoff:0,collide:12}); // spire-side gate pillar
+  portals.push({x:4480,y:3060,dx:4550,dy:830,id:"deep-in", msg:"You descend into the Emberdeep…"});   // spire door -> entry room
+  portals.push({x:4500,y:800, dx:4520,dy:3125,id:"deep-out",msg:"You climb out of the Emberdeep…"});  // entry room exit -> spire
+  decor.push({x:4520,y:3060,spr:SPR.obsidian,scale:2,yoff:0,collide:12}); // gate pillars flank the door (not in it)
   decor.push({x:4440,y:3060,spr:SPR.obsidian,scale:2,yoff:0,collide:12});
+  // ---- dungeon gates: Emberdark Cave mouth <-> Cragmaw's Lair (teleport portals) ----
+  portals.push({x:4070,y:812, dx:4070,dy:650, id:"cave-in", msg:"You enter Cragmaw's Lair…"});  // cave mouth -> inside the lair
+  portals.push({x:4070,y:716, dx:4070,dy:884, id:"cave-out",msg:"You step out of the cave…"});   // inside the lair -> cave mouth
   // the nook's old hoard: a modest mid-dungeon cache for delvers
   chests.push({x:4370,y:570,opened:false,name:"Delver's Hoard",rich:false});
 
@@ -2863,6 +2866,15 @@ function updateQuestMarkers(){
 // ---------- NPC dialog ----------
 let dialogNPC=null;
 // ---------- chests & dungeon gates ----------
+function usePortal(p){ // shared by the walk-in trigger, the interact button and mouse click
+  if(!G||G.dead||(G.portalCd||0)>0)return;
+  Audio2.play("portal");ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
+  G.x=p.dx;G.y=p.dy;G.portalCd=2.5;G.target=null;
+  cam.x=G.x;cam.y=G.y;
+  ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
+  if(p.msg)msg(p.msg,"quest");
+  Music.setZone(zoneOf(G.x,G.y));
+}
 function spawnChest(x,y,name,rich){
   chests.push({x,y,opened:false,name,rich});
 }
@@ -3335,16 +3347,10 @@ function updatePlayer(dt){
   // music zone follows the player's location
   G.zoneT-=dt;
   if(G.zoneT<=0){G.zoneT=1;Music.setZone(zoneOf(G.x,G.y));}
-  // dungeon gates: portals between the Ruined Spire and the Emberdeep
+  // dungeon gates: walk-in teleport portals (Ruined Spire <-> Emberdeep, cave mouth <-> Cragmaw's Lair)
   G.portalCd=Math.max(0,(G.portalCd||0)-dt);
   if(G.portalCd<=0&&!G.dead)for(const p of portals){
-    if(dist(G.x,G.y,p.x,p.y)<52){
-      Audio2.play("portal");ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
-      G.x=p.dx;G.y=p.dy;G.portalCd=2.5;
-      ring(G.x,G.y-24,"#ff8c2a",10,90,0.5);burst(G.x,G.y-20,"#ffd94d",18,200,0.7,3);
-      msg(p.id==="deep-in"?"You descend into the Emberdeep…":"You climb out of the Emberdeep…","quest");
-      Music.setZone(zoneOf(G.x,G.y));
-      break;}}
+    if(dist(G.x,G.y,p.x,p.y)<52){usePortal(p);break;}}
   if(G.lungeT>0)G.lungeT-=dt;
   if((G.castT||0)>0)G.castT-=dt;
   // regen
@@ -3854,6 +3860,7 @@ function rr(x,y,w,h,r){ // rounded-rect path helper
 }
 function interactHint(){
   for(const n of npcs)if(dist(G.x,G.y,n.x,n.y)<150)return (IS_TOUCH?"Tap TALK to speak with ":"Click ")+n.name+" to talk";
+  for(const p of portals)if(dist(G.x,G.y,p.x,p.y)<150)return IS_TOUCH?"Tap ENTER to go through the gate":"Press E or click to enter";
   for(const p of pickups)if(p.t<=0&&dist(G.x,G.y,p.x,p.y)<130)return IS_TOUCH?"Tap GET to gather the mushroom":"Click the mushroom to gather";
   return null;
 }
@@ -3867,6 +3874,7 @@ function nearestInteractable(){
   for(const p of pickups){if(p.t>0)continue;const d=dist(G.x,G.y,p.x,p.y);if(d<130&&(!best||d<best.d))best={kind:"pickup",d,p};}
   for(const v of villagers){const d=dist(G.x,G.y,v.x,v.y);if(d<170&&(!best||d<best.d))best={kind:"villager",d,v};}
   for(const c of chests){if(c.opened)continue;const d=dist(G.x,G.y,c.x,c.y);if(d<130&&(!best||d<best.d))best={kind:"chest",d,c};}
+  for(const p of portals){const d=dist(G.x,G.y,p.x,p.y);if(d<150&&(!best||d<best.d))best={kind:"portal",d,p};}
   return best;
 }
 function refreshInteractButton(){
@@ -3876,6 +3884,7 @@ function refreshInteractButton(){
   if(ia.kind==="npc"){glyph="❝";sub="TALK";aria="Talk to "+ia.n.name;}
   else if(ia.kind==="pickup"){glyph="✿";sub="GET";aria="Gather mushroom";}
   else if(ia.kind==="chest"){glyph="✦";sub="OPEN";aria="Open "+ia.c.name;}
+  else if(ia.kind==="portal"){glyph="▼";sub="ENTER";aria="Enter";}
   else{glyph="❝";sub="CHAT";aria="Chat with villager";}
   const key=ia.kind+":"+sub+":"+aria;
   if(lastActKey===key)return;
@@ -3891,6 +3900,7 @@ function performInteract(){
   if(ia.kind==="npc")openDialog(ia.n);
   else if(ia.kind==="pickup")tryGather(ia.p.x,ia.p.y);
   else if(ia.kind==="chest")openChest(ia.c);
+  else if(ia.kind==="portal")usePortal(ia.p);
   else msg(pick(["Lovely day in Emberhold.","Heard Cragmaw's been restless…","Pell overcharges, but don't tell him I said so.","My cousin swears the boars are organizing."]));
 }
 let hotbarSlots=[]; // {x,y,size,slot,aid} — canvas hit areas for tooltips
@@ -4080,6 +4090,10 @@ function worldTap(sx,sy){
   // npc?
   for(const n of npcs){if(dist(wx,wy,n.x,n.y-16)<64/viewScale+30){
     if(dist(G.x,G.y,n.x,n.y)<170)openDialog(n);else{msg("Move closer to "+n.name+".");}
+    return;}}
+  // dungeon gate?
+  for(const p of portals){if(dist(wx,wy,p.x,p.y-20)<56/viewScale+26){
+    if(dist(G.x,G.y,p.x,p.y)<170)usePortal(p);else msg("Move closer to the gate.");
     return;}}
   // mushroom?
   if(tryGather(wx,wy))return;
@@ -4590,8 +4604,8 @@ function startGame(name,clsKey,save,raceKey,slot){
     G.hp=Math.min(save.hp,save.maxhp);G.mana=Math.min(save.mana,save.maxmana);
     if(save.hp<=0){G.x=GRAVEYARD.x;G.y=GRAVEYARD.y;G.hp=G.maxhp;G.mana=G.maxmana;}
     G.inv=save.inv||[];G.quests=save.quests||{};G.play=save.play||0;G.stats=save.stats||{kills:0,deaths:0};
-    // v2 fields, with v1 backfill
-    G.appearance=migrateAppearance(save.appearance||defaultAppearance());
+    // v2 fields, with v1 backfill (validate appearance against the hero's OWN race palette)
+    G.appearance=migrateAppearance(save.appearance||defaultAppearance(),G.raceKey);
     G.talents=save.talents||{};
     if(typeof save.talentPts==="number")G.talentPts=save.talentPts;
     else G.talentPts=Math.max(0,G.level-1-totalTalentSpent()); // v1: earned one point per level
@@ -4606,7 +4620,7 @@ function startGame(name,clsKey,save,raceKey,slot){
     if(save.discovered)G.discovered=save.discovered;
     if(save.muted!==undefined)Audio2.setMuted(!!save.muted); // legacy: v3 saves carried global mute
   }else{
-    G.appearance=migrateAppearance(chosenAppearance()); // from character creation
+    G.appearance=migrateAppearance(chosenAppearance(),G.raceKey); // from character creation, kept in the chosen race's palette
   }
   G.zoneT=0;G.poiT=0;G.dustT=0;
   rebuildPlayerSprite();
