@@ -228,9 +228,10 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
 @media (max-width:560px){.appear-wrap{flex-direction:column}}
 
 /* ---------- talents ---------- */
+#talents{width:min(97vw,1180px)}
 .tal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
-.tal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media (max-width:700px){.tal-grid{grid-template-columns:1fr}}
+.tal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media (max-width:700px){.tal-grid{grid-template-columns:repeat(5,1fr);gap:6px}.tal-col{padding:8px}.tal-desc{min-height:0;font-size:11px}.tal-name{font-size:12.5px}}
 .tal-col{border:1px solid #4a3f22;border-radius:10px;padding:12px;background:rgba(0,0,0,.25)}
 .tal-col.locked{opacity:.55}
 .tal-ab{display:flex;gap:10px;align-items:center;margin-bottom:10px}
@@ -259,7 +260,7 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
 .eq-stats{font-size:11px;color:#8fa8c9;margin-top:4px;line-height:1.4}
 .slot.gear .nm2{font-size:8.5px}
 @media (max-width:560px){.equip-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:560px){.tal-grid{grid-template-columns:1fr}.tal-head{flex-direction:column;align-items:flex-start}.tal-head .btn{align-self:stretch;margin-top:8px}
+@media (max-width:560px){.tal-head{flex-direction:column;align-items:flex-start}.tal-head .btn{align-self:stretch;margin-top:8px}
 #btn-random-name{flex-shrink:0;white-space:nowrap}
 #char-name{min-width:0}}
 </style>
@@ -277,7 +278,8 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
     <button class="abtn" id="ab1" aria-label="Ability 2"><span class="key">2</span><span class="cdo"></span><span class="lock"></span></button>
     <button class="abtn" id="ab2" aria-label="Ability 3"><span class="key">3</span><span class="cdo"></span><span class="lock"></span></button>
     <button class="abtn" id="ab3" aria-label="Ability 4"><span class="key">4</span><span class="cdo"></span><span class="lock"></span></button>
-    <button class="abtn" id="ab4" aria-label="Health potion"><span class="key">5</span><span class="cdo"></span><span class="lock"></span></button>
+    <button class="abtn" id="ab4" aria-label="Ability 5"><span class="key">5</span><span class="cdo"></span><span class="lock"></span></button>
+    <button class="abtn" id="ab5" aria-label="Health potion"><span class="key">6</span><span class="cdo"></span><span class="lock"></span></button>
   </div>
   <button id="btn-tgt" aria-label="Target nearest enemy">◎</button>
 </div>
@@ -308,11 +310,12 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
     <button class="btn" id="btn-select">Select Hero</button>
     <button class="btn" id="btn-new">New Game</button>
     <button class="btn small" id="btn-opt">Options</button>
+    <button class="btn small" id="btn-unstuck">Unstuck Hero</button>
     <button class="btn small" id="btn-how">How to Play</button>
     <button class="btn small" id="btn-exit-game">Exit Game</button>
   </div>
   <div class="foot-note">An original single-file action RPG. All art &amp; sound generated in-code.</div>
-  <div class="ver-tag">v0.2.1</div>
+  <div class="ver-tag">v0.3.0</div>
 </div>
 
 <!-- character selection -->
@@ -408,14 +411,14 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
       <tr><td>WASD / Arrows</td><td>Move</td></tr>
       <tr><td>Click enemy</td><td>Target (auto-attacks in range)</td></tr>
       <tr><td>Tab</td><td>Cycle targets</td></tr>
-      <tr><td>1 – 5</td><td>Abilities &amp; health potion</td></tr>
-      <tr><td>Hover hotbar</td><td>Ability tooltips (name, stats, mana, cooldown)</td></tr>
+      <tr><td>1 – 6</td><td>Abilities 1–5 &amp; health potion (slot 6)</td></tr>
+      <tr><td>Hover hotbar</td><td>Ability tooltips (name, stats, resource cost, cooldown)</td></tr>
       <tr><td>Click NPC / node</td><td>Talk, trade, gather</td></tr>
-      <tr><td>L / B / C / H</td><td>Quest log, bags, character, help</td></tr>
+      <tr><td>Q / B / C / H</td><td>Quest log, bags, character, help</td></tr>
       <tr><td>T</td><td>Talent panel (spend talent points)</td></tr>
-      <tr><td>O</td><td>Options (audio, graphics, HUD, keybindings)</td></tr>
+      <tr><td>Esc / O</td><td>Options (audio, graphics, HUD, keybindings)</td></tr>
       <tr><td>M</td><td>Mute sound</td></tr>
-      <tr><td>Esc</td><td>Close panels / clear target</td></tr>
+      <tr><td>Esc (in game)</td><td>Close panels / clear target — rebind the Options key in Options</td></tr>
     </table></div>
     <div class="help-sec"><h4>Touch Controls</h4><table>
       <tr><td>Left thumb</td><td>Virtual joystick to move</td></tr>
@@ -430,16 +433,16 @@ input[type=range].opt-slider{width:150px;accent-color:#c98f3d;cursor:pointer}
     <div class="help-sec"><h4>Races &amp; Racial Passives</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">
       • <b style="color:#e05a4a">Emberkin</b> — <b style="color:#ffd94d">Inner Fire</b>: +8% to all damage.<br/>
       • <b style="color:#9d9280">Ogrun</b> — <b style="color:#ffd94d">Thick Hide</b>: take 10% less damage from all sources, +5% max health.<br/>
-      • <b style="color:#b8c8e8">Astren</b> — <b style="color:#ffd94d">Arcane Mind</b>: +15% mana regeneration, abilities cost 8% less mana.<br/>
+      • <b style="color:#b8c8e8">Astren</b> — <b style="color:#ffd94d">Arcane Mind</b>: +15% resource regeneration, abilities cost 8% less resource.<br/>
       • <b style="color:#7bc74d">Wildkin</b> — <b style="color:#ffd94d">Keen Eye</b>: +10% critical strike chance.<br/>
       • <b style="color:#e0ac72">Human</b> — <b style="color:#ffd94d">Adaptability</b>: +10% XP from all sources.<br/>
       Racials benefit every class — pick the race that fits how you want to play.</div></div>
-    <div class="help-sec"><h4>Necromancer</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">The Necromancer wears <b style="color:#ffe9b0">Cloth</b> and wields <b style="color:#ffe9b0">Staves</b>. Abilities: <b style="color:#c9a0e8">Raise Skeleton</b> (Lv1) — a bone servant that fights for you; <b style="color:#c9a0e8">Life Drain</b> (Lv3) — damage a foe and heal yourself; <b style="color:#c9a0e8">Plague Nova</b> (Lv5) — pestilent AoE that spreads death around you; <b style="color:#c9a0e8">Soul Harvest</b> (Lv7) — reap the life of every foe around you and turn their wounds into your strength. Plagued enemies take damage over time.</div></div>
+    <div class="help-sec"><h4>Necromancer</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">The Necromancer wears <b style="color:#ffe9b0">Cloth</b> and wields <b style="color:#ffe9b0">Staves</b>. Abilities: <b style="color:#c9a0e8">Raise Skeleton</b> (Lv1) — a bone servant that stays passive at your side and only strikes the foe you engage; <b style="color:#c9a0e8">Life Drain</b> (Lv3) — damage a foe and heal yourself; <b style="color:#c9a0e8">Plague Nova</b> (Lv5) — pestilent AoE that spreads death around you; <b style="color:#c9a0e8">Soul Harvest</b> (Lv7) — reap the life of every foe around you and turn their wounds into your strength; <b style="color:#c9a0e8">Death Coil</b> (Lv9) — a coil of death that heals you for part of the damage dealt. Plagued enemies take damage over time.</div></div>
     <div class="help-sec"><h4>Class Quests</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Every class has a mentor with a 6-quest chain — a trial roughly per level, ending with Cragmaw — each rewarding a piece of <b style="color:#ffd94d">class-locked gear</b> suited to that level. Seek out <b style="color:#ffe9b0">Veteran Korr</b> (Warrior), <b style="color:#ffe9b0">Archmage Lyra</b> (Mage), <b style="color:#ffe9b0">Tracker Fen</b> (Hunter), or <b style="color:#ffe9b0">Mortis at the graveyard</b> (Necromancer).</div></div>
-    <div class="help-sec"><h4>Specialized Vendors</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6"><b style="color:#ffe9b0">Weaponsmith Wex</b> sells weapons, <b style="color:#ffe9b0">Armorer Brida</b> sells head/chest/leg/hand/foot armor, and <b style="color:#ffe9b0">Trader Pell</b> sells consumables and trinkets — always matching your class. Vendor gear, world drops, and class-quest rewards are all competitive: gear however you like.</div></div>
+    <div class="help-sec"><h4>Specialized Vendors</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6"><b style="color:#ffe9b0">Weaponsmith Wex</b> sells weapons only, <b style="color:#ffe9b0">Armorer Brida</b> sells head/chest/leg/hand/foot armor only, and <b style="color:#ffe9b0">Trader Pell</b> sells potions, elixirs and trinkets — always matching your class. Vendor gear, world drops, and class-quest rewards are all competitive: gear however you like.</div></div>
     <div class="help-sec"><h4>Gear &amp; Classes</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Monsters drop <b style="color:#4ade80">green</b>, <b style="color:#60a5fa">blue</b>, <b style="color:#c084fc">epic</b> and <b style="color:#ff8c2a">legendary</b> gear for 7 slots — weapon, head, chest, legs, hands, feet, trinket. Tap a piece in your bags to equip it; equipped gear shows on your sprite. Each class is locked to its own <b style="color:#ffe9b0">armor</b> and <b style="color:#ffe9b0">weapons</b>: Warriors wear Plate and swing Greatswords, Mages wear Cloth and carry Staves, Hunters wear Leather and wield Bows, Necromancers wear Cloth and wield Bone Staves.</div></div>
     <div class="help-sec"><h4>Appearance</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">Pick your character's race, skin tone, hair color, hairstyle, eye color and a racial accessory on the creation screen — the preview window shows your hero as you'll play them. Each race's palettes stay true to its theme.</div></div>
-    <div class="help-sec"><h4>Tips</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">• Monsters leash back home if you run far — use it to escape.<br/>• Stock up on potions before the gnoll camp and the cave.<br/>• Your progress saves automatically; Continue from the title screen.<br/>• New ability slot: your fourth class ability unlocks at level 7 and sits in slot 4 (press 4), with potions moving to slot 5.</div></div>
+    <div class="help-sec"><h4>Tips</h4><div style="font-size:14px;color:#c9bfa4;line-height:1.6">• Monsters leash back home if you run far — use it to escape.<br/>• Stock up on potions before the gnoll camp and the cave.<br/>• Your progress saves automatically; Continue from the title screen.<br/>• Every class learns five skills: the fifth unlocks at level 9 in hotbar slot 5, with potions in slot 6. Warriors and Hunters spend <b style="color:#ffd94d">Stamina</b> (amber bar) that surges back quickly in combat; Mages and Necromancers spend <b style="color:#8ac8f0">Mana</b>.<br/>• Trapped in the terrain? Open Options and hit <b style="color:#ffd94d">Unstuck</b> to return to safe ground.</div></div>
   </div>
 </div>
 
@@ -526,20 +529,23 @@ function applyHudToggles(){$("vignette").style.display=SETTINGS.vignette?"block"
 
 // ---------- keybindings ----------
 const BIND_KEY="questbound_binds_v1";
-const BIND_DEFAULTS={ab1:"1",ab2:"2",ab3:"3",ab4:"4",potion:"5",up:"w",down:"s",left:"a",right:"d",interact:"e"};
+const BIND_DEFAULTS={ab1:"1",ab2:"2",ab3:"3",ab4:"4",ab5:"5",potion:"6",up:"w",down:"s",left:"a",right:"d",interact:"e",questlog:"q",options:"escape"};
 const BIND_CATS=[
-  {name:"Abilities",acts:[["ab1","Ability 1"],["ab2","Ability 2"],["ab3","Ability 3"],["ab4","Ability 4"],["potion","Health Potion"]]},
+  {name:"Abilities",acts:[["ab1","Ability 1"],["ab2","Ability 2"],["ab3","Ability 3"],["ab4","Ability 4"],["ab5","Ability 5"],["potion","Health Potion"]]},
   {name:"Movement",acts:[["up","Move Up"],["down","Move Down"],["left","Move Left"],["right","Move Right"]]},
+  {name:"Menus",acts:[["questlog","Quest Log"],["options","Options Menu"]]},
   {name:"Interaction",acts:[["interact","Interact / Talk"]]},
 ];
-// keys that may NOT be picked as bindings: reserved by the OS/browser or fixed UI keys (Tab target, L/B/C/T/H/M/O panels)
-const NO_BIND=["tab","escape","enter","l","b","c","t","h","m","o"];
+// keys that may NOT be picked as bindings: reserved by the OS/browser or fixed UI keys (Tab target, B/C/T/H/M panels)
+const NO_BIND=["tab","enter","b","c","t","h","m"];
 let BINDS=Object.assign({},BIND_DEFAULTS);
 function loadBinds(){try{const raw=localStorage.getItem(BIND_KEY);if(!raw)return;const s=JSON.parse(raw);
-  if(s&&typeof s==="object")for(const k in BIND_DEFAULTS)if(typeof s[k]==="string")BINDS[k]=s[k];}catch(e){}}
+  if(s&&typeof s==="object")for(const k in BIND_DEFAULTS)if(typeof s[k]==="string")BINDS[k]=s[k];
+  // v0.3.0 migration: old saves bound potions to "5", which is now Ability 5
+  if(BINDS.potion===BINDS.ab5)BINDS.potion="6";}catch(e){}}
 function saveBinds(){try{localStorage.setItem(BIND_KEY,JSON.stringify(BINDS));}catch(e){}}
 function resetBinds(){BINDS=Object.assign({},BIND_DEFAULTS);saveBinds();}
-function keyLabel(k){const m={arrowup:"↑",arrowdown:"↓",arrowleft:"←",arrowright:"→"," ":"Space"};
+function keyLabel(k){const m={arrowup:"↑",arrowdown:"↓",arrowleft:"←",arrowright:"→"," ":"Space",escape:"Esc"};
   if(m[k])return m[k];return k.length===1?k.toUpperCase():k[0].toUpperCase()+k.slice(1);}
 let rebindTarget=null;
 
@@ -1143,6 +1149,10 @@ function buildIcons(){
   icon("deepfreeze",g=>{px(g,16,6,16,24,"#bfe6ff");px(g,20,10,8,16,"#dff2ff");px(g,8,16,32,8,"#8ac8f0");px(g,24,2,2,44,"#fff");px(g,12,32,24,6,"#4aa3ff");px(g,20,36,8,6,"#fff");}); // blinding ice burst
   icon("serrated",g=>{px(g,4,20,36,5,"#d8cdb2");px(g,38,17,6,11,"#8a8f9a");px(g,8,17,5,11,"#c0392b");px(g,12,24,4,6,"#ff5b4a");px(g,24,24,4,8,"#ff5b4a");px(g,30,24,3,5,"#c0392b");}); // barbed arrow dripping blood
   icon("soulharvest",g=>{px(g,8,8,32,32,"#2a1a3a");px(g,14,14,20,20,"#7a3ad8");px(g,20,20,8,8,"#1d1026");px(g,14,30,20,4,"#a06ae8");px(g,10,10,6,6,"#a06ae8");px(g,32,10,6,6,"#a06ae8");px(g,24,24,2,2,"#fff");}); // purple soul vortex
+  icon("execute",g=>{px(g,8,30,30,7,"#c0392b");px(g,30,10,8,26,"#e8eef8");px(g,34,4,4,10,"#fff");px(g,12,14,10,10,"#7a1a1a");px(g,20,38,16,4,"#5a0f0f");}); // executioner's falling blade
+  icon("glacial",g=>{px(g,20,2,8,34,"#dff2ff");px(g,22,6,4,24,"#fff");px(g,10,14,28,6,"#8ac8f0");px(g,14,30,20,10,"#4aa3ff");px(g,6,36,36,6,"#bfe6ff");}); // giant glacial spike
+  icon("explosive",g=>{px(g,4,21,30,5,"#d8cdb2");px(g,32,17,12,13,"#ff8c2a");px(g,36,20,6,7,"#ffd94d");px(g,8,18,6,11,"#c0392b");px(g,18,8,4,8,"#ff6b2a");px(g,26,34,4,6,"#ff6b2a");}); // exploding arrow
+  icon("deathcoil",g=>{px(g,10,10,28,28,"#1d1026");px(g,14,14,20,20,"#7a3ad8");px(g,20,20,8,8,"#e8d0ff");px(g,22,22,4,4,"#1d1026");px(g,6,22,8,4,"#a06ae8");px(g,34,22,8,4,"#a06ae8");px(g,22,4,4,8,"#a06ae8");}); // coiling death energy
   icon("wolf_fang",g=>{px(g,14,10,8,26,"#e8e2cf");px(g,20,20,6,14,"#d8d2bd");px(g,12,32,18,6,"#5a6068");});
   icon("horror_chitin",g=>{px(g,8,18,32,10,"#2a1e33");px(g,14,12,20,8,"#4a3560");px(g,20,8,8,8,"#b06ae8");px(g,16,24,8,4,"#7a5a9f");});
   icon("debuff_bleed",g=>{px(g,20,6,8,14,"#ff5b4a");px(g,16,18,16,16,"#c0392b");px(g,20,22,8,8,"#ff8c7a");px(g,26,30,6,10,"#c0392b");});
@@ -1156,13 +1166,13 @@ const XP_NEED=[0,70,180,310,460,640,860,1100,1380,1700,99999]; // XP to go from 
 
 const CLASSES={
   warrior:{name:"Warrior",role:"Melee • Tank",desc:"A hardened fighter who wades into the thick of battle, shrugging off blows that would fell lesser heroes.",hp:120,mana:40,ap:12,armor:8,speed:230,ranged:false,range:78,atkSpeed:1.0,color:"#e05a4a",
-    growth:{hp:20,mana:6,ap:3,armor:1.2},abilities:["charge","whirlwind","shieldslam","sunder"]},
+    growth:{hp:20,mana:6,ap:3,armor:1.2},abilities:["charge","whirlwind","shieldslam","sunder","execute"]},
   mage:{name:"Mage",role:"Ranged • Control",desc:"A master of frost magic. Fragile in close quarters, but devastating at range with chilling bolts and ice storms.",hp:80,mana:100,ap:14,armor:2,speed:230,ranged:true,range:340,atkSpeed:1.35,color:"#4aa3ff",
-    growth:{hp:13,mana:12,ap:4,armor:0.4},abilities:["frostbolt","blink","blizzard","deepfreeze"]},
+    growth:{hp:13,mana:12,ap:4,armor:0.4},abilities:["frostbolt","blink","blizzard","deepfreeze","glacial"]},
   hunter:{name:"Hunter",role:"Ranged • Skirmisher",desc:"A swift tracker with unmatched aim. Rains arrows from afar and lays cunning frost traps for pursuers.",hp:95,mana:60,ap:11,armor:4,speed:242,ranged:true,range:380,atkSpeed:1.1,color:"#7bc74d",
-    growth:{hp:16,mana:8,ap:3.5,armor:0.8},abilities:["multishot","frosttrap","aimedshot","serrated"]},
+    growth:{hp:16,mana:8,ap:3.5,armor:0.8},abilities:["multishot","frosttrap","aimedshot","serrated","explosive"]},
   necromancer:{name:"Necromancer",role:"Ranged • Dark Caster",desc:"A student of death itself. Raises skeletal servants from the grave, drains the life of foes, and spreads festering plagues across the battlefield.",hp:85,mana:95,ap:13,armor:3,speed:230,ranged:true,range:320,atkSpeed:1.3,color:"#a06ae8",
-    growth:{hp:14,mana:11,ap:4,armor:0.5},abilities:["raise_skeleton","life_drain","plague_nova","soulharvest"]},
+    growth:{hp:14,mana:11,ap:4,armor:0.5},abilities:["raise_skeleton","life_drain","plague_nova","soulharvest","deathcoil"]},
 };
 
 const ABILITIES={
@@ -1182,6 +1192,10 @@ const ABILITIES={
   life_drain:{name:"Life Drain",unlock:3,cd:6,cost:12,range:340,tip:"Drain your target for 200% damage, healing yourself for 50% dealt."},
   plague_nova:{name:"Plague Nova",unlock:5,cd:12,cost:22,tip:"Erupt with pestilence: 130% damage to nearby enemies plus a lingering plague for 8s."},
   soulharvest:{name:"Soul Harvest",unlock:7,cd:20,cost:26,tip:"Reap the life of all nearby enemies for 170% damage, healing yourself for 20% of the damage dealt."},
+  execute:  {name:"Execute",unlock:9,cd:14,cost:20,range:130,tip:"A finishing blow for 300% weapon damage — 50% more against enemies below 30% health."},
+  glacial:  {name:"Glacial Spike",unlock:9,cd:12,cost:22,range:380,tip:"Hurl a huge spike of glacial ice for 260% damage, rooting the target for 1.5s."},
+  explosive:{name:"Explosive Shot",unlock:9,cd:12,cost:18,range:420,tip:"Fire an explosive arrow for 200% weapon damage, blasting nearby enemies for 70%."},
+  deathcoil:{name:"Death Coil",unlock:9,cd:10,cost:18,range:340,tip:"Unleash a coil of death for 220% damage, healing you for 25% of the damage dealt."},
   potion:   {name:"Health Potion",unlock:1,cd:15,cost:0,tip:"Drink a health potion, restoring 55% of max health."},
 };
 
@@ -1204,7 +1218,11 @@ const TALENTS={
     {ab:"sunder",talents:[
       {id:"w_su_dmg",name:"Armorbreaker",tip:"+35% Sunder Armor damage per rank."},
       {id:"w_su_vuln",name:"Exposed Plate",tip:"+10% more damage taken by the Sundered target per rank."},
-      {id:"w_su_cd",name:"Opportunist",tip:"−2s Sunder Armor cooldown per rank.",cdR:-2}]}],
+      {id:"w_su_cd",name:"Opportunist",tip:"−2s Sunder Armor cooldown per rank.",cdR:-2}]},
+    {ab:"execute",talents:[
+      {id:"w_ex_dmg",name:"Headsman",tip:"+35% Execute damage per rank."},
+      {id:"w_ex_fin",name:"Merciless",tip:"Execute deals +25% more damage per rank against enemies below 30% health."},
+      {id:"w_ex_cd",name:"Relentless",tip:"−2s Execute cooldown per rank.",cdR:-2}]}],
   mage:[
     {ab:"frostbolt",talents:[
       {id:"m_fb_dmg",name:"Empowered Frost",tip:"+35% Frostbolt damage per rank."},
@@ -1221,7 +1239,11 @@ const TALENTS={
     {ab:"deepfreeze",talents:[
       {id:"m_df_dmg",name:"Absolute Zero",tip:"+30% Deep Freeze damage per rank."},
       {id:"m_df_rad",name:"Frostbite",tip:"+25 Deep Freeze radius per rank."},
-      {id:"m_df_root",name:"Glacial Grasp",tip:"Deep Freeze root lasts +0.8s per rank."}]}],
+      {id:"m_df_root",name:"Glacial Grasp",tip:"Deep Freeze root lasts +0.8s per rank."}]},
+    {ab:"glacial",talents:[
+      {id:"m_gl_dmg",name:"Shattering Cold",tip:"+30% Glacial Spike damage per rank."},
+      {id:"m_gl_root",name:"Permafrost",tip:"Glacial Spike root lasts +0.6s per rank."},
+      {id:"m_gl_cd",name:"Frozen Focus",tip:"−2s Glacial Spike cooldown per rank.",cdR:-2}]}],
   hunter:[
     {ab:"multishot",talents:[
       {id:"h_ms_vol",name:"Volley",tip:"+1 Multi-Shot target per rank."},
@@ -1238,7 +1260,11 @@ const TALENTS={
     {ab:"serrated",talents:[
       {id:"h_sr_dmg",name:"Barbed Heads",tip:"+30% Serrated Shot damage per rank."},
       {id:"h_sr_rot",name:"Hemorrhage",tip:"Serrated Shot bleed deals +50% damage and lasts +2s per rank."},
-      {id:"h_sr_cd",name:"Quarrel",tip:"−1s Serrated Shot cooldown per rank.",cdR:-1}]}],
+      {id:"h_sr_cd",name:"Quarrel",tip:"−1s Serrated Shot cooldown per rank.",cdR:-1}]},
+    {ab:"explosive",talents:[
+      {id:"h_ex_dmg",name:"Bigger Boom",tip:"+30% Explosive Shot damage per rank."},
+      {id:"h_ex_rad",name:"Shrapnel",tip:"+30 Explosive Shot blast radius per rank."},
+      {id:"h_ex_cd",name:"Quick Fuse",tip:"−2s Explosive Shot cooldown per rank.",cdR:-2}]}],
   necromancer:[
     {ab:"raise_skeleton",talents:[
       {id:"n_sk_dmg",name:"Unholy Strength",tip:"+30% minion damage per rank."},
@@ -1255,7 +1281,11 @@ const TALENTS={
     {ab:"soulharvest",talents:[
       {id:"n_sh_dmg",name:"Grim Reapers",tip:"+35% Soul Harvest damage per rank."},
       {id:"n_sh_rad",name:"Wide Grasp",tip:"+30 Soul Harvest radius per rank."},
-      {id:"n_sh_heal",name:"Grim Feast",tip:"Soul Harvest heals +10% more of the damage dealt per rank."}]}],
+      {id:"n_sh_heal",name:"Grim Feast",tip:"Soul Harvest heals +10% more of the damage dealt per rank."}]},
+    {ab:"deathcoil",talents:[
+      {id:"n_dc_dmg",name:"Death's Grip",tip:"+35% Death Coil damage per rank."},
+      {id:"n_dc_heal",name:"Soul Leech",tip:"Death Coil heals +15% more of the damage dealt per rank."},
+      {id:"n_dc_cd",name:"Dark Calling",tip:"−1s Death Coil cooldown per rank.",cdR:-1}]}],
 };
 function TR(id){return (G&&G.talents[id])||0;}          // talent rank
 function totalTalentSpent(){let n=0;if(G)for(const k in G.talents)n+=G.talents[k];return n;}
@@ -1487,7 +1517,7 @@ function gearPool(clsKey,slots,tiers,themes){return GEAR[clsKey].filter(d=>slots
   for(const d of U){d.quest=true;d.price=99999;gearById[d.id]=d;GEAR[d.cls].push(d);}
 })();
 const STAT_LABEL={ap:"Attack Power",armor:"Armor",hp:"Health",mana:"Mana"};
-function gearStatsText(d){return Object.keys(d.stats).map(k=>"+"+d.stats[k]+" "+STAT_LABEL[k]).join(", ");}
+function gearStatsText(d){return Object.keys(d.stats).map(k=>"+"+d.stats[k]+" "+statLabel(k)).join(", ");}
 // player appearance data
 const SKINS=["#f5c99a","#e8b47e","#d29a5f","#b07a45","#8a572f","#5f3a22"];
 const HAIRC=["#2a1a10","#5a3418","#9a6a2a","#b04820","#8a8a8a","#e0d0a0"];
@@ -1508,7 +1538,7 @@ const RACES={
     hair:["#2a2a2a","#3a322c","#4a4444","#5a5a5a","#8a7a6a"],
     eyes:["#1a1a1a","#3a2a1a","#4a3a2a"],
     acc:[["","None"],["stone_brow","Stone Brow"],["rock_shoulder","Rock Shoulder"]]},
-  astren:{name:"Astren",spriteScale:2.05,racialName:"Arcane Mind",racialTip:"+15% mana regeneration. Abilities cost 8% less mana.",
+  astren:{name:"Astren",spriteScale:2.05,racialName:"Arcane Mind",racialTip:"+15% resource regeneration. Abilities cost 8% less resource.",
     rdesc:"Star-touched scholars with pale silver skin and eyes like distant suns. Knowledge is their armor.",
     skins:["#d8dce8","#c8cede","#e8ecf4","#b8c4d8","#a8b4cc"],
     hair:["#e8e8f0","#b8c8e8","#d8c8e8","#a0a8c8","#f0f0ff"],
@@ -1539,6 +1569,35 @@ function migrateAppearance(a,raceKey){
   return a;
 }
 function effCost(aid){let c=(ABILITIES[aid]||{cost:0}).cost;if(G.raceKey==="astren")c=Math.round(c*0.92);return c;} // Astren: Arcane Mind −8% cost
+// ---------- resources: Warriors & Hunters spend Stamina; Mages & Necromancers spend Mana ----------
+function usesStamina(){return !!G&&(G.clsKey==="warrior"||G.clsKey==="hunter");}
+function resName(){return usesStamina()?"Stamina":"Mana";}
+function resColor(){return usesStamina()?"#e8b93c":"#2a6ad8";}
+function statLabel(k){return k==="mana"?(G&&(G.clsKey==="warrior"||G.clsKey==="hunter")?"Stamina":"Mana"):(STAT_LABEL[k]||k);}
+// ---------- line of sight & dungeon visibility (no free hits through walls) ----------
+function pointInWall(x,y){
+  if(tileAt(x,y)===TM.CAVEW)return true;
+  for(const rc of rectCols)if(x>rc.x-2&&x<rc.x+rc.w+2&&y>rc.y-2&&y<rc.y+rc.h+2)return true;
+  return false;
+}
+function hasLOS(x1,y1,x2,y2){
+  const d=Math.hypot(x2-x1,y2-y1),steps=Math.max(1,Math.ceil(d/14));
+  for(let i=1;i<steps;i++){const t=i/steps;
+    if(pointInWall(x1+(x2-x1)*t,y1+(y2-y1)*t))return false;}
+  return true;
+}
+function dungeonFam(x,y){ // which dungeon (if any) a point belongs to, by its floor
+  const t=tileAt(x,y);
+  if(x>=4320&&(t===TM.STONE||t===TM.EMBER||t===TM.CAVEF))return "deep";
+  if(t===TM.CAVEF||t===TM.EMBER)return "cave";
+  return null;
+}
+function mobHidden(m){ // dungeon enemies stay hidden until the player is inside with them
+  if(!G)return false;
+  const mf=dungeonFam(m.x,m.y);
+  if(!mf)return false;
+  return dungeonFam(G.x,G.y)!==mf;
+}
 const BASE_LOOK={
   warrior:{shirt:"#7a2a20",pants:"#3a3a44",weapon:"sword",belt:"#c9a93c"},
   mage:{shirt:"#2a3a6a",pants:"#2a2a3a",weapon:"staff",gem:"#4aa3ff",hood:true},
@@ -1579,7 +1638,7 @@ const MOB_TYPES={
 
 const ITEMS={
   hpotion:  {name:"Health Potion",price:25, sell:6,  use:"hp",  desc:"Restores 55% of max health. (Hotbar slot 5)"},
-  mpotion:  {name:"Mana Potion",  price:20, sell:5,  use:"mp",  desc:"Restores 55% of max mana."},
+  mpotion:  {name:"Mana Potion",  price:20, sell:5,  use:"mp",  desc:"Restores 55% of your mana or stamina."},
   elixir:   {name:"Elixir of Power",price:75,sell:18, use:"elixir",desc:"+8 attack power for 5 minutes."},
   boar_tusk:{name:"Boar Tusk",    price:0,  sell:8,  junk:true,desc:"A curved tusk. Traders pay coin for these."},
   gnoll_ear:{name:"Gnoll Ear",    price:0,  sell:12, junk:true,desc:"Proof of a gnoll slain. Grim, but valuable."},
@@ -2101,7 +2160,7 @@ function newGameState(name,clsKey,raceKey){
     x:SPAWN.x,y:SPAWN.y,facing:Math.PI/2,
     hp:Math.round(cls.hp*hpm),maxhp:Math.round(cls.hp*hpm),mana:cls.mana,maxmana:cls.mana,
     ap:cls.ap,armor:cls.armor,speed:cls.speed,
-    target:null,dead:false,
+    target:null,dead:false,lastSafeX:700,lastSafeY:740,safeT:0,
     cd:{},buffs:[],debuffs:[],inv:[{id:"hpotion",n:2}],play:0,
     appearance:defaultAppearance(),talentPts:0,talents:{},
     gear:{weapon:null,head:null,chest:null,legs:null,gloves:null,boots:null,trinket:null},gearSeq:1,
@@ -2144,6 +2203,7 @@ function spawnMob(def){
   const m={type:def.type,t,def,x:def.x+rnd(-30,30),y:def.y+rnd(-30,30),hx:def.x,hy:def.y,
     hp:t.hp,maxhp:t.hp,state:"idle",target:null,atkT:rnd(0,1),wanderT:rnd(1,4),wx:0,wy:0,
     debuffs:[],dmgFlash:0,deadT:0,respawnT:0,walkT:rnd(0,9),slamT:4,aggroT:0,lastDmgT:99,lungeT:0,
+    noLosT:0,returnT:0,blockT:0,summoned:false,
     // animation state: idle twitches, aggro alert, death timeline
     seed:rnd(0,100),twitchT:rnd(2,7),twitch:0,twDir:1,alertT:0,
     deathDir:1,deathScale:1,deathThudT:0,blood:"#8f2323"};
@@ -2203,6 +2263,14 @@ function lunge(ang,dur=0.18){G.lungeT=dur;G.lungeDur=dur;G.lungeAng=ang;}
 function playerAttackPower(){let ap=G.ap;for(const b of G.buffs)if(b.stat==="ap")ap+=b.amt;return ap;}
 function dealDamageToMob(m,amount,opts={}){
   if(m.state==="dead")return;
+  // no free hits through walls: instant player/minion damage needs line of sight
+  if(opts.los&&G){
+    const sx=opts.sx!==undefined?opts.sx:G.x,sy=(opts.sy!==undefined?opts.sy:G.y)-14;
+    if(!hasLOS(sx,sy,m.x,m.y-14)){
+      if((m.blockT||0)<=0){floater(m.x,m.y-34,"Blocked!","#9d9280");m.blockT=0.9;}
+      return;
+    }
+  }
   let crit=Math.random()<(G.raceKey==="wildkin"?0.2:0.1),vuln=1; // Wildkin: Keen Eye +10% crit
   for(const d of m.debuffs)if(d.kind==="vuln"&&d.dur>0)vuln+=0.1*d.mult;
   let dmg=amount*vuln*(crit?1.7:1);
@@ -2286,6 +2354,32 @@ function respawn(){
   $("death-screen").classList.add("hidden");
   msg("You wake at the graveyard, aching but alive.");
 }
+// ---------- unstuck: teleport to the last safe open ground (or the town spawn) ----------
+function unstuckPlayer(){
+  if(!G||G.dead)return;
+  Audio2.resume();
+  let tx=G.lastSafeX,ty=G.lastSafeY;
+  if(tx===undefined||dist(G.x,G.y,tx,ty)<90){tx=SPAWN.x;ty=SPAWN.y;} // still stuck at the "safe" spot — go home
+  G.x=tx;G.y=ty;resolveCollision(G,14);
+  G.target=null;cam.x=G.x;cam.y=G.y;
+  for(const m of mobs)if(m.state==="aggro")m.state="return";
+  burst(G.x,G.y-16,"#ffd94d",16,170,0.6,4);ring(G.x,G.y,"#ffd94d",10,80,0.45);
+  Audio2.play("portal");
+  msg("The wilds release you — you are back on safe ground.");
+  saveGame();
+}
+function unstuckSavedHero(){
+  Audio2.resume();
+  const slot=continueSlotIndex();
+  if(slot<0){Audio2.play("error");msg("No saved hero to unstuck yet.");return;}
+  const s=loadSlot(slot);if(!s)return;
+  try{
+    s.x=SPAWN.x;s.y=SPAWN.y;
+    localStorage.setItem(slotKey(slot),JSON.stringify(s));
+    Audio2.play("portal");
+    msg(`<b>${s.name}</b> will wake on safe ground in Emberhold.`);
+  }catch(e){Audio2.play("error");}
+}
 function gainXP(n){
   if(G.level>=MAX_LEVEL)return;
   n=Math.round(n*(G.raceKey==="human"?1.1:1)); // Human: Adaptability +10% XP
@@ -2322,14 +2416,14 @@ function abilityReady(id){return (G.cd[id]||0)<=0;}
 function useAbilitySlot(slot){
   if(G.dead||!G)return;
   Audio2.resume();
-  if(slot===4){drinkPotion("hpotion");return;}
+  if(slot===5){drinkPotion("hpotion");return;}
   const aid=cls().abilities[slot],ab=ABILITIES[aid];
   if(G.level<ab.unlock){Audio2.play("error");msg(`${ab.name} unlocks at level ${ab.unlock}.`);return;}
   if(!abilityReady(aid))return;
   const cost=effCost(aid);
-  if(G.mana<cost){Audio2.play("error");msg("Not enough mana.","loot");return;}
+  if(G.mana<cost){Audio2.play("error");msg(`Not enough ${resName().toLowerCase()}.`);return;}
   // offensive abilities need a target (acquire nearest in range if none)
-  const needsTarget=["charge","frostbolt","blizzard","multishot","aimedshot","life_drain","sunder","deepfreeze","serrated"].includes(aid);
+  const needsTarget=["charge","frostbolt","blizzard","multishot","aimedshot","life_drain","sunder","deepfreeze","serrated","execute","glacial","explosive","deathcoil"].includes(aid);
   if(needsTarget&&(!G.target||G.target.state==="dead")){
     const t=nearestEnemy(ab.range||400);
     if(t)G.target=t;else{Audio2.play("error");msg("No target in range.");return;}
@@ -2340,7 +2434,7 @@ function useAbilitySlot(slot){
 }
 function nearestEnemy(maxR){
   let best=null,bd=maxR;
-  for(const m of mobs){if(m.state==="dead")continue;const d=dist(G.x,G.y,m.x,m.y);if(d<bd){bd=d;best=m;}}
+  for(const m of mobs){if(m.state==="dead"||mobHidden(m))continue;const d=dist(G.x,G.y,m.x,m.y);if(d<bd){bd=d;best=m;}}
   return best;
 }
 const ABILITY_FN={
@@ -2354,7 +2448,7 @@ const ABILITY_FN={
     slash(G.x,G.y-16,a,"#ffe9b0",70,1.4);
     lunge(a);addShake(3);
     Audio2.play("hit");
-    dealDamageToMob(t,playerAttackPower()*1.5*(1+0.4*TR("w_ch_dmg")),{stun:1.5+0.6*TR("w_ch_stun"),color:"#ffd94d",knock:30});},
+    dealDamageToMob(t,playerAttackPower()*1.5*(1+0.4*TR("w_ch_dmg")),{stun:1.5+0.6*TR("w_ch_stun"),color:"#ffd94d",knock:30,los:true});},
   whirlwind(){Audio2.play("swing");addShake(4);
     const r=135+30*TR("w_wh_rad"),dmg=playerAttackPower()*1.2*(1+0.35*TR("w_wh_dmg"));
     ring(G.x,G.y,"#e8eef8",20,r,0.35);
@@ -2362,15 +2456,19 @@ const ABILITY_FN={
     burst(G.x,G.y,"#c8d2e0",16,200,0.4,4);Audio2.play("boom");
     const lac=TR("w_wh_lac");
     for(const m of mobs){if(m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<r){
-      dealDamageToMob(m,dmg,{color:"#cfe0ff"});
+      dealDamageToMob(m,dmg,{color:"#cfe0ff",los:true});
       if(lac>0)addDebuff(m,"slow",1+lac,0.65);}}},
-  shieldslam(){const t=nearestEnemy(110)||G.target;Audio2.play("boom");
+  shieldslam(){const t=nearestEnemy(110)||G.target;Audio2.play("boom");Audio2.play("stun");
     if(t&&dist(G.x,G.y,t.x,t.y)<125){
       const a=angTo(G.x,G.y,t.x,t.y);
-      lunge(a);addShake(6);
-      slash(t.x,t.y-16,a,"#ffd94d",80,1.3);
-      ring(t.x,t.y,"#ffd94d",10,60,0.3);
-      dealDamageToMob(t,playerAttackPower()*2.2*(1+0.35*TR("w_ss_dmg")),{color:"#ffd94d",knock:26});
+      lunge(a,0.22);addShake(7);
+      // readable shield-bash: a golden shield wedge slams outward, with sparks and a heavy ring
+      particles.push({shield:true,x:t.x,y:t.y-14,ang:a,t:0,dur:0.32,color:"#ffd94d"});
+      slash(t.x,t.y-16,a,"#ffd94d",88,1.5);
+      ring(t.x,t.y,"#ffd94d",12,74,0.35);
+      burst(t.x,t.y-14,"#ffd94d",14,220,0.45,4);burst(t.x,t.y-14,"#fff",6,150,0.3,3);
+      floater(t.x,t.y-52,"Shield Slam!","#ffd94d");
+      dealDamageToMob(t,playerAttackPower()*2.2*(1+0.35*TR("w_ss_dmg")),{color:"#ffd94d",knock:30,los:true});
       addDebuff(t,"aslow",4,0.6);
       const vw2=TR("w_ss_vuln");if(vw2>0)addDebuff(t,"vuln",6,vw2);
     }else{floater(G.x,G.y-20,"Too far!","#ff9b8e");G.cd.shieldslam=0.5;G.mana+=effCost("shieldslam");}},
@@ -2379,7 +2477,7 @@ const ABILITY_FN={
     const dmg=playerAttackPower()*1.8*(1+0.35*TR("w_su_dmg"));
     slash(t.x,t.y-16,a,"#ff8c2a",70,1.3);burst(t.x,t.y-14,"#c9a93c",12,180,0.4,3);
     ring(t.x,t.y,"#ffb063",8,50,0.3);
-    dealDamageToMob(t,dmg,{color:"#ffb063",knock:20});
+    dealDamageToMob(t,dmg,{color:"#ffb063",knock:20,los:true});
     addDebuff(t,"vuln",6,2+TR("w_su_vuln"));},
   frostbolt(){const t=G.target;Audio2.play("frost");
     ring(G.x,G.y,"#bfe6ff",6,40,0.25);
@@ -2401,16 +2499,19 @@ const ABILITY_FN={
     if(nv>0){addShake(2);Audio2.play("frosthit");
       ring(G.x,G.y,"#bfe6ff",20,140,0.4);
       for(const m of mobs)if(m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<135)
-        dealDamageToMob(m,playerAttackPower()*(1+0.5*nv),{slow:{dur:2,mult:0.6},color:"#bfe6ff"});}},
+        dealDamageToMob(m,playerAttackPower()*(1+0.5*nv),{slow:{dur:2,mult:0.6},color:"#bfe6ff",los:true});}},
   blizzard(){const t=G.target;Audio2.play("frost");addShake(2);
-    ring(G.x,G.y,"#bfe6ff",8,50,0.3);
+    // cast animation: the mage raises a frost flare, then the storm breaks over the target
+    G.castT=0.32;G.castKind="frost";
+    ring(G.x,G.y,"#bfe6ff",8,56,0.3);burst(G.x,G.y-24,"#bfe6ff",12,150,0.4,3);
+    ring(t.x,t.y,"#dff2ff",20,70,0.45);burst(t.x,t.y-20,"#dff2ff",16,190,0.5,4);
     blizzards.push({x:t.x,y:t.y,r:150+25*TR("m_bz_rad"),t:0,dur:2.4,tick:0,
       dmg:playerAttackPower()*1.1*(1+0.3*TR("m_bz_dmg")),rootC:0.15*TR("m_bz_root")});},
   deepfreeze(){const t=G.target;Audio2.play("deepfreeze");addShake(2);
     const r=120+25*TR("m_df_rad"),dmg=playerAttackPower()*1.5*(1+0.3*TR("m_df_dmg"));
     ring(t.x,t.y,"#bfe6ff",10,r,0.4);burst(t.x,t.y-14,"#bfe6ff",20,220,0.6,4);
     for(const m of mobs)if(m.state!=="dead"&&dist(t.x,t.y,m.x,m.y)<r)
-      dealDamageToMob(m,dmg,{root:2.5+0.8*TR("m_df_root"),color:"#8ac8f0"});},
+      dealDamageToMob(m,dmg,{root:2.5+0.8*TR("m_df_root"),color:"#8ac8f0",los:true});},
   multishot(){Audio2.play("shoot");addShake(2);
     const n=3+TR("h_ms_vol"),dmg=playerAttackPower()*1.3*(1+0.3*TR("h_ms_dmg"));
     const inCone=mobs.filter(m=>m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<420)
@@ -2441,7 +2542,7 @@ const ABILITY_FN={
     const rDmg=1+0.3*TR("h_sr_dmg"),rot=TR("h_sr_rot");
     const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.2);
     streak(G.x,G.y-18,t.x,t.y-14,"#ff5b4a",0.2);
-    dealDamageToMob(t,playerAttackPower()*1.8*rDmg,{bleed:{dur:8+2*rot,dps:playerAttackPower()*0.35*(1+0.5*rot)},color:"#ff5b4a"});},
+    dealDamageToMob(t,playerAttackPower()*1.8*rDmg,{bleed:{dur:8+2*rot,dps:playerAttackPower()*0.35*(1+0.5*rot)},color:"#ff5b4a",los:true});},
   // ---- necromancer ----
   raise_skeleton(){
     Audio2.play("skeleton");
@@ -2456,7 +2557,7 @@ const ABILITY_FN={
     const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.2);
     const dmg=playerAttackPower()*2.0*(1+0.35*TR("n_ld_dmg"));
     streak(t.x,t.y-14,G.x,G.y-14,"#c0392b",0.4);ring(G.x,G.y,"#c0392b",8,44,0.35);
-    dealDamageToMob(t,dmg,{color:"#c0392b"});
+    dealDamageToMob(t,dmg,{color:"#c0392b",los:true});
     const heal=Math.round(dmg*0.5*(1+0.4*TR("n_ld_vamp")));
     G.hp=Math.min(G.maxhp,G.hp+heal);floater(G.x,G.y-30,"+"+heal,"#7bc74d");
     burst(G.x,G.y-20,"#7bc74d",8,100,0.4,3);
@@ -2467,7 +2568,7 @@ const ABILITY_FN={
     const mul=1+0.35*TR("n_pl_dmg"),r=170+30*TR("n_pl_rad");
     ring(G.x,G.y,"#7bc74d",20,r,0.45);burst(G.x,G.y-14,"#7bc74d",22,220,0.6,4);
     for(const m of mobs){if(m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<r){
-      dealDamageToMob(m,playerAttackPower()*1.3*mul,{color:"#7bc74d"});
+      dealDamageToMob(m,playerAttackPower()*1.3*mul,{color:"#7bc74d",los:true});
       addDebuff(m,"plague",8,1,{dps:playerAttackPower()*0.25*mul});
     }}
   },
@@ -2476,10 +2577,37 @@ const ABILITY_FN={
     ring(G.x,G.y,"#a06ae8",20,r,0.45);burst(G.x,G.y-14,"#7a3ad8",24,240,0.6,4);
     let dealt=0;
     for(const m of mobs){if(m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<r){
-      const dmg=playerAttackPower()*1.7*mul;dealt+=dmg;dealDamageToMob(m,dmg,{color:"#a06ae8"});}}
+      const dmg=playerAttackPower()*1.7*mul;dealt+=dmg;dealDamageToMob(m,dmg,{color:"#a06ae8",los:true});}}
     const heal=Math.round(dealt*(0.2+0.1*TR("n_sh_heal")));
     if(heal>0){G.hp=Math.min(G.maxhp,G.hp+heal);floater(G.x,G.y-30,"+"+heal,"#7bc74d");
       burst(G.x,G.y-20,"#7bc74d",10,140,0.5,3);}},
+  // ---- 5th skills (unlock at level 9) ----
+  execute(){const t=G.target;Audio2.play("boom");
+    if(t&&dist(G.x,G.y,t.x,t.y)<140){
+      const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.24);addShake(6);
+      slash(t.x,t.y-16,a,"#ff5b4a",96,1.5);ring(t.x,t.y,"#ff5b4a",12,70,0.35);
+      burst(t.x,t.y-14,"#ff5b4a",12,200,0.45,4);
+      let dmg=playerAttackPower()*3.0*(1+0.35*TR("w_ex_dmg"));
+      if(t.hp<t.maxhp*0.3){dmg*=1.5+0.25*TR("w_ex_fin");floater(t.x,t.y-52,"EXECUTE!","#ff5b4a",true);}
+      dealDamageToMob(t,dmg,{color:"#ff5b4a",knock:24,los:true});
+    }else{floater(G.x,G.y-20,"Too far!","#ff9b8e");G.cd.execute=0.5;G.mana+=effCost("execute");}},
+  glacial(){const t=G.target;Audio2.play("deepfreeze");
+    G.castT=0.3;G.castKind="frost";
+    ring(G.x,G.y,"#bfe6ff",6,44,0.25);burst(G.x+Math.cos(angTo(G.x,G.y,t.x,t.y))*22,G.y-22,"#dff2ff",8,150,0.35,3);
+    projectiles.push({kind:"frost",big:true,x:G.x,y:G.y-18,tx:t,spd:640,dmg:playerAttackPower()*2.6*(1+0.3*TR("m_gl_dmg")),root:1.5+0.6*TR("m_gl_root"),from:"player",life:2});},
+  explosive(){const t=G.target;Audio2.play("shoot");addShake(2);
+    const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.2);
+    burst(G.x+Math.cos(a)*24,G.y-18,"#ff8c2a",6,120,0.25,3);
+    projectiles.push({kind:"arrow",big:true,x:G.x,y:G.y-18,tx:t,spd:820,dmg:playerAttackPower()*2.0*(1+0.3*TR("h_ex_dmg")),aoe:130+30*TR("h_ex_rad"),from:"player",life:1.5,color:"#ff8c2a"});},
+  deathcoil(){const t=G.target;Audio2.play("reap");
+    const a=angTo(G.x,G.y,t.x,t.y);lunge(a,0.2);
+    streak(G.x,G.y-16,t.x,t.y-14,"#a06ae8",0.3);ring(t.x,t.y,"#a06ae8",10,56,0.3);
+    burst(t.x,t.y-14,"#7a3ad8",12,170,0.45,4);
+    const dmg=playerAttackPower()*2.2*(1+0.35*TR("n_dc_dmg"));
+    dealDamageToMob(t,dmg,{color:"#a06ae8",los:true});
+    const heal=Math.round(dmg*(0.25+0.15*TR("n_dc_heal")));
+    G.hp=Math.min(G.maxhp,G.hp+heal);floater(G.x,G.y-30,"+"+heal,"#7bc74d");
+    burst(G.x,G.y-20,"#a06ae8",8,120,0.4,3);},
 };
 function updateMinions(dt){
   for(let i=minions.length-1;i>=0;i--){const m=minions[i];
@@ -2489,7 +2617,8 @@ function updateMinions(dt){
     m.dur-=dt;
     if(m.dur<=0){expireMinion(m);m.dying=true;m.deathT=0;continue;}
     m.walkT+=dt*6;m.swingT-=dt;m.lungeT=Math.max(0,(m.lungeT||0)-dt);
-    let t=(G.target&&G.target.state!=="dead"&&dist(G.x,G.y,G.target.x,G.target.y)<560)?G.target:nearestEnemy(430);
+    // the skeleton is passive: it only fights the enemy its master is already engaging
+    let t=(G.target&&G.target.state!=="dead"&&G.target.state==="aggro"&&!mobHidden(G.target))?G.target:null;
     if(t&&t.state!=="dead"){
       const d=dist(m.x,m.y,t.x,t.y);
       if(d>52){const a=angTo(m.x,m.y,t.x,t.y);m.x+=Math.cos(a)*265*dt;m.y+=Math.sin(a)*265*dt;resolveCollision(m,12);}
@@ -2497,7 +2626,7 @@ function updateMinions(dt){
         const sa=angTo(m.x,m.y,t.x,t.y);
         slash(t.x,t.y-12,sa,"#e8e0cc",46,1.0);
         m.lungeT=0.18;m.lungeDur=0.18;m.lungeAng=sa; // strike hop toward the foe
-        dealDamageToMob(t,playerAttackPower()*m.dmgMul,{color:"#e8e0cc"});}
+        dealDamageToMob(t,playerAttackPower()*m.dmgMul,{color:"#e8e0cc",los:true,sx:m.x,sy:m.y});}
     }else{
       const d=dist(m.x,m.y,G.x,G.y);
       if(d>70){const a=angTo(m.x,m.y,G.x,G.y);m.x+=Math.cos(a)*285*dt;m.y+=Math.sin(a)*285*dt;resolveCollision(m,12);}
@@ -2542,9 +2671,10 @@ function drinkPotion(id){
 // ---------- auto attack ----------
 function playerAutoAttack(dt){
   const t=G.target;
-  if(!t||t.state==="dead")return;
+  if(!t||t.state==="dead"||mobHidden(t))return;
   const c=cls(),d=dist(G.x,G.y,t.x,t.y);
   if(d>c.range)return;
+  if(!hasLOS(G.x,G.y-14,t.x,t.y-14))return; // no auto-attacks through walls
   G.facing=angTo(G.x,G.y,t.x,t.y);
   G.atkT-=dt;
   if(G.atkT>0)return;
@@ -2564,7 +2694,7 @@ function playerAutoAttack(dt){
     lunge(a,0.14);
     slash(t.x,t.y-12,a,"#ffffff",52,1.0);
     burst(t.x,t.y-10,"#fff",4,80,0.2,2);
-    dealDamageToMob(t,ap,{color:"#fff"});
+    dealDamageToMob(t,ap,{color:"#fff",los:true});
   }
 }
 
@@ -2587,6 +2717,9 @@ function updateMobs(dt){
       }
       continue;}
     m.lastDmgT+=dt;m.dmgFlash=Math.max(0,m.dmgFlash-dt);m.lungeT=Math.max(0,(m.lungeT||0)-dt);
+    m.blockT=Math.max(0,(m.blockT||0)-dt);
+    // dungeon enemies cannot engage (or be engaged) from outside their dungeon
+    if(mobHidden(m)&&m.state==="aggro")m.state="return";
     m.alertT=Math.max(0,(m.alertT||0)-dt);m.twitch=Math.max(0,(m.twitch||0)-dt);
     for(const d of m.debuffs){d.dur-=dt;
       if((d.kind==="plague"||d.kind==="bleed")&&d.dur>0&&d.dps&&m.state!=="dead"){
@@ -2613,7 +2746,7 @@ function updateMobs(dt){
       m.wanderT-=dt;
       if(m.wanderT<=0){m.wanderT=rnd(2,5);const a=rnd(Math.PI*2);m.wx=Math.cos(a);m.wy=Math.sin(a);}
       if(!rooted){m.x+=m.wx*40*dt;m.y+=m.wy*40*dt;if(dist(m.hx,m.hy,m.x,m.y)>120){m.wx*=-1;m.wy*=-1;}resolveCollision(m,12);}
-      if(!G.dead&&pd<m.t.aggro){m.state="aggro";m.target="player";m.aggroT=0;m.alertT=1.2;
+      if(!G.dead&&pd<m.t.aggro&&!mobHidden(m)&&hasLOS(m.x,m.y-14,G.x,G.y-14)){m.state="aggro";m.target="player";m.aggroT=0;m.alertT=1.2;
         if(m.t.elite){Audio2.play("roar");msg(m.t.name+" has noticed you!","quest");}
         if(m.t.howler){ // wolves howl and the pack answers
           if(Math.random()<0.6){Audio2.play("howl");ring(m.x,m.y-16,"#a8b8c8",10,120,0.8);}
@@ -2623,7 +2756,13 @@ function updateMobs(dt){
       if(G.dead){m.state="return";}
       else if(hd>m.t.leash){m.state="return";}
       else{
-        m.aggroT+=dt;
+        m.aggroT+=dt;m.returnT=0;
+        // stuck behind a wall with no line of sight: give up and head home instead of eating free hits
+        if(pd<620){
+          if(!hasLOS(m.x,m.y-14,G.x,G.y-14)){m.noLosT=(m.noLosT||0)+dt;
+            if(m.noLosT>2.5){m.state="return";m.noLosT=0;}}
+          else m.noLosT=0;
+        }
         const a=angTo(m.x,m.y,G.x,G.y);
         if(!rooted&&pd>m.t.range*0.8){m.x+=Math.cos(a)*spd*dt;m.y+=Math.sin(a)*spd*dt;resolveCollision(m,12);}
         // elite slam
@@ -2637,14 +2776,28 @@ function updateMobs(dt){
         if(pd>m.t.aggro*2.2&&m.aggroT>6)m.state="return";
       }
     }else if(m.state==="return"){
+      m.returnT=(m.returnT||0)+dt;
       const a=angTo(m.x,m.y,m.hx,m.hy);
       m.x+=Math.cos(a)*spd*1.15*dt;m.y+=Math.sin(a)*spd*1.15*dt;resolveCollision(m,12);
       m.hp=Math.min(m.maxhp,m.hp+m.maxhp*0.08*dt*10);
-      if(dist(m.hx,m.hy,m.x,m.y)<30){m.state="idle";m.hp=m.maxhp;m.target=null;}
+      if(dist(m.hx,m.hy,m.x,m.y)<30){m.state="idle";m.hp=m.maxhp;m.target=null;m.returnT=0;}
+      // walled off from home (e.g. leashed out of a dungeon): snap back and fully reset the encounter
+      else if(m.returnT>4)resetEncounter(m);
     }
   }
 }
 
+// full encounter reset: snap back to spawn, restore health, clear boss mechanics & adds
+function resetEncounter(m){
+  m.x=m.hx;m.y=m.hy;m.hp=m.maxhp;m.state="idle";m.target=null;m.debuffs=[];
+  m.aggroT=0;m.slamT=4;m.noLosT=0;m.returnT=0;m.alertT=0;m.lastDmgT=99;
+  if(m.type==="kezath"){
+    m.phase2=false;m.enraged=false;delete m.sm75;delete m.sm50;delete m.sm25;
+    m.pyreT=4.5;m.stormT=7;
+    for(let i=mobs.length-1;i>=0;i--)if(mobs[i].summoned&&mobs[i].state!=="dead")mobs.splice(i,1);
+  }
+  burst(m.x,m.y-16,"#8a8f9a",10,120,0.4,3);
+}
 // ----- Kezath, the Sealed Flame: encounter AI (telegraphed AoE, summoned adds, phases, enrage) -----
 function updateKezath(m,dt,pd){
   const frac=m.hp/m.maxhp;
@@ -2691,7 +2844,7 @@ function summonKezathAdds(m){
   for(let i=0;i<2;i++){
     const a=rnd(Math.PI*2),d=rnd(60,110);
     const s=spawnMob({type:"cinder",x:m.x+Math.cos(a)*d,y:m.y+Math.sin(a)*d});
-    s.state="aggro";s.target="player";s.atkT=0.8;
+    s.state="aggro";s.target="player";s.atkT=0.8;s.summoned=true;
     burst(s.x,s.y,"#ff6b2a",12,140,0.6,4);
   }
 }
@@ -2706,6 +2859,8 @@ function updateCombatFx(dt){
     const tx=t.x,ty=t.y-14,a=angTo(p.x,p.y,tx,ty);
     p.x+=Math.cos(a)*p.spd*dt;p.y+=Math.sin(a)*p.spd*dt;
     p.ang=a;
+    // shots die on walls — no sniping through stone
+    if(pointInWall(p.x,p.y+14)){burst(p.x,p.y,"#8a8f9a",4,80,0.25,2);projectiles.splice(i,1);continue;}
     if(SETTINGS.particles&&particles.length<500&&p.life>0.25&&Math.random()<0.7)
       particles.push({x:p.x,y:p.y,vx:rnd(-30,30),vy:rnd(-30,30),t:0,dur:0.2,color:p.kind.startsWith("frost")?"#bfe6ff":(p.color||"#d8cdb2"),size:2});
     if(dist(p.x,p.y,tx,ty)<22){
@@ -2713,7 +2868,18 @@ function updateCombatFx(dt){
       burst(tx,ty,p.kind==="frost"?"#8ac8f0":(p.color||"#d8cdb2"),6,100,0.3,3);
       if(p.big)slash(tx,ty,p.ang,"#ffd94d",70,1.2);
       addShake(p.big?2:(p.kind==="frost"?1.5:1));
-      dealDamageToMob(t,p.dmg,p.slow?{slow:p.slow,color:"#8ac8f0"}:{color:p.color});
+      if(p.aoe){ // Explosive Shot: blast the target and everything near it
+        Audio2.play("boom");addShake(3);
+        burst(tx,ty,"#ff8c2a",16,220,0.5,4);ring(t.x,t.y,"#ff8c2a",16,p.aoe,0.35);
+        for(const mm of mobs)if(mm.state!=="dead"&&dist(t.x,t.y,mm.x,mm.y)<p.aoe)
+          dealDamageToMob(mm,mm===t?p.dmg:p.dmg*0.7,{color:"#ff8c2a"});
+      }else{
+        const o={color:p.color};
+        if(p.slow)o.slow=p.slow;
+        if(p.root)o.root=p.root;
+        if(p.kind&&p.kind.startsWith("frost"))o.color="#8ac8f0";
+        dealDamageToMob(t,p.dmg,o);
+      }
       projectiles.splice(i,1);
     }
   }
@@ -2726,6 +2892,9 @@ function updateCombatFx(dt){
     else if(tr.t>60)traps.splice(i,1);
   }
   for(let i=blizzards.length-1;i>=0;i--){const b=blizzards[i];b.t+=dt;b.tick-=dt;
+    // falling ice shards rain through the storm for its whole duration
+    if(SETTINGS.particles&&particles.length<560&&Math.random()<0.85)
+      particles.push({x:b.x+rnd(-b.r,b.r)*0.9,y:b.y-rnd(10,b.r*0.7),vx:rnd(-24,-8),vy:rnd(230,300),t:0,dur:rnd(0.35,0.55),color:pick(["#dff2ff","#bfe6ff","#ffffff"]),size:rnd(2,3.4)});
     if(b.tick<=0){b.tick=0.8;Audio2.play("frosthit");
       for(const m of mobs){if(m.state!=="dead"&&dist(b.x,b.y,m.x,m.y)<b.r){
         dealDamageToMob(m,b.dmg,{slow:{dur:2,mult:0.6},color:"#bfe6ff"});
@@ -2987,8 +3156,9 @@ function openVendor(npcId){
 }
 let shopVendor="pell";
 // gear stock per vendor type, filtered to the player's class, tiers 1-2, limited for a browseable list
+function vendorKind(){const n=NPC_DEFS.find(n=>n.id===shopVendor);return n?n.vendor||"general":"general";}
 function vendorGearStock(){
-  const v=(NPC_DEFS[shopVendor]||{}).vendor||"general",cls=G.clsKey,out=[];
+  const v=vendorKind(),cls=G.clsKey,out=[];
   for(const d of GEAR[cls]){
     if(d.tier>2||d.quest)continue;
     if(v==="weapon"&&d.slot!=="weapon")continue;
@@ -3005,7 +3175,11 @@ function renderShop(){
   $("tab-sell").style.filter=shopMode==="sell"?"brightness(1.3)":"";
   const list=$("shop-list");list.innerHTML="";
   if(shopMode==="buy"){
-    const v=(NPC_DEFS[shopVendor]||{}).vendor||"general";
+    const v=vendorKind();
+    const note={general:"Pell stocks tonics, elixirs and curious trinkets.",
+      weapon:"Wex sells weapons only — the finest steel, staves and bows in Emberhold.",
+      armor:"Brida sells armor only — head, chest, legs, hands and feet."}[v];
+    if(note)list.appendChild(el("div","npc-text",note));
     if(v==="general"){
       for(const id of SHOP_STOCK){
         const it=ITEMS[id],row=el("div","shop-row");
@@ -3038,6 +3212,11 @@ function renderShop(){
       const b=el("button","btn small","Sell");
       if(isGear)b.onclick=()=>sellGear(s.uid);else b.onclick=()=>sellItem(s.id);
       row.appendChild(b);
+      if(!isGear&&s.n>1){ // sell the whole stack at once
+        const ba=el("button","btn small","Sell All");
+        ba.onclick=()=>sellAllItems(s.id);
+        row.appendChild(ba);
+      }
       list.appendChild(row);
     }
   }
@@ -3060,6 +3239,13 @@ function sellItem(id){
   const s=G.inv.find(i=>i.id===id);if(!s)return;
   s.n--;if(s.n<=0)G.inv.splice(G.inv.indexOf(s),1);
   G.gold+=ITEMS[id].sell;Audio2.play("coin");msg(`Sold: ${ITEMS[id].name} (+${fmtGold(ITEMS[id].sell)})`,"loot");
+  renderShop();renderBag();saveGame();
+}
+function sellAllItems(id){
+  const s=G.inv.find(i=>i.id===id);if(!s||s.gear)return;
+  const n=s.n,total=ITEMS[id].sell*n;
+  G.inv.splice(G.inv.indexOf(s),1);
+  G.gold+=total;Audio2.play("coin");msg(`Sold: ${ITEMS[id].name} ×${n} (+${fmtGold(total)})`,"loot");
   renderShop();renderBag();saveGame();
 }
 
@@ -3116,11 +3302,11 @@ function gearTipHTML(d){
   for(const k of Object.keys(STAT_LABEL)){
     const have=d.stats[k]||0,has=ed?(ed.stats[k]||0):0;
     if(!have&&!has)continue;
-    if(!have){losers.push(`+${has} ${STAT_LABEL[k]}`);continue;}
+    if(!have){losers.push(`+${has} ${statLabel(k)}`);continue;}
     const diff=have-has;
     const cls=diff>0?"pos":diff<0?"neg":"eq";
     const dtxt=diff>0?`(+${diff})`:diff<0?`(\u2212${-diff})`:"(=)";
-    h.push(`<div class="tt-stat"><span>+${have} ${STAT_LABEL[k]}</span><span class="d ${cls}">${dtxt}</span></div>`);
+    h.push(`<div class="tt-stat"><span>+${have} ${statLabel(k)}</span><span class="d ${cls}">${dtxt}</span></div>`);
   }
   h.push(`</div>`);
   if(ed)h.push(`<div class="tt-cur">Currently equipped: <b style="color:${rarityColor(ed.tier)}">${ed.name}</b></div>`);
@@ -3205,14 +3391,14 @@ function renderChar(){
   body.appendChild(el("div","portrait")).style.backgroundImage=`url(${iconURL(G.clsKey)})`;
   body.appendChild(el("div","npc-name",G.name));
   body.appendChild(el("div",null,`<span style="color:${c.color};font-weight:700">Level ${G.level} ${c.name}</span> <span style="color:#9d8a5c">• ${c.role}</span><br><span style="color:#c9bfa5">${RACES[G.raceKey]?RACES[G.raceKey].name:"Human"}</span> <span style="color:#8a8069">• ${RACES[G.raceKey]?RACES[G.raceKey].racialName:"Adaptability"} — ${RACES[G.raceKey]?RACES[G.raceKey].racialTip:""}</span>`));
-  const rows=[["Health",`${Math.ceil(G.hp)} / ${G.maxhp}`],["Mana",`${Math.ceil(G.mana)} / ${G.maxmana}`],
+  const rows=[["Health",`${Math.ceil(G.hp)} / ${G.maxhp}`],[resName(),`${Math.ceil(G.mana)} / ${G.maxmana}`],
     ["XP",G.level>=MAX_LEVEL?"MAX":`${G.xp} / ${XP_NEED[G.level]}`],
     ["Attack Power",Math.round(playerAttackPower())],["Armor",Math.round(G.armor)],
     ["Coin",fmtGold(G.gold)],["Monsters slain",G.stats.kills],["Deaths",G.stats.deaths]];
   for(const [k,v] of rows)body.appendChild(el("div","stat-row",`<span class="k">${k}</span><span class="v">${v}</span>`));
   body.appendChild(el("div","help-sec",`<h4 style="margin-top:16px">Abilities</h4>`+
     c.abilities.map((a,i)=>{const ab=ABILITIES[a];return `<div class="stat-row"><span class="k">[${i+1}] ${ab.name}</span><span class="v">${G.level>=ab.unlock?"✓":"Lvl "+ab.unlock}</span></div>`;}).join("")+
-    `<div class="stat-row"><span class="k">[5] Health Potion</span><span class="v">×${countItem("hpotion")}</span></div>`));
+    `<div class="stat-row"><span class="k">[${c.abilities.length+1}] Health Potion</span><span class="v">×${countItem("hpotion")}</span></div>`));
   body.appendChild(el("div","help-sec",`<h4 style="margin-top:16px">Equipment <span style="font-size:12px;color:#8a8069;font-weight:400">(tap a piece to unequip)</span></h4>`));
   const eq=el("div","equip-grid");
   for(const slot of SLOTS){
@@ -3353,19 +3539,25 @@ function updatePlayer(dt){
     if(dist(G.x,G.y,p.x,p.y)<52){usePortal(p);break;}}
   if(G.lungeT>0)G.lungeT-=dt;
   if((G.castT||0)>0)G.castT-=dt;
+  // track the last safe open ground, for the Unstuck teleport
+  G.safeT=(G.safeT||0)-dt;
+  if(G.safeT<=0){G.safeT=1.5;
+    if(!pointInWall(G.x,G.y)&&tileAt(G.x,G.y)!==TM.CAVEW){G.lastSafeX=G.x;G.lastSafeY=G.y;}}
   // regen
   G.regenT+=dt;
   if(G.regenT>1){G.regenT=0;
     const inCombat=mobs.some(m=>m.state==="aggro");
     G.hp=Math.min(G.maxhp,G.hp+G.maxhp*(inCombat?0.008:0.03));
-    G.mana=Math.min(G.maxmana,G.mana+G.maxmana*(inCombat?0.02:0.06)*(G.raceKey==="astren"?1.15:1)); // Astren: Arcane Mind +15% mana regen
+    // Stamina (Warrior/Hunter) surges back fast, even mid-fight; Mana (Mage/Necromancer) is slower
+    const resRate=usesStamina()?(inCombat?0.09:0.17):(inCombat?0.02:0.06);
+    G.mana=Math.min(G.maxmana,G.mana+G.maxmana*resRate*(G.raceKey==="astren"?1.15:1)); // Astren: Arcane Mind +15% resource regen
   }
   // debuffs & buffs & cooldowns
   for(const d of G.debuffs)d.dur-=dt;G.debuffs=G.debuffs.filter(d=>d.dur>0);
   for(const b of G.buffs)b.dur-=dt;G.buffs=G.buffs.filter(b=>b.dur>0);
   for(const k in G.cd)G.cd[k]=Math.max(0,G.cd[k]-dt);
   // target validity
-  if(G.target&&(G.target.state==="dead"||dist(G.x,G.y,G.target.x,G.target.y)>700))G.target=null;
+  if(G.target&&(G.target.state==="dead"||dist(G.x,G.y,G.target.x,G.target.y)>700||mobHidden(G.target)))G.target=null;
   playerAutoAttack(dt);
   // camera
   cam.x=lerp(cam.x,G.x,Math.min(1,dt*6));
@@ -3434,11 +3626,20 @@ function renderWorld(){
     ctx.drawImage(ICONS.frosttrap,sx-12*viewScale,sy-12*viewScale,24*viewScale,24*viewScale);
     ctx.globalAlpha=1;
   }
-  // blizzard zones
+  // blizzard zones: layered storm — ground frost, pulsing rim, and animated falling shards
   for(const b of blizzards){
-    const [sx,sy]=w2s(b.x,b.y),r=b.r*viewScale;
-    ctx.beginPath();ctx.arc(sx,sy,r,0,7);ctx.fillStyle="rgba(140,200,240,0.22)";ctx.fill();
-    ctx.strokeStyle="rgba(190,230,255,0.6)";ctx.lineWidth=2;ctx.stroke();
+    const [sx,sy]=w2s(b.x,b.y),r=b.r*viewScale,bt=performance.now()/1000;
+    ctx.beginPath();ctx.arc(sx,sy,r,0,7);ctx.fillStyle="rgba(140,200,240,0.20)";ctx.fill();
+    ctx.beginPath();ctx.arc(sx,sy,r*(0.55+0.1*Math.sin(bt*5)),0,7);ctx.fillStyle="rgba(190,230,255,0.13)";ctx.fill();
+    ctx.strokeStyle=`rgba(190,230,255,${0.45+0.25*Math.sin(bt*5)})`;ctx.lineWidth=2;ctx.stroke();
+    ctx.strokeStyle="rgba(225,245,255,0.8)";ctx.lineWidth=Math.max(1.5,2*viewScale);ctx.lineCap="round";
+    for(let i=0;i<16;i++){
+      const fx=Math.sin(i*12.9898)*0.92,fy=(bt*1.5+i*0.37)%1;
+      const ix=sx+fx*r*0.92,iy=sy-r+fy*2*r;
+      ctx.beginPath();ctx.moveTo(ix,iy-11*viewScale);ctx.lineTo(ix-3.5*viewScale,iy+7*viewScale);ctx.stroke();
+      ctx.fillStyle="rgba(255,255,255,0.85)";ctx.fillRect(ix-1,iy-13*viewScale,2,3*viewScale);
+    }
+    ctx.lineCap="butt";
   }
   // telegraphs
   for(const t of telegraphs){
@@ -3453,7 +3654,7 @@ function renderWorld(){
   // y-sorted entities
   const ents=[];
   for(const d of decor)ents.push({y:d.y,k:"d",d});
-  for(const m of mobs)ents.push({y:m.y,k:"m",m});
+  for(const m of mobs){if(mobHidden(m))continue;ents.push({y:m.y,k:"m",m});}
   for(const n of npcs)ents.push({y:n.y,k:"n",n});
   for(const v of villagers)ents.push({y:v.y,k:"v",v});
   for(const mm of minions)ents.push({y:mm.y,k:"mm",mm});
@@ -3491,6 +3692,16 @@ function renderWorld(){
     const [sx,sy]=w2s(p.x===undefined?p.x1:p.x,p.x===undefined?p.y1:p.y),pr=p.t/p.dur;
     if(p.ring){const r=lerp(p.r1,p.r2,pr)*viewScale;ctx.beginPath();ctx.arc(sx,sy,r,0,7);
       ctx.strokeStyle=p.color;ctx.globalAlpha=1-pr;ctx.lineWidth=3;ctx.stroke();ctx.globalAlpha=1;}
+    else if(p.shield){ // Shield Slam: an expanding golden shield wedge
+      ctx.save();ctx.translate(sx,sy);ctx.rotate(p.ang||0);
+      ctx.globalAlpha=(1-pr)*0.9;
+      const rr2=(12+pr*52)*viewScale;
+      ctx.fillStyle=p.color;
+      ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,rr2,-0.72,0.72);ctx.closePath();ctx.fill();
+      ctx.globalAlpha=(1-pr)*0.95;ctx.strokeStyle="#fff3c4";ctx.lineWidth=3*viewScale;
+      ctx.beginPath();ctx.arc(0,0,rr2*0.82,-0.6,0.6);ctx.stroke();
+      ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(rr2*0.55,0,3.2*viewScale,0,7);ctx.fill();
+      ctx.restore();ctx.globalAlpha=1;}
     else if(p.slash){
       ctx.globalAlpha=1-pr;
       ctx.strokeStyle=p.color;ctx.lineWidth=(4+p.width*2)*viewScale;ctx.lineCap="round";
@@ -3799,7 +4010,8 @@ function renderHUD(){
   text("Lvl "+G.level,px0+52*hs,py0+36*hs,12*hs,"#9d8a5c");
   bar(px0,py0+50*hs,pw,15*hs,G.hp/G.maxhp,"#3fae4a");
   text(`${Math.ceil(G.hp)} / ${G.maxhp}`,px0+pw/2,py0+62*hs,11*hs,"#fff","center","sans-serif");
-  bar(px0,py0+68*hs,pw,11*hs,G.mana/G.maxmana,"#2a6ad8");
+  bar(px0,py0+68*hs,pw,11*hs,G.mana/G.maxmana,resColor());
+  text(`${resName()} ${Math.ceil(G.mana)} / ${G.maxmana}`,px0+pw/2,py0+77*hs,9*hs,"#fff","center","sans-serif");
   // target frame
   const t=G.target;
   if(t&&t.state!=="dead"){
@@ -3830,7 +4042,7 @@ function renderHUD(){
   // quest tracker
   renderTracker();
   // boss bar
-  const boss=mobs.find(m=>m.t.elite&&m.state!=="dead"&&(m.state==="aggro"||m.lastDmgT<6)&&dist(G.x,G.y,m.x,m.y)<650);
+  const boss=mobs.find(m=>m.t.elite&&m.state!=="dead"&&!mobHidden(m)&&(m.state==="aggro"||m.lastDmgT<6)&&dist(G.x,G.y,m.x,m.y)<650);
   if(boss){
     const bw=Math.min(520,vw-40),bx0=(vw-bw)/2,by0=14;
     text("☠ "+boss.t.name,bw/2+bx0,by0+14,16,"#ffb0a0","center");
@@ -3905,12 +4117,12 @@ function performInteract(){
 }
 let hotbarSlots=[]; // {x,y,size,slot,aid} — canvas hit areas for tooltips
 function renderHotbar(){
-  const size=56,gap=8,n=5,w=n*(size+gap)-gap,x0=(vw-w)/2,y0=vh-size-14;
+  const size=56,gap=8,n=6,w=n*(size+gap)-gap,x0=(vw-w)/2,y0=vh-size-14;
   hotbarSlots=[];
-  for(let i=0;i<5;i++){
+  for(let i=0;i<6;i++){
     const x=x0+i*(size+gap);
     let iconId,ready=true,frac=0,locked=false,label=String(i+1),aid=null;
-    if(i<4){aid=cls().abilities[i];const ab=ABILITIES[aid];iconId=aid;
+    if(i<5){aid=cls().abilities[i];const ab=ABILITIES[aid];iconId=aid;
       if(G.level<ab.unlock){locked=true;}
       else{const cd=G.cd[aid]||0;if(cd>0){ready=false;frac=cd/effCD(aid);}}
       if(G.mana<effCost(aid)&&!locked)ready=false;
@@ -3922,24 +4134,34 @@ function renderHotbar(){
     ctx.globalAlpha=locked?0.35:(ready?1:0.7);
     ctx.drawImage(ICONS[iconId],x+4,y0+4,size-8,size-8);ctx.globalAlpha=1;
     if(!ready&&frac>0){ctx.fillStyle="rgba(0,0,0,0.65)";ctx.fillRect(x+2,y0+2,size-4,(size-4)*frac);
-      const aid2=i<4?cls().abilities[i]:"potion";text(Math.ceil(G.cd[aid2]||0),x+size/2,y0+size/2+7,18,"#fff","center","sans-serif");}
-    if(i===4&&countItem("hpotion")>0)text("×"+countItem("hpotion"),x+size-6,y0+size-6,11,"#ffd94d","right","sans-serif");
+      const aid2=i<5?cls().abilities[i]:"potion";text(Math.ceil(G.cd[aid2]||0),x+size/2,y0+size/2+7,18,"#fff","center","sans-serif");}
+    if(i===5&&countItem("hpotion")>0)text("×"+countItem("hpotion"),x+size-6,y0+size-6,11,"#ffd94d","right","sans-serif");
     text(label,x+6,y0+16,11,"#f5d376","left","sans-serif");
-    if(locked&&i<4)text("Lv"+ABILITIES[cls().abilities[i]].unlock,x+size/2,y0+size/2+7,15,"#9d8a5c","center","sans-serif");
+    if(locked&&i<5)text("Lv"+ABILITIES[cls().abilities[i]].unlock,x+size/2,y0+size/2+7,15,"#9d8a5c","center","sans-serif");
   }
 }
 function renderMinimap(){
   const r=IS_TOUCH?62:78,mx=vw-r-14,my=r+12;
+  const viewW=1500; // world units shown across the minimap — player stays centered, map scrolls
+  const viewH=viewW*(WORLD_H/WORLD_W);
   ctx.save();ctx.beginPath();ctx.arc(mx,my,r,0,7);ctx.clip();
-  ctx.drawImage(mmapC,mx-r,my-r,r*2,r*2);
-  // dots
-  const dot=(x,y,c,s=3)=>{ctx.fillStyle=c;ctx.fillRect(mx-r+(x/WORLD_W)*r*2-s/2,my-r+(y/WORLD_H)*r*2-s/2,s,s);};
-  for(const m of mobs){if(m.state==="dead")continue;dot(m.x,m.y,m.t.elite?"#ff2020":"#ff7b6b",m.t.elite?6:3);}
+  ctx.fillStyle="#141a12";ctx.fillRect(mx-r,my-r,r*2,r*2);
+  // scrolling world map: source window centered on the player
+  const sw=mmapC.width*(viewW/WORLD_W),sh=mmapC.height*(viewH/WORLD_H);
+  const sx0=(G.x/WORLD_W)*mmapC.width-sw/2,sy0=(G.y/WORLD_H)*mmapC.height-sh/2;
+  ctx.drawImage(mmapC,sx0,sy0,sw,sh,mx-r,my-r,r*2,r*2);
+  // dots, positioned relative to the player
+  const kx=(r*2)/viewW,ky=(r*2)/viewH;
+  const dot=(x,y,c,s=3)=>{const dx=mx+(x-G.x)*kx,dy=my+(y-G.y)*ky;
+    if(dx<mx-r+2||dx>mx+r-2||dy<my-r+2||dy>my+r-2)return;
+    ctx.fillStyle=c;ctx.fillRect(dx-s/2,dy-s/2,s,s);};
+  for(const m of mobs){if(m.state==="dead"||mobHidden(m))continue;dot(m.x,m.y,m.t.elite?"#ff2020":"#ff7b6b",m.t.elite?6:3);}
   for(const n of npcs){const mk=npcMarkers[n.id];dot(n.x,n.y,mk==="!"?"#ffd94d":mk==="?"?"#7bc74d":"#ffe9b0",4);}
   for(const p of pickups)if(p.t<=0)dot(p.x,p.y,"#c0392b",2);
-  const px1=mx-r+(G.x/WORLD_W)*r*2,py1=my-r+(G.y/WORLD_H)*r*2;
-  ctx.save();ctx.translate(px1,py1);ctx.rotate(G.facing+Math.PI/2);
-  ctx.fillStyle="#fff";ctx.beginPath();ctx.moveTo(0,-6);ctx.lineTo(4,4);ctx.lineTo(-4,4);ctx.closePath();ctx.fill();ctx.restore();
+  // player arrow, always at the center
+  ctx.save();ctx.translate(mx,my);ctx.rotate(G.facing+Math.PI/2);
+  ctx.fillStyle="#fff";ctx.strokeStyle="#000";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,-7);ctx.lineTo(5,5);ctx.lineTo(0,2);ctx.lineTo(-5,5);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
   ctx.restore();
   ctx.beginPath();ctx.arc(mx,my,r,0,7);ctx.strokeStyle="#8a6d2f";ctx.lineWidth=3;ctx.stroke();
   text("Emberhold",mx,my+r+14,11,"#9d8a5c","center");
@@ -4028,7 +4250,8 @@ window.addEventListener("keydown",e=>{
   // hotkey rebinding capture: next non-reserved key is bound to the clicked action
   if(rebindTarget){
     e.preventDefault();e.stopPropagation();
-    if(k!=="escape"&&!NO_BIND.includes(k)){
+    const cancel=k==="escape"&&rebindTarget!=="options"; // Esc cancels, except when binding the Options key itself
+    if(!cancel&&!NO_BIND.includes(k)){
       for(const a in BINDS)if(a!==rebindTarget&&BINDS[a]===k){BINDS[a]=BINDS[rebindTarget];break;} // swap conflicts
       BINDS[rebindTarget]=k;saveBinds();Audio2.play("ui");
     }else Audio2.play("error");
@@ -4047,13 +4270,15 @@ window.addEventListener("keydown",e=>{
   if(k==="tab"){e.preventDefault();cycleTarget();}
   else if(k===BINDS.ab1)useAbilitySlot(0);else if(k===BINDS.ab2)useAbilitySlot(1);
   else if(k===BINDS.ab3)useAbilitySlot(2);else if(k===BINDS.ab4)useAbilitySlot(3);
-  else if(k===BINDS.potion)useAbilitySlot(4);
-  else if(k==="l")togglePanel("questlog",renderQuestLog);
+  else if(k===BINDS.ab5)useAbilitySlot(4);
+  else if(k===BINDS.potion)useAbilitySlot(5);
+  else if(k===BINDS.questlog||k==="l")togglePanel("questlog",renderQuestLog);
   else if(k==="b")togglePanel("bagpanel",renderBag);
   else if(k==="c")togglePanel("charpanel",renderChar);
   else if(k==="t")togglePanel("talents",renderTalents);
   else if(k==="h")togglePanel("help");
   else if(k==="m")toggleMute();
+  else if(k===BINDS.options){if(modalOpen())closeModals();else togglePanel("options",renderOptions);}
   else if(k==="o")togglePanel("options",renderOptions);
   else if(k===BINDS.interact)performInteract();
   else if(k==="escape"){if(modalOpen())closeModals();else G.target=null;}
@@ -4065,7 +4290,7 @@ function togglePanel(id,render){
   if(wasHidden){p.classList.remove("hidden");if(render)render();Audio2.play("ui");}
 }
 function cycleTarget(){
-  const near=mobs.filter(m=>m.state!=="dead"&&dist(G.x,G.y,m.x,m.y)<600)
+  const near=mobs.filter(m=>m.state!=="dead"&&!mobHidden(m)&&dist(G.x,G.y,m.x,m.y)<600)
     .sort((a,b)=>dist(G.x,G.y,a.x,a.y)-dist(G.x,G.y,b.x,b.y));
   if(!near.length)return;
   const i=near.indexOf(G.target);
@@ -4083,7 +4308,7 @@ function worldTap(sx,sy){
   const [wx,wy]=s2w(sx,sy);
   // enemy?
   let best=null,bd=52/viewScale+18;
-  for(const m of mobs){if(m.state==="dead")continue;
+  for(const m of mobs){if(m.state==="dead"||mobHidden(m))continue;
     const d=dist(wx,wy,m.x,m.y-14);const r=(m.t.elite?70:44);
     if(d<Math.max(bd,r)){best=m;bd=d;}}
   if(best){G.target=best;Audio2.play("ui");return;}
@@ -4104,15 +4329,15 @@ function worldTap(sx,sy){
 
 // ability tooltip HTML for the canvas hotbar
 function abilityTipHTML(slot){
-  const isPotion=slot===4;
+  const isPotion=slot===5;
   const aid=isPotion?"potion":cls().abilities[slot];
   const ab=ABILITIES[aid];
-  const keyB=keyLabel(BINDS[["ab1","ab2","ab3","ab4","potion"][slot]]);
+  const keyB=keyLabel(BINDS[["ab1","ab2","ab3","ab4","ab5","potion"][slot]]);
   const h=[];
   h.push(`<div class="tt-name" style="color:${isPotion?"#ffd94d":"#f5d376"}">${ab.name}</div>`);
   h.push(`<div class="tt-meta">${isPotion?"Consumable":"Ability "+(slot+1)+" · unlocks Lv"+ab.unlock} · <b style="color:#ffe9b0">${keyB}</b></div>`);
   h.push(`<div class="tt-stats">`);
-  h.push(`<div class="tt-stat"><span>Mana cost</span><span class="d">${effCost(aid)}</span></div>`);
+  h.push(`<div class="tt-stat"><span>${resName()} cost</span><span class="d">${effCost(aid)}</span></div>`);
   h.push(`<div class="tt-stat"><span>Cooldown</span><span class="d">${effCD(aid)}s</span></div>`);
   if(ab.range)h.push(`<div class="tt-stat"><span>Range</span><span class="d">${ab.range}</span></div>`);
   if(isPotion)h.push(`<div class="tt-stat"><span>Carried</span><span class="d">×${countItem("hpotion")}</span></div>`);
@@ -4140,7 +4365,7 @@ cv.addEventListener("mousemove",e=>{
     for(const h of hotbarSlots){if(e.clientX>=h.x&&e.clientX<=h.x+h.size&&e.clientY>=h.y&&e.clientY<=h.y+h.size){img=CURSORS.npc;onBar=true;break;}}
     if(!onBar){
       const [wx,wy]=s2w(e.clientX,e.clientY);
-      for(const m of mobs){if(m.state==="dead")continue;
+      for(const m of mobs){if(m.state==="dead"||mobHidden(m))continue;
         if(dist(wx,wy,m.x,m.y-14)<(m.t.elite?70:44)/viewScale+18){img=CURSORS.enemy;break;}}
       if(img===CURSORS.pointer){
         for(const n of npcs)if(dist(wx,wy,n.x,n.y-16)<64/viewScale+30){img=CURSORS.npc;break;}
@@ -4197,10 +4422,10 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 // ability buttons (DOM, touch)
 function refreshAbilityButtons(){
-  for(let i=0;i<5;i++){
+  for(let i=0;i<6;i++){
     const b=$("ab"+i);if(!b)continue;
     let iconId,cdLeft=0,cdMax=1,locked=false,lockTxt="";
-    if(i<4){const aid=cls().abilities[i],ab=ABILITIES[aid];iconId=aid;
+    if(i<5){const aid=cls().abilities[i],ab=ABILITIES[aid];iconId=aid;
       if(G.level<ab.unlock){locked=true;lockTxt="Lv"+ab.unlock;}
       cdLeft=G.cd[aid]||0;cdMax=ab.cd;
       b.classList.toggle("nomt",G.mana<effCost(aid));
@@ -4210,12 +4435,12 @@ function refreshAbilityButtons(){
     b.style.backgroundImage=`url(${iconURL(iconId)})`;
     b.classList.toggle("locked",locked);
     b.querySelector(".lock").textContent=lockTxt;
-    const k=b.querySelector(".key");if(k)k.textContent=keyLabel(BINDS[["ab1","ab2","ab3","ab4","potion"][i]]);
+    const k=b.querySelector(".key");if(k)k.textContent=keyLabel(BINDS[["ab1","ab2","ab3","ab4","ab5","potion"][i]]);
     const cdo=b.querySelector(".cdo");
     if(cdLeft>0){cdo.style.display="flex";cdo.textContent=Math.ceil(cdLeft);}else cdo.style.display="none";
   }
 }
-for(let i=0;i<5;i++){
+for(let i=0;i<6;i++){
   const b=$("ab"+i);if(!b)continue;
   b.addEventListener("touchstart",e=>{e.preventDefault();e.stopPropagation();useAbilitySlot(i);},{passive:false});
   b.addEventListener("mousedown",e=>{e.stopPropagation();useAbilitySlot(i);});
@@ -4231,6 +4456,7 @@ $("sb-char").onclick=()=>{Audio2.play("ui");togglePanel("charpanel",renderChar);
 $("sb-talent").onclick=()=>{Audio2.play("ui");togglePanel("talents",renderTalents);};
 $("sb-help").onclick=()=>{Audio2.play("ui");togglePanel("help");};
 $("sb-opt").onclick=()=>{Audio2.play("ui");togglePanel("options",renderOptions);};
+$("btn-unstuck").onclick=()=>{Audio2.play("ui");unstuckSavedHero();};
 $("sb-mute").onclick=()=>toggleMute();
 $("btn-opt").onclick=()=>{Audio2.play("ui");togglePanel("options",renderOptions);};
 function toggleMute(){Audio2.resume();Audio2.setMuted(!Audio2.muted);}
@@ -4303,7 +4529,7 @@ function renderOptions(){
       row.appendChild(kb);c.appendChild(row);
     }
   }
-  c.appendChild(el("div","opt-note","Click a binding, then press any key to reassign it; Esc cancels. Some keys (Tab, L, B, C, T, H, M, O, Enter) are reserved for the interface. Arrow keys always work for movement."));
+  c.appendChild(el("div","opt-note","Click a binding, then press any key to reassign it; Esc cancels (unless you're setting the Options key itself). Tab and B/C/T/H/M are reserved for the interface; Q opens the Quest Log and Esc opens Options by default. Arrow keys always work for movement."));
   const foot=el("div","opt-foot");
   const rb=el("button","btn small","Reset Keybindings");
   rb.onclick=()=>{resetBinds();rebindTarget=null;renderOptions();Audio2.play("ui");};
@@ -4313,6 +4539,11 @@ function renderOptions(){
   b.appendChild(el("div","opt-note","Options and keybindings are saved automatically on this device and apply immediately."));
   if(gameScreen==="play"){
     const ge=sec("Game");
+    const urow=el("div","opt-row");
+    urow.appendChild(el("div","opt-label",`<div class="t">Unstuck</div><div class="d">Trapped in terrain? Teleport back to the last safe ground you stood on.</div>`));
+    const uBtn=el("button","btn small","Unstuck");
+    uBtn.onclick=()=>{closeModals();unstuckPlayer();};
+    urow.appendChild(uBtn);ge.appendChild(urow);
     const row=el("div","opt-row");
     row.appendChild(el("div","opt-label",`<div class="t">Return to Main Menu</div>`));
     const menuBtn=el("button","btn small","Return to Main Menu");
